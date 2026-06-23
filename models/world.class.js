@@ -5,7 +5,15 @@ class World{
         new Chicken(),
         new Chicken(),
     ];
+    ctx;
 
-    draw(){};
+    constructor(canvas){
+        this.ctx = canvas.getContext("2D");
+        this.draw();
+    }
+
+    draw(){
+        this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
+    };
 
 }
