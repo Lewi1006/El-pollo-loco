@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+    box-sizing: border-box;
+    text-decoration: none;
+    position: relative;
+    list-style: none;
+    font-size: inherit;
+    color: inherit;
+    font-family: 'zabras', Arial, Helvetica, sans-serif;
+    background: initial;
+    border: initial;
+}
+
+.content{
+    width: 100%;
+    padding: 0 max(calc(50% - 720px), 1rem);
+}
+

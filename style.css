@@ -1,0 +1,28 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100dvh;
+    width: 100%;
+}
+
+div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+
+    h1{
+        font-size: 64px;
+        letter-spacing: 3px;
+    
+    }
+    canvas{
+        background-color: black;
+        width: 720px;
+        height: 480px;
+    }
+
+}
