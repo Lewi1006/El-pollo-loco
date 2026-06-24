@@ -1,28 +1,33 @@
 class World {
-  character = new Character();
-  enemies = [new Chicken(), new Chicken(), new Chicken()];
-  ctx;
-  canvas;
-  
-  constructor(canvas) {
-    this.ctx = canvas.getContext("2d");
-    this.canvas = canvas;
-    this.draw();
-  }
+    character = new Character();
+    enemies = [new Chicken(), new Chicken(), new Chicken()];
+    ctx;
+    canvas;
 
-  draw() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.drawImage(
-      this.character.img,
-      this.character.x,
-      this.character.y,
-      this.character.width,
-      this.character.height,
-    );
+    constructor(canvas) {
+        this.ctx = canvas.getContext("2d");
+        this.canvas = canvas;
+        this.draw();
+        console.log(this.canvas);
 
-    let self = this;
-    requestAnimationFrame(function () {
-      self.draw();
-    });
-  }
+    }
+
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        
+        this.ctx.drawImage(
+            this.character.img,
+            this.character.x,
+            this.character.y,
+            this.character.width,
+            this.character.height,
+        );
+
+        // let self = this;
+        // requestAnimationFrame(function () {
+        //     self.draw();
+        // });
+
+        requestAnimationFrame(() => this.draw());           
+    }
 }
