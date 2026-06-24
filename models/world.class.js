@@ -2,6 +2,7 @@ import { BackgroundObject } from "./background-object.class.js";
 import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
 import { Cloud } from "./cloud.class.js";
+import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class World {
     character = new Character();
@@ -20,6 +21,9 @@ export class World {
         )
         
     ];
+
+    counter = 0;
+
     ctx;
     canvas;
 
@@ -27,6 +31,7 @@ export class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.draw();
+        this.startCounter();
     }
 
     draw() {
@@ -36,13 +41,8 @@ export class World {
         this.addToMap(this.character);
         this.addObjectsToMap(this.clouds);
         this.addObjectsToMap(this.enemies);
-        
-        let self = this;
-        requestAnimationFrame(function () {
-            self.draw();
-        });
 
-        // requestAnimationFrame(() => this.draw());
+        requestAnimationFrame(() => this.draw());
     }
 
     addObjectsToMap(objects) {
@@ -54,6 +54,13 @@ export class World {
     addToMap(mo) {
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
     }
+
+    startCounter(){
+        IntervalHub.startInterval(()=>{
+            this.counter++;
+            // console.log(this.counter);
+        }, 1000)
+    }
 }
 
-console.log(World);
+// console.log(World);
