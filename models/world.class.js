@@ -1,9 +1,11 @@
 import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
+import { Cloud } from "./cloud.class.js";
 
 export class World {
     character = new Character();
     enemies = [new Chicken(), new Chicken(), new Chicken()];
+    clouds = [new Cloud()]
     ctx;
     canvas;
 
@@ -27,6 +29,10 @@ export class World {
         );
         this.enemies.forEach(enemy => {
             this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
+        })
+
+          this.clouds.forEach(cloud => {
+            this.ctx.drawImage(cloud.img, cloud.x, cloud.y, cloud.width, cloud.height);
         })
 
         let self = this;
