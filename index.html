@@ -1,40 +1,23 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>El pollo loco</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>El pollo loco</title>
 
-    <!-- #region import links -->
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="./styles/fonts.css" />
-    <link rel="stylesheet" href="./styles/standard.css" />
+        <!-- #region import links -->
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="./styles/fonts.css" />
+        <link rel="stylesheet" href="./styles/standard.css" />
 
-    <script src="./js/game.js" defer></script>
-    <script src="./models/background-object.class.js" defer></script>
-    <script src="./models/character.class.js" defer></script>
-    <script src="./models/chicken.class.js" defer></script>
-    <script src="./models/cloud.class.js" defer></script>
-    <script src="./models/drawable-object.class.js" defer></script>
-    <script src="./models/endboss.class.js" defer></script>
-    <script src="./models/keyboard.class.js" defer></script>
-    <script src="./models/level.class.js" defer></script>
-    <script src="./models/movable-object.class.js" defer></script>
-    <script src="./models/status-bar.class.js" defer></script>
-    <script src="./models/throwable-object.class.js" defer></script>
-    <script src="./models/world.class.js" defer></script>
-    <script src="./helper_classes/image-helper.js" defer></script>
-    <script src="./helper_classes/interval-helper.js" defer></script>
-    <script src="./helper_classes/keyboard-manager.js" defer></script>
-    <script src="./audio/audio.js"></script>
+        <script type="module" src="./js/game.js"></script>
 
-    <!-- #endregion -->
-
-  </head>
-  <body>
-    <div id="fullscreen">
-        <h1>El Pollo Loco</h1>
-        <canvas></canvas>
-    </div>
-  </body>
+        <!-- #endregion -->
+    </head>
+    <body onload="init()">
+        <div id="fullscreen">
+            <h1>El Pollo Loco</h1>
+            <canvas width="720" height="480" id="canvas"></canvas>
+        </div>
+    </body>
 </html>
