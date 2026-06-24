@@ -22,8 +22,6 @@ export class World {
         
     ];
 
-    counter = 0;
-
     ctx;
     canvas;
 
@@ -31,7 +29,6 @@ export class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.draw();
-        this.startCounter();
     }
 
     draw() {
@@ -53,13 +50,6 @@ export class World {
 
     addToMap(mo) {
         this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
-    }
-
-    startCounter(){
-        IntervalHub.startInterval(()=>{
-            this.counter++;
-            // console.log(this.counter);
-        }, 1000)
     }
 }
 
