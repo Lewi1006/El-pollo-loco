@@ -1,4 +1,7 @@
-class World {
+import { Character } from "./character.class.js";
+import { Chicken } from "./chicken.class.js";
+
+export class World {
     character = new Character();
     enemies = [new Chicken(), new Chicken(), new Chicken()];
     ctx;
@@ -8,7 +11,7 @@ class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.draw();
-        console.log(this.canvas);
+        
 
     }
 
@@ -22,12 +25,18 @@ class World {
             this.character.width,
             this.character.height,
         );
+        this.enemies.forEach(enemy => {
+            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
+        })
 
-        // let self = this;
-        // requestAnimationFrame(function () {
-        //     self.draw();
-        // });
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw();
+        });
 
-        requestAnimationFrame(() => this.draw());           
+        // requestAnimationFrame(() => this.draw());           
     }
 }
+
+
+console.log(World);
