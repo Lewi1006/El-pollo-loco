@@ -15,8 +15,8 @@ export class Cloud extends MovableObject {
     }
 
     animate() {
-        IntervalHub.startInterval(() => {
-            this.x -= 0.15;
-        }, 1000 / 60);
+        this.moveLeft();
     }
+
+ 
 }
