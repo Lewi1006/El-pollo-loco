@@ -9,6 +9,7 @@ export class MovableObject {
     imageCache = {};
     currentImage = 0;
     speed = 0.15;
+    otherDirection = false;
 
     // new Image() is predefined like <img src="...">
     loadImage(path) {
