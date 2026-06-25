@@ -7,7 +7,7 @@ export class Character extends MovableObject {
     height = 280;
     y = 155;
     imagesWalk = ImageHelper.CHARACTER.walk;
-    
+    world;
 
     constructor(){
         super();
@@ -18,11 +18,15 @@ export class Character extends MovableObject {
 
     animate(){
         IntervalHub.startInterval(()=>{
-            // loop array with modulo operator 
-            let i = this.currentImage % this.imagesWalk.length;
-            let path = this.imagesWalk[i];
-            this.img = this.imageCache[path];
-            this.currentImage++
+            if(this.world.keyboard.RIGHT){
+                // loop array with modulo operator 
+                let i = this.currentImage % this.imagesWalk.length;
+                let path = this.imagesWalk[i];
+                this.img = this.imageCache[path];
+                this.currentImage++
+
+            }
+
 
         }, 100);
 
