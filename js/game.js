@@ -6,7 +6,7 @@ let world;
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas); 
-    window.world = world; 
+    // window.world = world; 
     }
 
 // so that onload works and access to function init is there 

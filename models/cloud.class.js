@@ -1,5 +1,6 @@
 import { MovableObject } from "./movable-object.class.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+import { ImageHelper } from "../helper_classes/image-helper.js";
 
 export class Cloud extends MovableObject {
     y = 20;
