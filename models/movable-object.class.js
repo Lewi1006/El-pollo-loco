@@ -5,6 +5,7 @@ export class MovableObject {
     height = 150;
     width = 100;
     imageCache = {};
+    currentImage = 0;
 
     // new Image() is predefined like <img src="...">
     loadImage(path) {

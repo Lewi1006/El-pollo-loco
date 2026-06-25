@@ -7,7 +7,7 @@ export class Character extends MovableObject {
     height = 280;
     y = 155;
     imagesWalk = ImageHelper.CHARACTER.walk;
-    currentImage = 0;
+    
 
     constructor(){
         super();
