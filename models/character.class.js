@@ -20,7 +20,6 @@ export class Character extends MovableObject {
         this.loadImages(this.imagesJump);
         this.animate();
         this.applyGravity();
-        console.log(this.world);
     }
 
     // #region methods

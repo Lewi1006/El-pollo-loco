@@ -1,4 +1,6 @@
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+// import { Chicken } from "./chicken.class.js";
+// import { Character } from "./character.class.js";
 
 export class MovableObject {
     // #region properties
@@ -36,6 +38,31 @@ export class MovableObject {
         this.img.src = path;
     }
 
+    draw(ctx) {
+        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    }
+
+    drawFrame(ctx) {
+        // #rectangles for collision
+
+        // if (this instanceof Character || this instanceof Chicken) --> doesn't work here cause mO does not know chicken or character
+        ctx.beginPath();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "blue";
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.stroke();
+    }
+
+    // character.isColliding(Chicken);
+    isColliding(mo) {
+        return (
+            this.x + this.width > mo.x &&
+            this.y + this.height > mo.y &&
+            this.x < mo.x &&
+            this.y < mo.y + mo.height
+        );
+    }
+
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -46,12 +73,10 @@ export class MovableObject {
 
     moveRight() {
         this.x += this.speed;
-        
     }
 
     moveLeft() {
         this.x -= this.speed;
-   
     }
 
     jump() {

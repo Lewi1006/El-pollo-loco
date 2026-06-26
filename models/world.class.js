@@ -23,12 +23,23 @@ export class World {
         this.keyboard = keyboard;
         this.setWorld();
         this.draw();
+        this.checkCollisions();
     }
 
     // #region methods
     // hand over world as variable to character so that keyboard can be accessed ???
     setWorld() {
         this.character.world = this;
+    }
+
+    checkCollisions() {
+        IntervalHub.startInterval(() => {
+            this.level.enemies.forEach((enemy) => {
+                if (this.character.isColliding(enemy)) {
+                    console.log("collision with Character", enemy);
+                }
+            });
+        }, 1000);
     }
 
     draw() {
@@ -59,7 +70,12 @@ export class World {
             this.flipImage(mo);
         }
 
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        mo.draw(this.ctx);
+
+        // only draw rectangle if its a character or chicken object
+        if (mo instanceof Character || mo instanceof Chicken) {
+            mo.drawFrame(this.ctx);
+        }
 
         if (mo.otherDirection === true) {
             this.flipImageBack(mo);
