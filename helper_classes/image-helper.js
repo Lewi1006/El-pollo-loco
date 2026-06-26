@@ -213,7 +213,3 @@ export class ImageHelper {
         bigCoin: [`assets/img/8_coin/coin_2.png`],
     };
 }
-
-
-console.log("ImageHelper:", ImageHelper);
-console.log("Character:", ImageHelper.CHARACTER);
