@@ -3,12 +3,13 @@ import { ImageHelper } from "../helper_classes/image-helper.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class Character extends MovableObject {
+    // #region properties
     height = 280;
     y = 155;
     speed = 10;
     imagesWalk = ImageHelper.CHARACTER.walk;
     world;
-       
+    // #endregion
 
     constructor() {
         super();
@@ -18,6 +19,7 @@ export class Character extends MovableObject {
         console.log(this.imagesWalk);
     }
 
+    // #region methods
     animate() {
         // walking speed
         IntervalHub.startInterval(() => {
@@ -45,5 +47,7 @@ export class Character extends MovableObject {
 
 
     jump() {}
+
+    // #endregion
 }
 

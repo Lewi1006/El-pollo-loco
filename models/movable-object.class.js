@@ -1,15 +1,19 @@
 import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class MovableObject {
+    // #region properties
     x = 120;
     y = 280;
     img;
     height = 150;
-    width = 100;
+    width = 140;
     imageCache = {};
     currentImage = 0;
     speed = 0.15;
     otherDirection = false;
+    // #endregion
+
+    // #region methods
 
     // new Image() is predefined like <img src="...">
     loadImage(path) {
@@ -42,4 +46,6 @@ export class MovableObject {
                 this.img = this.imageCache[path];
                 this.currentImage++;
     }
+
+    // #endregion
 }

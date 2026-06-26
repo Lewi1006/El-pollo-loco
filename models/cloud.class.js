@@ -3,9 +3,11 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 
 export class Cloud extends MovableObject {
+    // #region properties
     y = 20;
     height = 250;
     width = 500;
+    // #endregion
 
     constructor() {
         super();
@@ -13,10 +15,9 @@ export class Cloud extends MovableObject {
         this.x = Math.random() * 500;
         this.animate();
     }
-
+    // #region methods
     animate() {
         this.moveLeft();
     }
-
- 
+    // #endregion
 }

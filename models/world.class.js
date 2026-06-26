@@ -8,12 +8,14 @@ import { Level } from "./level.class.js";
 import { level1 } from "../levels/level1.js";
 
 export class World {
+    // #region properties
     character = new Character();
     level = level1;
     ctx;
     canvas;
     keyboard;
     camera_x = 0;
+    // #endregion
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -23,6 +25,7 @@ export class World {
         this.draw();
     }
 
+    // #region methods
     // hand over world as variable to character so that keyboard can be accessed ???
     setWorld() {
         this.character.world = this;
@@ -74,7 +77,5 @@ export class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
+    // #endregion
 }
-
-// console.log(World);
-// console.log(level1);
