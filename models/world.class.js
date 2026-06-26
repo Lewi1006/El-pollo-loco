@@ -9,11 +9,7 @@ import { level1 } from "../levels/level1.js";
 
 export class World {
     character = new Character();
-    enemies = level1.enemies;
-    clouds = level1.clouds;
-    // infinite background scroll
-    // https://medium.com/@avinashmurmu664/how-to-build-a-seamless-infinite-background-scroll-in-vanilla-javascript-canvas-87350c794f71
-    backgroundObjects = level1.backgroundObjects
+    level = level1;
     ctx;
     canvas;
     keyboard;
@@ -37,11 +33,11 @@ export class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.backgroundObjects);
+        this.addObjectsToMap(this.level.backgroundObjects);
 
         this.addToMap(this.character);
-        this.addObjectsToMap(this.clouds);
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.enemies);
 
         this.ctx.translate(-this.camera_x, 0);
 
@@ -81,4 +77,4 @@ export class World {
 }
 
 // console.log(World);
-console.log(level1);
+// console.log(level1);

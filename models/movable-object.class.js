@@ -26,12 +26,20 @@ export class MovableObject {
     }
 
     moveRight() {
-        console.log("moving right");
+        // console.log("moving right");
     }
 
       moveLeft() {
         IntervalHub.startInterval(() => {
             this.x -= this.speed;
         }, 1000 / 60);
+    }
+
+    playAnimation(images){
+         // loop array with modulo operator / Walk animation or for endboss alert animation?
+                let i = this.currentImage % images.length;
+                let path = images[i];
+                this.img = this.imageCache[path];
+                this.currentImage++;
     }
 }
