@@ -4,7 +4,7 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class Chicken extends MovableObject {
     // #region properties
-    y = 360;
+    y = 350;
     height = 70;
     width = 80;
     imagesWalk = ImageHelper.CHICKEN.walk;

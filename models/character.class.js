@@ -5,7 +5,7 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 export class Character extends MovableObject {
     // #region properties
     height = 280;
-    y = 80;
+    y = 140;
     speed = 10;
     imagesWalk = ImageHelper.CHARACTER.walk;
     imagesJump = ImageHelper.CHARACTER.jump;
@@ -29,8 +29,8 @@ export class Character extends MovableObject {
         this.loadImages(this.imagesJump);
         this.loadImages(this.imagesDead);
         this.loadImages(this.imagesHurt);
-        this.animate();
         this.applyGravity();
+        this.animate();
     }
 
     // #region methods

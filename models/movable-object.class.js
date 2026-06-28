@@ -1,9 +1,7 @@
 import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { DrawableObject } from "./drawable-object.class.js";
-// import { Chicken } from "./chicken.class.js";
-// import { Character } from "./character.class.js";
 
-export class MovableObject extends DrawableObject{
+export class MovableObject extends DrawableObject {
     // #region properties
     speed = 0.15;
     otherDirection = false;
@@ -17,6 +15,7 @@ export class MovableObject extends DrawableObject{
         right: 0,
         bottom: 0,
     };
+    throwable = false;
     // #endregion
 
     // #region methods
@@ -31,10 +30,12 @@ export class MovableObject extends DrawableObject{
     }
 
     isAboveGround() {
-        return this.y < 140;
+        if (this.throwable == true) {
+            return true;
+        } else {
+            return this.y < 140;
+        }
     }
-
-
 
     // character.isColliding(Chicken);
     isColliding(mo) {
@@ -59,13 +60,12 @@ export class MovableObject extends DrawableObject{
         return this.energy == 0;
     }
 
-    // returns true if hit happened in the past 5 seconds  
-    isHurt(){
+    // returns true if hit happened in the past 5 seconds
+    isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; // difference since last hit in ms
         timePassed /= 1000; // difference in sec
         return timePassed < 1;
     }
-
 
     moveRight() {
         this.x += this.speed;

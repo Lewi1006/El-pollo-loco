@@ -19,7 +19,6 @@ export class StatusBarHealth extends DrawableObject {
     }
 
     setPercentage(percentage) {
-        console.log("Status update:", percentage);
         this.percentage = percentage;
         let index = this.resolveImageIndex();
         let path = this.imagesHealth[index];
