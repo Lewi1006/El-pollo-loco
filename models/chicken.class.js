@@ -4,10 +4,11 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class Chicken extends MovableObject {
     // #region properties
-    y = 360;
+    y = 350;
     height = 70;
     width = 80;
     imagesWalk = ImageHelper.CHICKEN.walk;
+
     // #endregion
 
     constructor() {
@@ -22,7 +23,9 @@ export class Chicken extends MovableObject {
     // #region methods
 
     animate() {
-        this.moveLeft();
+        IntervalHub.startInterval(() => {
+            this.moveLeft();
+        }, 1000 / 60);
 
         IntervalHub.startInterval(() => {
             this.playAnimation(this.imagesWalk);

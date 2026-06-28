@@ -6,6 +6,9 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { Level } from "./level.class.js";
 import { level1 } from "../levels/level1.js";
+import { StatusBarHealth } from "./status-bar.class.js";
+import { ThrowableObject } from "./throwable-object.class.js";
+
 
 export class World {
     // #region properties
@@ -15,6 +18,8 @@ export class World {
     canvas;
     keyboard;
     camera_x = 0;
+    statusBar = new StatusBarHealth();
+    throwableObjects = [];
     // #endregion
 
     constructor(canvas, keyboard) {
@@ -23,6 +28,7 @@ export class World {
         this.keyboard = keyboard;
         this.setWorld();
         this.draw();
+        this.run();
     }
 
     // #region methods
@@ -31,16 +37,44 @@ export class World {
         this.character.world = this;
     }
 
+    run() {
+        IntervalHub.startInterval(() => {
+            this.checkCollisions();
+            this.checkThrowObjects();
+        }, 200);
+    }
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    checkThrowObjects(){
+        if(this.keyboard.D){
+           let bottle = new ThrowableObject(this.character.x + 100, this.character.y +100);
+            this.throwableObjects.push(bottle); 
+        }
+        console.log(this.keyboard.D);
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
 
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.throwableObjects);
+
+        // fix so that status bar sticks to position when character is moving
+        this.ctx.translate(-this.camera_x, 0); // move camera back
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0); // move camera forward
 
         this.ctx.translate(-this.camera_x, 0);
 
@@ -59,7 +93,12 @@ export class World {
             this.flipImage(mo);
         }
 
-        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
+        mo.draw(this.ctx);
+
+        // only draw rectangle if its a character or chicken object
+        if (mo instanceof Character || mo instanceof Chicken) {
+            mo.drawFrame(this.ctx);
+        }
 
         if (mo.otherDirection === true) {
             this.flipImageBack(mo);
