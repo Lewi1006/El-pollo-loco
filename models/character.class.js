@@ -9,8 +9,17 @@ export class Character extends MovableObject {
     speed = 10;
     imagesWalk = ImageHelper.CHARACTER.walk;
     imagesJump = ImageHelper.CHARACTER.jump;
+    imagesDead = ImageHelper.CHARACTER.dead;
+    imagesHurt = ImageHelper.CHARACTER.hurt;
     // setWorld  assigns world class to this property so world is available to character
     world;
+
+    offset = {
+        top: 100,
+        left: 30,
+        right: 30,
+        bottom: 10,
+    };
     // #endregion
 
     constructor() {
@@ -18,6 +27,8 @@ export class Character extends MovableObject {
         this.loadImage("./assets/img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.imagesWalk);
         this.loadImages(this.imagesJump);
+        this.loadImages(this.imagesDead);
+        this.loadImages(this.imagesHurt);
         this.animate();
         this.applyGravity();
     }
@@ -50,7 +61,11 @@ export class Character extends MovableObject {
 
         // walking and jumping animation
         IntervalHub.startInterval(() => {
-            if (this.isAboveGround()) {
+            if (this.isDead()) {
+                this.playAnimation(this.imagesDead);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.imagesHurt);
+            } else if (this.isAboveGround()) {
                 this.playAnimation(this.imagesJump);
             } else {
                 if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {

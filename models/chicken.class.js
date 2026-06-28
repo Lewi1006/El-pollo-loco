@@ -8,6 +8,7 @@ export class Chicken extends MovableObject {
     height = 70;
     width = 80;
     imagesWalk = ImageHelper.CHICKEN.walk;
+
     // #endregion
 
     constructor() {

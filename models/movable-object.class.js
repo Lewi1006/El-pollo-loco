@@ -1,20 +1,22 @@
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+import { DrawableObject } from "./drawable-object.class.js";
 // import { Chicken } from "./chicken.class.js";
 // import { Character } from "./character.class.js";
 
-export class MovableObject {
+export class MovableObject extends DrawableObject{
     // #region properties
-    x = 120;
-    y = 280;
-    img;
-    height = 150;
-    width = 140;
-    imageCache = {};
-    currentImage = 0;
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
     acceleration = 2.5;
+    energy = 100;
+    lastHit = 0;
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    };
     // #endregion
 
     // #region methods
@@ -32,44 +34,38 @@ export class MovableObject {
         return this.y < 140;
     }
 
-    // new Image() is predefined like <img src="...">
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
-    drawFrame(ctx) {
-        // #rectangles for collision
-
-        // if (this instanceof Character || this instanceof Chicken) --> doesn't work here cause mO does not know chicken or character
-        ctx.beginPath();
-        ctx.lineWidth = 5;
-        ctx.strokeStyle = "blue";
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.stroke();
-    }
 
     // character.isColliding(Chicken);
     isColliding(mo) {
         return (
-            this.x + this.width > mo.x &&
-            this.y + this.height > mo.y &&
-            this.x < mo.x &&
-            this.y < mo.y + mo.height
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
         );
     }
 
-    loadImages(arr) {
-        arr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
+    hit() {
+        this.energy -= 5;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
     }
+
+    isDead() {
+        return this.energy == 0;
+    }
+
+    // returns true if hit happened in the past 5 seconds  
+    isHurt(){
+        let timePassed = new Date().getTime() - this.lastHit; // difference since last hit in ms
+        timePassed /= 1000; // difference in sec
+        return timePassed < 1;
+    }
+
 
     moveRight() {
         this.x += this.speed;

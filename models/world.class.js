@@ -6,6 +6,7 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { Level } from "./level.class.js";
 import { level1 } from "../levels/level1.js";
+import { StatusBarHealth } from "./status-bar.class.js";
 
 export class World {
     // #region properties
@@ -15,6 +16,7 @@ export class World {
     canvas;
     keyboard;
     camera_x = 0;
+    statusBar = new StatusBarHealth();
     // #endregion
 
     constructor(canvas, keyboard) {
@@ -36,22 +38,28 @@ export class World {
         IntervalHub.startInterval(() => {
             this.level.enemies.forEach((enemy) => {
                 if (this.character.isColliding(enemy)) {
-                    console.log("collision with Character", enemy);
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
                 }
             });
-        }, 1000);
+        }, 200);
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
-
+        
         this.addToMap(this.character);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.enemies);
+        
+        // fix so that status bar sticks to position when character is moving
+        this.ctx.translate(-this.camera_x, 0); // move camera back
+        this.addToMap(this.statusBar);
+        this.ctx.translate(this.camera_x, 0); // move camera forward
+
 
         this.ctx.translate(-this.camera_x, 0);
 
