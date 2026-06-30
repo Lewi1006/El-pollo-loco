@@ -5,6 +5,7 @@
 // character gets initialized
 // levels are connected here
 
+// #region Imports
 import { BackgroundObject } from "./background-object.class.js";
 import { Character } from "./character.class.js";
 import { Chicken } from "./chicken.class.js";
@@ -17,6 +18,9 @@ import { StatusBarHealth } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 import { Bottle } from "./bottle.class.js";
 import { Coin } from "./coin.class.js";
+import { CoinStatus } from "./coin-status.class.js";
+
+// #endregion
 
 export class World {
     // #region properties
@@ -29,6 +33,8 @@ export class World {
     statusBar = new StatusBarHealth();
     throwableObjects = [];
     coinCounter = 0;
+    coinStatus = new CoinStatus();
+
 
     // #endregion
 
@@ -92,6 +98,11 @@ export class World {
         }
     }
 
+    countCoins(){
+
+    }
+
+    
     collectBottle() {
         for (let j = 0; j < this.level.bottles.length; j++) {
             let bottle = this.level.bottles[j];
@@ -136,6 +147,7 @@ export class World {
         // reset camera so that status bar sticks to position when character is moving
         this.ctx.translate(-this.camera_x, 0); // move camera back
         this.addToMap(this.statusBar);
+        this.addToMap(this.coinStatus);
         this.ctx.translate(this.camera_x, 0); // move camera forward
 
         this.ctx.translate(-this.camera_x, 0);
