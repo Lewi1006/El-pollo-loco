@@ -1,3 +1,10 @@
+// game.js is main.js file 
+// It initializes canvas, creates World and Keyboard objects
+// init() is called on window load
+// canvas is selected from HTML
+// canvas and keyboard variables are passed into World object
+// eventListener makes keyboard globally accesible
+
 import { World } from "../models/world.class.js";
 import { Keyboard } from "../helper_classes/keyboard-manager.js";
 
@@ -17,6 +24,8 @@ function init() {
 // https://stackoverflow.com/questions/8830074/what-is-the-difference-between-window-onload-init-and-window-onload-init
 window.onload = init;
 
+
+// #region Keyboard input
 document.addEventListener("keydown", (event) => {
     //  console.log(keyboard);
     if (event.code == "ArrowLeft") {
@@ -69,3 +78,5 @@ document.addEventListener("keyup", (event) => {
         keyboard.D = false;
     }
 });
+
+// #endregion

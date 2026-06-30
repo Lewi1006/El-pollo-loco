@@ -9,6 +9,7 @@ export class MovableObject extends DrawableObject {
     acceleration = 2.5;
     energy = 100;
     lastHit = 0;
+    
     offset = {
         top: 0,
         left: 0,
@@ -56,11 +57,12 @@ export class MovableObject extends DrawableObject {
         }
     }
 
+
     isDead() {
         return this.energy == 0;
     }
 
-    // returns true if hit happened in the past 5 seconds
+    // returns true if hit happened in the past second
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; // difference since last hit in ms
         timePassed /= 1000; // difference in sec
