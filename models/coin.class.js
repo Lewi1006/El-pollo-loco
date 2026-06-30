@@ -6,11 +6,13 @@ export class Coin extends DrawableObject {
     width = 130;
     imagesCoin = ImageHelper.COINS.bigCoin;
 
-    constructor() {
+    constructor(x,y) {
         super();
-        console.log(this.imagesCoin);
         this.loadImage(this.imagesCoin);
-        this.x = 300;
-        this.y = 200;
+        this.x = x;
+        this.y = y;
     }
 }
+
+
+// generateCoins(){}

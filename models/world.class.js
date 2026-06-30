@@ -16,6 +16,7 @@ import { level1 } from "../levels/level1.js";
 import { StatusBarHealth } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 
+
 export class World {
     // #region properties
     character = new Character();
@@ -100,6 +101,7 @@ export class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
 
         // reset camera so that status bar sticks to position when character is moving
         this.ctx.translate(-this.camera_x, 0); // move camera back

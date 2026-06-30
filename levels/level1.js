@@ -4,6 +4,7 @@ import { Cloud } from "../models/cloud.class.js";
 import { BackgroundObject } from "../models/background-object.class.js";
 import { Endboss } from "../models/endboss.class.js";
 import { Coin } from "../models/coin.class.js";
+import { Bottle } from "../models/bottle.class.js";
 
 export const level1 = new Level(
     [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
@@ -32,5 +33,6 @@ export const level1 = new Level(
         new BackgroundObject(6, 719 * 3),
         new BackgroundObject(7, 719 * 3),
     ],
-    [new Coin()]
+    [new Coin(300,200)],
+    [new Bottle(550,340)],
 );
