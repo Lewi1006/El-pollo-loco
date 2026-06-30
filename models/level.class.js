@@ -6,7 +6,7 @@ export class Level {
     clouds;
     backgroundObjects;
     coins = [];
-    bottles;
+    bottles = [];
     level_end_x = 2200;
     // #endregion
 

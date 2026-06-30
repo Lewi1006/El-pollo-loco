@@ -28,6 +28,7 @@ export class World {
     camera_x = 0; // Camera vertical scrolling behavior
     statusBar = new StatusBarHealth();
     throwableObjects = [];
+    coinCounter = 0;
 
     // #endregion
 
@@ -65,18 +66,38 @@ export class World {
     // calls isColliding(), hit() from Character class
     // calls setPercentage from StatusBar and passes the characters energy into it as percentage value
     checkCollisions() {
+        this.looseEnergy();
+        this.collectCoin();
+        this.collectBottle();
+    }
+
+    looseEnergy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
+    }
 
+    collectCoin() {
         for (let i = 0; i < this.level.coins.length; i++) {
             let coin = this.level.coins[i];
 
             if (this.character.isColliding(coin)) {
                 this.level.coins.splice(i, 1);
+                this.coinCounter++;
+                console.log(this.coinCounter);
+            }
+        }
+    }
+
+    collectBottle() {
+        for (let j = 0; j < this.level.bottles.length; j++) {
+            let bottle = this.level.bottles[j];
+
+            if (this.character.isColliding(bottle)) {
+                this.level.bottles.splice(j, 1);
             }
         }
     }
