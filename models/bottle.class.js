@@ -6,6 +6,12 @@ export class Bottle extends DrawableObject{
     height = 90;
     width = 70;
     imagesBottleGround = ImageHelper.BOTTLE.ground;
+    offset = {
+        top: 20,
+        left: 20,
+        right: 20,
+        bottom: 10,
+    };
     
     constructor(x,y){
         super();

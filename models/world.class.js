@@ -15,7 +15,8 @@ import { Level } from "./level.class.js";
 import { level1 } from "../levels/level1.js";
 import { StatusBarHealth } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
-
+import { Bottle } from "./bottle.class.js";
+import { Coin } from "./coin.class.js";
 
 export class World {
     // #region properties
@@ -27,7 +28,7 @@ export class World {
     camera_x = 0; // Camera vertical scrolling behavior
     statusBar = new StatusBarHealth();
     throwableObjects = [];
-   
+
     // #endregion
 
     // create canvas with predefined canvas.getContext("2d");
@@ -70,6 +71,14 @@ export class World {
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
+
+        for (let i = 0; i < this.level.coins.length; i++) {
+            let coin = this.level.coins[i];
+
+            if (this.character.isColliding(coin)) {
+                this.level.coins.splice(i, 1);
+            }
+        }
     }
 
     // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
@@ -129,7 +138,12 @@ export class World {
         mo.draw(this.ctx);
 
         // only draw rectangle if its a character or chicken object for implementing collisions
-        if (mo instanceof Character || mo instanceof Chicken) {
+        if (
+            mo instanceof Character ||
+            mo instanceof Chicken ||
+            mo instanceof Bottle ||
+            mo instanceof Coin
+        ) {
             mo.drawFrame(this.ctx);
         }
 

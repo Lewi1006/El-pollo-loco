@@ -9,6 +9,12 @@ export class DrawableObject {
     img;
     imageCache = {};
     currentImage = 0;
+    offset = {
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    };
 
     // #endregion
 
@@ -49,6 +55,16 @@ export class DrawableObject {
             this.height - this.offset.top - this.offset.bottom,
         );
         ctx.stroke();
+    }
+
+      // character.isColliding(Chicken, Coin or Bottle);
+       isColliding(mo) {
+        return (
+            this.x + this.width - this.offset.right > mo.x + mo.offset.left &&
+            this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
+            this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
+            this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom
+        );
     }
 
     // #endregion
