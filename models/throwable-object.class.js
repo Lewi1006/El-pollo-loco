@@ -4,12 +4,14 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class ThrowableObject extends MovableObject {
     imagesBottleRotation = ImageHelper.BOTTLE.rotation;
+
     throwable = true;
 
     constructor(x, y) {
         super();
         this.loadImage(ImageHelper.BOTTLE.rotation[0]);
         this.loadImages(this.imagesBottleRotation);
+
         this.x = x;
         this.y = y;
         this.height = 60;

@@ -58,6 +58,8 @@ export class World {
         this.setWorld();
         this.draw();
         this.run();
+
+        console.log(this.throwableObjects);
     }
 
     // #region methods
@@ -81,6 +83,7 @@ export class World {
         this.loseEnergy();
         this.collectCoin();
         this.collectBottle();
+        this.checkBottleCollisions();
     }
 
     loseEnergy() {
@@ -90,6 +93,18 @@ export class World {
                 this.statusBar.setPercentage(this.character.energy);
             }
         });
+    }
+
+    checkBottleCollisions() {
+        for (let i = 0; i < this.throwableObjects.length; i++) {
+            let bottle = this.throwableObjects[i];
+
+            this.level.enemies.forEach((enemy) => {
+                if (bottle.isColliding(enemy)) {
+                    this.throwableObjects.splice(i, 1);
+                }
+            });
+        }
     }
 
     collectCoin() {
