@@ -18,7 +18,8 @@ import { StatusBarHealth } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 import { Bottle } from "./bottle.class.js";
 import { Coin } from "./coin.class.js";
-import { CoinStatus } from "./coin-status.class.js";
+import { CoinStatus } from "./status-bar-coins.class.js";
+import { BottleStatus } from "./status-bar-bottles.class.js";
 
 // #endregion
 
@@ -31,10 +32,13 @@ export class World {
     keyboard;
     camera_x = 0; // Camera vertical scrolling behavior
     statusBar = new StatusBarHealth();
+    statusBarCoins = new CoinStatus();
     throwableObjects = [];
     coinCounter = 0;
-    coinStatus = new CoinStatus();
-
+    totalCoins = 20;
+    statusBarBottles = new BottleStatus();
+    bottleCounter = 0;
+    totalBottles = 10;
 
     // #endregion
 
@@ -94,21 +98,21 @@ export class World {
                 this.level.coins.splice(i, 1);
                 this.coinCounter++;
                 console.log(this.coinCounter);
+                let percentage = (this.coinCounter / this.totalCoins) * 100;
+                this.statusBarCoins.setPercentage(percentage);
             }
         }
     }
 
-    countCoins(){
-
-    }
-
-    
     collectBottle() {
         for (let j = 0; j < this.level.bottles.length; j++) {
             let bottle = this.level.bottles[j];
 
             if (this.character.isColliding(bottle)) {
                 this.level.bottles.splice(j, 1);
+                this.bottleCounter++;
+                let percentage = (this.bottleCounter / this.totalBottles) * 100;
+                this.statusBarBottles.setPercentage(percentage);
             }
         }
     }
@@ -147,7 +151,8 @@ export class World {
         // reset camera so that status bar sticks to position when character is moving
         this.ctx.translate(-this.camera_x, 0); // move camera back
         this.addToMap(this.statusBar);
-        this.addToMap(this.coinStatus);
+        this.addToMap(this.statusBarCoins);
+        this.addToMap(this.statusBarBottles);
         this.ctx.translate(this.camera_x, 0); // move camera forward
 
         this.ctx.translate(-this.camera_x, 0);
