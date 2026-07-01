@@ -7,7 +7,7 @@ import { Coin } from "../models/coin.class.js";
 import { Bottle } from "../models/bottle.class.js";
 
 export const level1 = new Level(
-    [new Chicken(), new Chicken(), new Chicken(), new Endboss()],
+    [new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Endboss()],
     [new Cloud()],
     [
         new BackgroundObject(4, -719),

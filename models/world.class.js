@@ -84,16 +84,8 @@ export class World {
         this.collectCoin();
         this.collectBottle();
         this.checkBottleCollisions();
-    }
-
-    loseEnergy() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
-            }
-        });
-    }
+        this.checkStompCollision();
+     }
 
     checkBottleCollisions() {
         for (let i = 0; i < this.throwableObjects.length; i++) {
@@ -105,6 +97,46 @@ export class World {
                 }
             });
         }
+    }
+
+
+    //  only works with many conditional statements otherwise it doesn't register
+    checkStompCollision() {
+        this.level.enemies.forEach((enemy) => {
+            const characterBottom =
+                this.character.y +
+                this.character.height +
+                this.character.offset.bottom;
+            const enemyTop = enemy.y + enemy.offset.top;
+
+            // needs to fall down so we need to say that the position of the character was above the enemy 
+            const fallingDown = this.character.speedY < 0 && this.character.y < enemy.y;
+
+            const horizontalCollision =
+                this.character.x +
+                    this.character.width -
+                    this.character.offset.left >
+                    enemy.x + enemy.offset.left &&
+                enemy.x + enemy.width - enemy.offset.left >
+                    this.character.x + this.character.offset.left; 
+
+        
+            const verticalCollision = characterBottom >= enemyTop;
+
+            if(verticalCollision && horizontalCollision && fallingDown){
+                console.log('stomp');
+            }
+
+        });
+    }
+
+    loseEnergy() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        });
     }
 
     collectCoin() {
