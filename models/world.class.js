@@ -42,7 +42,6 @@ export class World {
     bottleCounter = 0;
     totalBottles = 5;
 
-
     // #endregion
 
     // create canvas with predefined canvas.getContext("2d");
@@ -79,12 +78,12 @@ export class World {
     // calls isColliding(), hit() from Character class
     // calls setPercentage from StatusBar and passes the characters energy into it as percentage value
     checkCollisions() {
-        this.looseEnergy();
+        this.loseEnergy();
         this.collectCoin();
         this.collectBottle();
     }
 
-    looseEnergy() {
+    loseEnergy() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
@@ -122,15 +121,19 @@ export class World {
 
     // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
     checkThrowObjects() {
-        if (this.keyboard.D) {
-            let bottle = new ThrowableObject(
-                this.character.x + 100,
-                this.character.y + 100,
-            );
-            this.throwableObjects.push(bottle);
+        if (this.bottleCounter <= 5 && this.bottleCounter > 0) {
+            if (this.keyboard.D) {
+                let bottle = new ThrowableObject(
+                    this.character.x + 100,
+                    this.character.y + 100,
+                );
+                this.throwableObjects.push(bottle);
+
+                this.bottleCounter--;
+            }
         }
     }
-
+    
     // draws all objects onto canvas
     // addToMap --> draws one object
     // addObjectsToMap --> draws an array / is a loop
