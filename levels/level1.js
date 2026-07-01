@@ -33,6 +33,33 @@ export const level1 = new Level(
         new BackgroundObject(6, 719 * 3),
         new BackgroundObject(7, 719 * 3),
     ],
-    [new Coin(300,200)],
-    [new Bottle(550,340)],
+    [
+        new Coin(300, 190),
+        new Coin(370, 160),
+        new Coin(440, 130),
+        new Coin(510, 160),
+        new Coin(580, 190),
+
+        new Coin(900, 120),
+        new Coin(970, 140),
+        new Coin(1040, 120),
+
+        new Coin(1400, 150),
+        new Coin(1470, 150),
+        new Coin(1540, 150),
+
+        new Coin(1900, 180),
+        new Coin(1970, 150),
+        new Coin(2040, 120),
+        new Coin(2110, 150),
+        new Coin(2180, 180),
+    ],
+    [
+        new Bottle(550, 340),
+        new Bottle(900, 340),
+        new Bottle(1020, 340),
+        new Bottle(1440, 340),
+        new Bottle(1920, 340),
+        
+    ],
 );

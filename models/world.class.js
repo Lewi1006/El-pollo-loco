@@ -38,9 +38,9 @@ export class World {
     statusBarEndboss = new EndbossStatus();
     throwableObjects = [];
     coinCounter = 0;
-    totalCoins = 20;
+    totalCoins = 16;
     bottleCounter = 0;
-    totalBottles = 10;
+    totalBottles = 5;
 
 
     // #endregion
