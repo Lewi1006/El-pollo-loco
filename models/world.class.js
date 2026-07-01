@@ -20,6 +20,7 @@ import { Bottle } from "./bottle.class.js";
 import { Coin } from "./coin.class.js";
 import { CoinStatus } from "./status-bar-coins.class.js";
 import { BottleStatus } from "./status-bar-bottles.class.js";
+import { EndbossStatus } from "./status-bar-endboss.class.js";
 
 // #endregion
 
@@ -33,12 +34,14 @@ export class World {
     camera_x = 0; // Camera vertical scrolling behavior
     statusBar = new StatusBarHealth();
     statusBarCoins = new CoinStatus();
+    statusBarBottles = new BottleStatus();
+    statusBarEndboss = new EndbossStatus();
     throwableObjects = [];
     coinCounter = 0;
     totalCoins = 20;
-    statusBarBottles = new BottleStatus();
     bottleCounter = 0;
     totalBottles = 10;
+
 
     // #endregion
 
@@ -153,6 +156,7 @@ export class World {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
+        this.addToMap(this.statusBarEndboss);
         this.ctx.translate(this.camera_x, 0); // move camera forward
 
         this.ctx.translate(-this.camera_x, 0);
