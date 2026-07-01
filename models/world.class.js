@@ -121,7 +121,7 @@ export class World {
 
     // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
     checkThrowObjects() {
-        if (this.bottleCounter <= 5 && this.bottleCounter > 0) {
+        if (this.bottleCounter <= this.totalBottles && this.bottleCounter > 0) {
             if (this.keyboard.D) {
                 let bottle = new ThrowableObject(
                     this.character.x + 100,
@@ -133,7 +133,7 @@ export class World {
             }
         }
     }
-    
+
     // draws all objects onto canvas
     // addToMap --> draws one object
     // addObjectsToMap --> draws an array / is a loop

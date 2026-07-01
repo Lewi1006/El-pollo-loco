@@ -20,8 +20,6 @@ export class BottleStatus extends DrawableObject {
         let index = this.resolveImageIndex(percentage);
         let path = this.imagesStatusBottle[index];
         this.img = this.imageCache[path];
-
-        console.log(this.percentage);
     }
 
         resolveImageIndex(percentage) {
