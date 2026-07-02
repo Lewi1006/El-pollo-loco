@@ -58,8 +58,6 @@ export class World {
         this.setWorld();
         this.draw();
         this.run();
-
-        console.log(this.throwableObjects);
     }
 
     // #region methods
@@ -85,6 +83,7 @@ export class World {
         this.collectBottle();
         this.checkBottleCollisions();
         this.checkStompCollision();
+        this.removeDeadEnemy();
     }
 
     checkBottleCollisions() {
@@ -101,19 +100,18 @@ export class World {
 
     //  only works with many conditional statements otherwise it doesn't register
     checkStompCollision() {
-
         this.level.enemies.forEach((enemy) => {
-            if (enemy instanceof Chicken){
+            if (enemy instanceof Chicken) {
                 const characterBottom =
                     this.character.y +
                     this.character.height +
                     this.character.offset.bottom;
                 const enemyTop = enemy.y + enemy.offset.top;
-    
+
                 // needs to fall down so we need to say that the position of the character was above the enemy
                 const fallingDown =
                     this.character.speedY < 0 && this.character.y < enemy.y;
-    
+
                 const horizontalCollision =
                     this.character.x +
                         this.character.width -
@@ -121,22 +119,17 @@ export class World {
                         enemy.x + enemy.offset.left &&
                     enemy.x + enemy.width - enemy.offset.left >
                         this.character.x + this.character.offset.left;
-    
+
                 const verticalCollision = characterBottom >= enemyTop;
-    
+
                 if (verticalCollision && horizontalCollision && fallingDown) {
                     console.log("stomp");
                     enemy.energy = 0;
-                    console.log(enemy.energy);
-                   
+                    enemy.deathTime = new Date().getTime();
                 }
-
             }
-
-
         });
     }
-    
 
     loseEnergy() {
         this.level.enemies.forEach((enemy) => {
@@ -154,7 +147,6 @@ export class World {
             if (this.character.isColliding(coin)) {
                 this.level.coins.splice(i, 1);
                 this.coinCounter++;
-                console.log(this.coinCounter);
                 let percentage = (this.coinCounter / this.totalCoins) * 100;
                 this.statusBarCoins.setPercentage(percentage);
             }
@@ -174,7 +166,22 @@ export class World {
         }
     }
 
-  
+    removeDeadEnemy() {
+        for (let i = 0; i < this.level.enemies.length; i++) {
+            let enemy = this.level.enemies[i];
+
+            if (enemy.isDead()) {
+                let timePassed = new Date().getTime() - enemy.deathTime; // difference since death in ms
+                timePassed /= 1000;
+
+                console.log(timePassed);
+
+                if (timePassed > 1) {
+                    this.level.enemies.splice(i, 1);
+                }
+            }
+        }
+    }
 
     // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
     checkThrowObjects() {
