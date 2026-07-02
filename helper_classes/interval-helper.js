@@ -1,3 +1,5 @@
+// IntervalHub manages all intervals in one array, so they can all be reset at the same time
+// used for restarting game or game over
 export class IntervalHub {
     // saves all registered interval ID's
     static allIntervals = [];
