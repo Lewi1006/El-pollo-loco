@@ -41,7 +41,6 @@ export class MovableObject extends DrawableObject {
         }
     }
 
-
     isDead() {
         return this.energy == 0;
     }
@@ -51,6 +50,10 @@ export class MovableObject extends DrawableObject {
         let timePassed = new Date().getTime() - this.lastHit; // difference since last hit in ms
         timePassed /= 1000; // difference in sec
         return timePassed < 1;
+    }
+
+    stopMovement() {
+        this.speed = 0;
     }
 
     moveRight() {

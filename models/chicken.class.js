@@ -16,7 +16,7 @@ export class Chicken extends MovableObject {
         super();
         this.loadImage(this.imagesWalk[0]);
         this.loadImages(this.imagesWalk);
-        this.loadImage(this.imagesDead);
+        this.loadImages(this.imagesDead);
         this.x = 400 + Math.random() * 1900;
         this.speed = 0.15 + Math.random() * 0.5;
         this.animate();
@@ -30,7 +30,12 @@ export class Chicken extends MovableObject {
         }, 1000 / 60);
 
         IntervalHub.startInterval(() => {
-            this.playAnimation(this.imagesWalk);
+            if (this.isDead()) {
+                this.stopMovement();
+                this.playAnimation(this.imagesDead);
+            } else {
+                this.playAnimation(this.imagesWalk);
+            }
         }, 200);
     }
 
