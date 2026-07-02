@@ -174,6 +174,8 @@ export class World {
         }
     }
 
+  
+
     // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
     checkThrowObjects() {
         if (this.bottleCounter <= this.totalBottles && this.bottleCounter > 0) {
