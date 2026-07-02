@@ -21,6 +21,7 @@ import { Coin } from "./coin.class.js";
 import { CoinStatus } from "./status-bar-coins.class.js";
 import { BottleStatus } from "./status-bar-bottles.class.js";
 import { EndbossStatus } from "./status-bar-endboss.class.js";
+import { Endboss } from "./endboss.class.js";
 
 // #endregion
 
@@ -91,6 +92,15 @@ export class World {
             let bottle = this.throwableObjects[i];
 
             this.level.enemies.forEach((enemy) => {
+                if (enemy instanceof Endboss && bottle.isColliding(enemy)) {
+                    enemy.hit();
+                    this.statusBarEndboss.setPercentage(enemy.energy);
+
+                    console.log(enemy.energy);
+
+                    this.throwableObjects.splice(i, 1);
+                }
+
                 if (bottle.isColliding(enemy)) {
                     this.throwableObjects.splice(i, 1);
                 }
@@ -140,6 +150,14 @@ export class World {
         });
     }
 
+    // loseEnergyEndboss() {
+    //     this.level.enemies.forEach((enemy) => {
+    //         if (enemy instanceof Endboss){
+    //             this.statusBarEndboss.setPercentage(enemy.energy);
+    //         }
+    //     });
+    // }
+
     collectCoin() {
         for (let i = 0; i < this.level.coins.length; i++) {
             let coin = this.level.coins[i];
@@ -166,6 +184,13 @@ export class World {
         }
     }
 
+    // go through all the enemies array
+    // check if each enemy isDead (energy=0)
+    // in collision we set energy to 0 to mark the death we also time stamp it
+    // and set the variable deathTime in class chicken to the current time
+    // we loop through enemies to check if they are dead
+    // if so we check the time passed since the moment they dies
+    // if it is over 1Second we splice this exact enemy from the array
     removeDeadEnemy() {
         for (let i = 0; i < this.level.enemies.length; i++) {
             let enemy = this.level.enemies[i];

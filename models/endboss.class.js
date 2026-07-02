@@ -8,6 +8,7 @@ export class Endboss extends MovableObject {
     width = 250;
     y = 55;
     imagesAlert = ImageHelper.ENDBOSS.alert;
+    energy = 100;
     // #endregion
 
     constructor() {
@@ -23,6 +24,17 @@ export class Endboss extends MovableObject {
         IntervalHub.startInterval(() => {
             this.playAnimation(this.imagesAlert);
         }, 200);
+    }
+
+
+    hit(){
+        this.energy -= 20;
+        if (this.energy < 0) {
+            this.energy = 0;
+        } 
+        // else {
+        //     this.lastHit = new Date().getTime();
+        // }
     }
     // #endregion
 }
