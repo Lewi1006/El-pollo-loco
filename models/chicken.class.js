@@ -8,6 +8,7 @@ export class Chicken extends MovableObject {
     height = 70;
     width = 80;
     imagesWalk = ImageHelper.CHICKEN.walk;
+    imagesDead = ImageHelper.CHICKEN.dead;
 
     // #endregion
 
@@ -15,6 +16,7 @@ export class Chicken extends MovableObject {
         super();
         this.loadImage(this.imagesWalk[0]);
         this.loadImages(this.imagesWalk);
+        this.loadImage(this.imagesDead);
         this.x = 400 + Math.random() * 1900;
         this.speed = 0.15 + Math.random() * 0.5;
         this.animate();
