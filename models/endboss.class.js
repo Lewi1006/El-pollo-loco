@@ -42,9 +42,9 @@ export class Endboss extends MovableObject {
             this.energy = 0;
             this.deathTime = new Date().getTime();
         }
-        // else {
-        //     this.lastHit = new Date().getTime();
-        // }
+        else {
+            this.lastHit = new Date().getTime();
+        }
     }
 
     updateAnimation = () => {
