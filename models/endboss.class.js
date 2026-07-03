@@ -4,7 +4,7 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class Endboss extends MovableObject {
     // #region properties
-    height= 400;
+    height = 400;
     width = 250;
     y = 55;
     imagesAlert = ImageHelper.ENDBOSS.alert;
@@ -17,21 +17,23 @@ export class Endboss extends MovableObject {
         this.loadImages(this.imagesAlert);
         this.x = 2500;
         this.animate();
+        IntervalHub.startInterval(this.updateAnimation, 200);
     }
 
     // #region methods
     animate() {
-        IntervalHub.startInterval(() => {
-            this.playAnimation(this.imagesAlert);
-        }, 200);
+        this.updateAnimation();
     }
 
+    updateAnimation = () => {
+        this.playAnimation(this.imagesAlert);
+    };
 
-    hit(){
+    hit() {
         this.energy -= 20;
         if (this.energy < 0) {
             this.energy = 0;
-        } 
+        }
         // else {
         //     this.lastHit = new Date().getTime();
         // }
