@@ -5,9 +5,10 @@ import { BackgroundObject } from "../models/background-object.class.js";
 import { Endboss } from "../models/endboss.class.js";
 import { Coin } from "../models/coin.class.js";
 import { Bottle } from "../models/bottle.class.js";
+import { BabyChicken } from "../models/baby-chicken.class.js";
 
 export const level1 = new Level(
-    [new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Endboss()],
+    [new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new BabyChicken(), new Endboss()],
     [new Cloud()],
     [
         new BackgroundObject(4, -719),
