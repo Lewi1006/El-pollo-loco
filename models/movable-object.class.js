@@ -13,15 +13,17 @@ export class MovableObject extends DrawableObject {
     throwable = false;
     // #endregion
 
+
     // #region methods
 
-    applyGravity() {
-        IntervalHub.startInterval(() => {
+    // applyGravity gets called in Character and throwable Objects --> interval is in constructor
+    applyGravity = () => {
+        // IntervalHub.startInterval(() => {
             if (this.isAboveGround() || this.speedY > 0) {
                 this.y -= this.speedY;
                 this.speedY -= this.acceleration;
             }
-        }, 1000 / 25);
+        // }, 1000 / 25);
     }
 
     isAboveGround() {

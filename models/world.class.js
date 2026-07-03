@@ -58,7 +58,7 @@ export class World {
         this.keyboard = keyboard;
         this.setWorld();
         this.draw();
-        this.run();
+        IntervalHub.startInterval(this.run, 200);
     }
 
     // #region methods
@@ -68,12 +68,10 @@ export class World {
     }
 
     // method for running other methods like collision or throwObjects
-    run() {
-        IntervalHub.startInterval(() => {
-            this.checkCollisions();
-            this.checkThrowObjects();
-        }, 200);
-    }
+    run = () => {
+        this.checkCollisions();
+        this.checkThrowObjects();
+    };
 
     // loops through the enemies of the level and checks if the enemy collides with the character
     // calls isColliding(), hit() from Character class
@@ -95,16 +93,49 @@ export class World {
                 if (enemy instanceof Endboss && bottle.isColliding(enemy)) {
                     enemy.hit();
                     this.statusBarEndboss.setPercentage(enemy.energy);
-
                     console.log(enemy.energy);
-
                     this.throwableObjects.splice(i, 1);
                 }
 
-                if (bottle.isColliding(enemy)) {
+                if (enemy instanceof Chicken && bottle.isColliding(enemy)) {
+                    enemy.energy = 0;
+                    enemy.deathTime = new Date().getTime();
                     this.throwableObjects.splice(i, 1);
                 }
             });
+        }
+    }
+
+    collectBottle() {
+        for (let j = 0; j < this.level.bottles.length; j++) {
+            let bottle = this.level.bottles[j];
+
+            if (this.character.isColliding(bottle)) {
+                this.level.bottles.splice(j, 1);
+                this.bottleCounter++;
+                let percentage = (this.bottleCounter / this.totalBottles) * 100;
+                this.statusBarBottles.setPercentage(percentage);
+                console.log(this.bottleCounter);
+            }
+        }
+    }
+
+    // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
+    checkThrowObjects() {
+        if (this.bottleCounter <= this.totalBottles && this.bottleCounter > 0) {
+            if (this.keyboard.D) {
+                let bottle = new ThrowableObject(
+                    this.character.x + 100,
+                    this.character.y + 100,
+                );
+                this.throwableObjects.push(bottle);
+
+                this.bottleCounter--;
+                let percentage = (this.bottleCounter / this.totalBottles) * 100;
+                this.statusBarBottles.setPercentage(percentage);
+
+                console.log(this.bottleCounter);
+            }
         }
     }
 
@@ -133,7 +164,6 @@ export class World {
                 const verticalCollision = characterBottom >= enemyTop;
 
                 if (verticalCollision && horizontalCollision && fallingDown) {
-                    console.log("stomp");
                     enemy.energy = 0;
                     enemy.deathTime = new Date().getTime();
                 }
@@ -150,14 +180,6 @@ export class World {
         });
     }
 
-    // loseEnergyEndboss() {
-    //     this.level.enemies.forEach((enemy) => {
-    //         if (enemy instanceof Endboss){
-    //             this.statusBarEndboss.setPercentage(enemy.energy);
-    //         }
-    //     });
-    // }
-
     collectCoin() {
         for (let i = 0; i < this.level.coins.length; i++) {
             let coin = this.level.coins[i];
@@ -167,19 +189,6 @@ export class World {
                 this.coinCounter++;
                 let percentage = (this.coinCounter / this.totalCoins) * 100;
                 this.statusBarCoins.setPercentage(percentage);
-            }
-        }
-    }
-
-    collectBottle() {
-        for (let j = 0; j < this.level.bottles.length; j++) {
-            let bottle = this.level.bottles[j];
-
-            if (this.character.isColliding(bottle)) {
-                this.level.bottles.splice(j, 1);
-                this.bottleCounter++;
-                let percentage = (this.bottleCounter / this.totalBottles) * 100;
-                this.statusBarBottles.setPercentage(percentage);
             }
         }
     }
@@ -199,26 +208,9 @@ export class World {
                 let timePassed = new Date().getTime() - enemy.deathTime; // difference since death in ms
                 timePassed /= 1000;
 
-                console.log(timePassed);
-
                 if (timePassed > 1) {
                     this.level.enemies.splice(i, 1);
                 }
-            }
-        }
-    }
-
-    // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
-    checkThrowObjects() {
-        if (this.bottleCounter <= this.totalBottles && this.bottleCounter > 0) {
-            if (this.keyboard.D) {
-                let bottle = new ThrowableObject(
-                    this.character.x + 100,
-                    this.character.y + 100,
-                );
-                this.throwableObjects.push(bottle);
-
-                this.bottleCounter--;
             }
         }
     }
