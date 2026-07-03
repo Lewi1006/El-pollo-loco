@@ -96,7 +96,7 @@ export class World {
                     enemy.hit();
                     this.statusBarEndboss.setPercentage(enemy.energy);
                     console.log(enemy.energy);
-                    this.throwableObjects.splice(i, 1);
+                     this.throwableObjects.splice(i, 1);
                 }
 
                 if (enemy instanceof Chicken || enemy instanceof BabyChicken && bottle.isColliding(enemy)) {

@@ -8,6 +8,8 @@ export class Endboss extends MovableObject {
     width = 250;
     y = 55;
     imagesAlert = ImageHelper.ENDBOSS.alert;
+    imagesHurt = ImageHelper.ENDBOSS.hurt;
+    imagesDead = ImageHelper.ENDBOSS.dead;
     energy = 100;
     // #endregion
 
@@ -15,6 +17,7 @@ export class Endboss extends MovableObject {
         super();
         this.loadImage(this.imagesAlert[0]);
         this.loadImages(this.imagesAlert);
+        this.loadImages(this.imagesDead);
         this.x = 2500;
         this.animate();
         IntervalHub.startInterval(this.updateAnimation, 200);
@@ -26,11 +29,17 @@ export class Endboss extends MovableObject {
     }
 
     updateAnimation = () => {
-        this.playAnimation(this.imagesAlert);
+        if (this.isDead()) {
+            this.playAnimation(this.imagesDead);
+        } else if (this.isHurt()) {
+            this.playAnimation(this.imagesHurt);
+        } else {
+            this.playAnimation(this.imagesAlert);
+        }
     };
 
     hit() {
-        this.energy -= 20;
+        this.energy -= 50;
         if (this.energy < 0) {
             this.energy = 0;
         }
