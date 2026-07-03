@@ -21,24 +21,29 @@ export class Chicken extends MovableObject {
         this.x = 400 + Math.random() * 1900;
         this.speed = 0.15 + Math.random() * 0.5;
         this.animate();
+        IntervalHub.startInterval(this.updateMovement, 1000 / 60);
+        IntervalHub.startInterval(this.updateAnimation, 200);
     }
 
     // #region methods
 
     animate() {
-        IntervalHub.startInterval(() => {
-            this.moveLeft();
-        }, 1000 / 60);
-
-        IntervalHub.startInterval(() => {
-            if (this.isDead()) {
-                this.stopMovement();
-                this.playAnimation(this.imagesDead);
-            } else {
-                this.playAnimation(this.imagesWalk);
-            }
-        }, 200);
+        this.updateMovement();
+        this.updateAnimation();
     }
+
+    updateMovement = () => {
+        this.moveLeft();
+    };
+
+    updateAnimation = () => {
+        if (this.isDead()) {
+            this.stopMovement();
+            this.playAnimation(this.imagesDead);
+        } else {
+            this.playAnimation(this.imagesWalk);
+        }
+    };
 
     // #endregion
 }
