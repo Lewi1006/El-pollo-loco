@@ -57,6 +57,7 @@ export class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
+
         this.setWorld();
         this.draw();
         IntervalHub.startInterval(this.run, 200);
@@ -66,6 +67,10 @@ export class World {
     // hand over world instance to character so that keyboard can be accessed ???
     setWorld() {
         this.character.world = this;
+
+        this.level.enemies.forEach((enemy) => {
+            enemy.world = this;
+        });
     }
 
     // method for running other methods like collision or throwObjects
