@@ -8,7 +8,20 @@ import { Bottle } from "../models/bottle.class.js";
 import { BabyChicken } from "../models/baby-chicken.class.js";
 
 export const level1 = new Level(
-    [new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new BabyChicken(), new Endboss()],
+    [
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new Chicken(),
+        new BabyChicken(),
+        new BabyChicken(),
+        new BabyChicken(),
+        new BabyChicken(),
+        new BabyChicken(),
+        new Endboss(),
+    ],
     [new Cloud()],
     [
         new BackgroundObject(4, -719),
@@ -61,6 +74,5 @@ export const level1 = new Level(
         new Bottle(1020, 340),
         new Bottle(1440, 340),
         new Bottle(1920, 340),
-        
     ],
 );

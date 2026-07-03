@@ -3,16 +3,27 @@ import { MovableObject } from "./movable-object.class.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class BabyChicken extends MovableObject {
+    // #region properties
     y = 380;
     height = 40;
     width = 50;
     imagesWalk = ImageHelper.BABY_CHICKEN.walk;
+    imagesDead = ImageHelper.BABY_CHICKEN.dead;
+    offset = {
+        top: 5,
+        left: 5,
+        right: 5,
+        bottom: 0,
+    };
+    deathTime = 0;
+    // #endregion
 
     constructor() {
         super();
         this.loadImage(this.imagesWalk[0]);
         this.loadImages(this.imagesWalk);
-        this.x = 400 + Math.random() * 700;
+        this.loadImages(this.imagesDead);
+        this.x = 400 + Math.random() * 1900;
         this.speed = 0.15 + Math.random() * 0.5;
         this.animate();
         IntervalHub.startInterval(this.updateMovement, 1000 / 60);
@@ -29,6 +40,11 @@ export class BabyChicken extends MovableObject {
     };
 
     updateAnimation = () => {
-        this.playAnimation(this.imagesWalk);
+        if (this.isDead()) {
+            this.stopMovement();
+            this.playAnimation(this.imagesDead);
+        } else {
+            this.playAnimation(this.imagesWalk);
+        }
     };
 }

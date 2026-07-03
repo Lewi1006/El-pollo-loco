@@ -22,6 +22,7 @@ import { CoinStatus } from "./status-bar-coins.class.js";
 import { BottleStatus } from "./status-bar-bottles.class.js";
 import { EndbossStatus } from "./status-bar-endboss.class.js";
 import { Endboss } from "./endboss.class.js";
+import { BabyChicken } from "./baby-chicken.class.js";
 
 // #endregion
 
@@ -98,7 +99,7 @@ export class World {
                     this.throwableObjects.splice(i, 1);
                 }
 
-                if (enemy instanceof Chicken && bottle.isColliding(enemy)) {
+                if (enemy instanceof Chicken || enemy instanceof BabyChicken && bottle.isColliding(enemy)) {
                     enemy.energy = 0;
                     enemy.deathTime = new Date().getTime();
                     this.throwableObjects.splice(i, 1);
@@ -143,7 +144,7 @@ export class World {
     //  only works with many conditional statements otherwise it doesn't register
     checkStompCollision() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy instanceof Chicken) {
+            if (enemy instanceof Chicken || enemy instanceof BabyChicken) {
                 const characterBottom =
                     this.character.y +
                     this.character.height +
@@ -268,8 +269,9 @@ export class World {
         if (
             mo instanceof Character ||
             mo instanceof Chicken ||
+            mo instanceof BabyChicken ||
             mo instanceof Bottle ||
-            mo instanceof Coin
+            mo instanceof Coin 
         ) {
             mo.drawFrame(this.ctx);
         }
