@@ -7,7 +7,7 @@ export class Level {
     backgroundObjects;
     coins = [];
     bottles = [];
-    level_end_x = 2200;
+    level_end_x = 3650;
     // #endregion
 
     constructor(enemies, clouds, backgroundObjects, coins, bottles) {

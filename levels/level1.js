@@ -46,6 +46,15 @@ export const level1 = new Level(
         new BackgroundObject(5, 719 * 3),
         new BackgroundObject(6, 719 * 3),
         new BackgroundObject(7, 719 * 3),
+
+        new BackgroundObject(0, 719 * 4),
+        new BackgroundObject(1, 719 * 4),
+        new BackgroundObject(2, 719 * 4),
+        new BackgroundObject(3, 719 * 4),
+        new BackgroundObject(4, 719 * 5),
+        new BackgroundObject(5, 719 * 5),
+        new BackgroundObject(6, 719 * 5),
+        new BackgroundObject(7, 719 * 5),
     ],
     [
         new Coin(300, 190),
