@@ -9,7 +9,7 @@ export class Chicken extends MovableObject {
     width = 80;
     imagesWalk = ImageHelper.CHICKEN.walk;
     imagesDead = ImageHelper.CHICKEN.dead;
-    deathTime = 0;
+    // deathTime = 0;
 
     // #endregion
 

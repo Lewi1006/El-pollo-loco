@@ -60,7 +60,6 @@ export class World {
         this.setWorld();
         this.draw();
         IntervalHub.startInterval(this.run, 200);
-        
     }
 
     // #region methods
@@ -96,10 +95,14 @@ export class World {
                     enemy.hit();
                     this.statusBarEndboss.setPercentage(enemy.energy);
                     console.log(enemy.energy);
-                     this.throwableObjects.splice(i, 1);
+                    this.throwableObjects.splice(i, 1);
                 }
 
-                if (enemy instanceof Chicken || enemy instanceof BabyChicken && bottle.isColliding(enemy)) {
+                if (
+                    (enemy instanceof Chicken ||
+                        enemy instanceof BabyChicken) &&
+                    bottle.isColliding(enemy)
+                ) {
                     enemy.energy = 0;
                     enemy.deathTime = new Date().getTime();
                     this.throwableObjects.splice(i, 1);
@@ -206,12 +209,14 @@ export class World {
         for (let i = 0; i < this.level.enemies.length; i++) {
             let enemy = this.level.enemies[i];
 
-            if (enemy.isDead()) {
-                let timePassed = new Date().getTime() - enemy.deathTime; // difference since death in ms
-                timePassed /= 1000;
+            if (enemy instanceof Chicken || enemy instanceof BabyChicken) {
+                if (enemy.isDead()) {
+                    let timePassed = new Date().getTime() - enemy.deathTime; // difference since death in ms
+                    timePassed /= 1000;
 
-                if (timePassed > 1) {
-                    this.level.enemies.splice(i, 1);
+                    if (timePassed > 1) {
+                        this.level.enemies.splice(i, 1);
+                    }
                 }
             }
         }
@@ -268,10 +273,11 @@ export class World {
         // only draw rectangle if its a character or chicken object for implementing collisions
         if (
             mo instanceof Character ||
+            mo instanceof Endboss ||
             mo instanceof Chicken ||
             mo instanceof BabyChicken ||
             mo instanceof Bottle ||
-            mo instanceof Coin 
+            mo instanceof Coin
         ) {
             mo.drawFrame(this.ctx);
         }

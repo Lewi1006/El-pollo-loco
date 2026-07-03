@@ -15,7 +15,7 @@ export class BabyChicken extends MovableObject {
         right: 5,
         bottom: 0,
     };
-    deathTime = 0;
+    // deathTime = 0;
     // #endregion
 
     constructor() {
