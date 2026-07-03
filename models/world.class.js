@@ -59,6 +59,7 @@ export class World {
         this.setWorld();
         this.draw();
         IntervalHub.startInterval(this.run, 200);
+        
     }
 
     // #region methods
@@ -69,6 +70,7 @@ export class World {
 
     // method for running other methods like collision or throwObjects
     run = () => {
+        console.log(this.character.y, this.character.speedY);
         this.checkCollisions();
         this.checkThrowObjects();
     };
@@ -152,6 +154,8 @@ export class World {
                 // needs to fall down so we need to say that the position of the character was above the enemy
                 const fallingDown =
                     this.character.speedY < 0 && this.character.y < enemy.y;
+
+                   
 
                 const horizontalCollision =
                     this.character.x +
