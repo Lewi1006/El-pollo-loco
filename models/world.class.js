@@ -82,7 +82,7 @@ export class World {
         this.collectCoin();
         this.collectBottle();
         this.checkBottleCollisions();
-        this.checkStompCollision();
+        this.stompEnemy();
         this.removeDeadEnemy();
     }
 
@@ -144,34 +144,14 @@ export class World {
         }
     }
 
-    //  only works with many conditional statements otherwise it doesn't register
-    checkStompCollision() {
+    stompEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if (enemy instanceof Chicken || enemy instanceof BabyChicken) {
-                const characterBottom =
-                    this.character.y +
-                    this.character.height +
-                    this.character.offset.bottom;
-                const enemyTop = enemy.y + enemy.offset.top;
+            const fallingDown =
+                this.character.speedY < 0 && this.character.y < enemy.y;
 
-                // needs to fall down so we need to say that the position of the character was above the enemy
-                const fallingDown =
-                    this.character.speedY < 0 && this.character.y < enemy.y;
-
-                const horizontalCollision =
-                    this.character.x +
-                        this.character.width -
-                        this.character.offset.left >
-                        enemy.x + enemy.offset.left &&
-                    enemy.x + enemy.width - enemy.offset.left >
-                        this.character.x + this.character.offset.left;
-
-                const verticalCollision = characterBottom >= enemyTop;
-
-                if (verticalCollision && horizontalCollision && fallingDown) {
-                    enemy.energy = 0;
-                    enemy.deathTime = new Date().getTime();
-                }
+            if (this.character.isColliding(enemy) && fallingDown) {
+                enemy.energy = 0;
+                enemy.deathTime = new Date().getTime();
             }
         });
     }
