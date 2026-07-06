@@ -41,7 +41,6 @@ export class BabyChicken extends MovableObject {
 
     updateAnimation = () => {
         if (this.isDead()) {
-            this.stopMovement();
             this.playAnimation(this.imagesDead);
         } else {
             this.playAnimation(this.imagesWalk);

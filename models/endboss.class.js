@@ -49,7 +49,8 @@ export class Endboss extends MovableObject {
         this.energy -= 50;
         if (this.energy <= 0) {
             this.energy = 0;
-            this.deathTime = new Date().getTime();
+            this.die();
+            // this.deathTime = new Date().getTime();
         } else {
             this.lastHit = new Date().getTime();
         }
@@ -60,13 +61,12 @@ export class Endboss extends MovableObject {
         if (!this.world) return;
 
         const distance = this.getDistance();
-        console.log(distance);
 
         if (distance <= 350 && !this.hasStartedWalking) {
             this.hasStartedWalking = true;
         }
 
-        if (distance <= 140){
+        if (distance <= 140) {
             this.isAttacking = true;
         } else {
             this.isAttacking = false;
@@ -83,20 +83,20 @@ export class Endboss extends MovableObject {
         if (!this.world) return;
 
         if (this.isDead()) {
-            this.die();
+            this.playDeadAnimation();
         } else if (this.isHurt()) {
             this.playAnimation(this.imagesHurt);
-        } else if(this.isAttacking){
+        } else if (this.isAttacking) {
             this.playAnimation(this.imagesAttack);
-        }else if (this.hasStartedWalking) {
+        } else if (this.hasStartedWalking) {
             this.playAnimation(this.imagesWalk);
         } else {
             this.playAnimation(this.imagesAlert);
         }
     };
 
-    die() {
-        this.stopMovement();
+    playDeadAnimation() {
+        // this.stopMovement();
 
         let timePassed = new Date().getTime() - this.deathTime;
         timePassed /= 1000;

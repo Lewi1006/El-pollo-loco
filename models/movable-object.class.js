@@ -11,20 +11,18 @@ export class MovableObject extends DrawableObject {
     lastHit = 0;
     throwable = false;
     deathTime = 0;
+    hasDied = false;
     // #endregion
-
 
     // #region methods
 
     // applyGravity gets called in Character and throwable Objects --> interval is in constructor
     applyGravity = () => {
-        // IntervalHub.startInterval(() => {
-            if (this.isAboveGround() || this.speedY > 0) {
-                this.y -= this.speedY;
-                this.speedY -= this.acceleration;
-            }
-        // }, 1000 / 25);
-    }
+        if (this.isAboveGround() || this.speedY > 0) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        }
+    };
 
     isAboveGround() {
         if (this.throwable == true) {
@@ -37,14 +35,10 @@ export class MovableObject extends DrawableObject {
     hit() {
         this.energy -= 5;
         if (this.energy < 0) {
-            this.energy = 0;
+            this.die();
         } else {
             this.lastHit = new Date().getTime();
         }
-    }
-
-    isDead() {
-        return this.energy == 0;
     }
 
     // returns true if hit happened in the past second
@@ -54,8 +48,19 @@ export class MovableObject extends DrawableObject {
         return timePassed < 1;
     }
 
-    stopMovement() {
-        this.speed = 0;
+    die() {
+        if (this.hasDied) {
+            return;
+        } else {
+            this.hasDied = true;
+            this.energy = 0;
+            this.speed = 0;
+            this.deathTime = new Date().getTime();
+        }
+    }
+
+    isDead() {
+        return this.energy <= 0;
     }
 
     moveRight() {

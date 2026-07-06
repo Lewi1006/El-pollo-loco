@@ -83,11 +83,11 @@ export class World {
     // calls isColliding(), hit() from Character class
     // calls setPercentage from StatusBar and passes the characters energy into it as percentage value
     checkCollisions() {
-        this.loseEnergy();
         this.collectCoin();
         this.collectBottle();
         this.checkBottleCollisions();
         this.stompEnemy();
+        this.loseEnergy();
         this.removeDeadEnemy();
     }
 
@@ -99,7 +99,6 @@ export class World {
                 if (enemy instanceof Endboss && bottle.isColliding(enemy)) {
                     enemy.hit();
                     this.statusBarEndboss.setPercentage(enemy.energy);
-                    console.log(enemy.energy);
                     this.throwableObjects.splice(i, 1);
                 }
 
@@ -108,8 +107,7 @@ export class World {
                         enemy instanceof BabyChicken) &&
                     bottle.isColliding(enemy)
                 ) {
-                    enemy.energy = 0;
-                    enemy.deathTime = new Date().getTime();
+                    enemy.die();
                     this.throwableObjects.splice(i, 1);
                 }
             });
@@ -151,12 +149,17 @@ export class World {
 
     stompEnemy() {
         this.level.enemies.forEach((enemy) => {
+            if(enemy.isDead()){
+                return;
+            }
+
             const fallingDown =
                 this.character.speedY < 0;
 
             if (this.character.isColliding(enemy) && fallingDown) {
-                enemy.energy = 0;
-                enemy.deathTime = new Date().getTime();
+                enemy.die();
+
+                // resets speedY to be above 0 again so the falling down condition works every time
                 this.character.speedY = 0;
             }
         });
@@ -164,6 +167,10 @@ export class World {
 
     loseEnergy() {
         this.level.enemies.forEach((enemy) => {
+            if(enemy.isDead()){
+                return;
+            }
+
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
