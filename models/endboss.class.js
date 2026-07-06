@@ -9,6 +9,7 @@ export class Endboss extends MovableObject {
     y = 55;
     imagesAlert = ImageHelper.ENDBOSS.alert;
     imagesWalk = ImageHelper.ENDBOSS.walk;
+    imagesAttack = ImageHelper.ENDBOSS.attack;
     imagesHurt = ImageHelper.ENDBOSS.hurt;
     imagesDead = ImageHelper.ENDBOSS.dead;
     energy = 100;
@@ -19,7 +20,8 @@ export class Endboss extends MovableObject {
         bottom: 20,
     };
     world;
-
+    hasStartedWalking = false;
+    isAttacking = false;
     // #endregion
 
     constructor() {
@@ -27,6 +29,7 @@ export class Endboss extends MovableObject {
         this.loadImage(this.imagesAlert[0]);
         this.loadImages(this.imagesAlert);
         this.loadImages(this.imagesWalk);
+        this.loadImages(this.imagesAttack);
         this.loadImages(this.imagesHurt);
         this.loadImages(this.imagesDead);
         this.x = 3900;
@@ -52,8 +55,26 @@ export class Endboss extends MovableObject {
         }
     }
 
+    // flag hasstartedwalking cause we wanna trigger walking once
     updateMovement = () => {
-        this.moveLeft();
+        if (!this.world) return;
+
+        const distance = this.getDistance();
+        console.log(distance);
+
+        if (distance <= 350 && !this.hasStartedWalking) {
+            this.hasStartedWalking = true;
+        }
+
+        if (distance <= 140){
+            this.isAttacking = true;
+        } else {
+            this.isAttacking = false;
+        }
+
+        if (this.hasStartedWalking && !this.isAttacking) {
+            this.moveLeft();
+        }
     };
 
     updateAnimation = () => {
@@ -65,8 +86,9 @@ export class Endboss extends MovableObject {
             this.die();
         } else if (this.isHurt()) {
             this.playAnimation(this.imagesHurt);
-        } else if (this.shouldWalk()) {
-            console.log(this.shouldWalk());
+        } else if(this.isAttacking){
+            this.playAnimation(this.imagesAttack);
+        }else if (this.hasStartedWalking) {
             this.playAnimation(this.imagesWalk);
         } else {
             this.playAnimation(this.imagesAlert);
@@ -84,11 +106,6 @@ export class Endboss extends MovableObject {
         if (timePassed < 4) {
             this.playAnimation(this.imagesDead);
         }
-    }
-
-    shouldWalk() {
-        const distance = this.getDistance();
-        return distance <= 600;
     }
 
     // https://stackoverflow.com/questions/20916953/get-distance-between-two-points-in-canvas
