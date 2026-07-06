@@ -152,11 +152,12 @@ export class World {
     stompEnemy() {
         this.level.enemies.forEach((enemy) => {
             const fallingDown =
-                this.character.speedY < 0 && this.character.y < enemy.y;
+                this.character.speedY < 0;
 
             if (this.character.isColliding(enemy) && fallingDown) {
                 enemy.energy = 0;
                 enemy.deathTime = new Date().getTime();
+                this.character.speedY = 0;
             }
         });
     }

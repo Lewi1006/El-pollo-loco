@@ -26,17 +26,20 @@ export class Endboss extends MovableObject {
         super();
         this.loadImage(this.imagesAlert[0]);
         this.loadImages(this.imagesAlert);
+        this.loadImages(this.imagesWalk);
         this.loadImages(this.imagesHurt);
         this.loadImages(this.imagesDead);
         this.x = 3900;
-        this.speed = 0.1;
+        this.speed = 1;
         this.animate();
         IntervalHub.startInterval(this.updateAnimation, 200);
+        IntervalHub.startInterval(this.updateMovement, 1000 / 60);
     }
 
     // #region methods
     animate() {
         this.updateAnimation();
+        this.updateMovement();
     }
 
     hit() {
@@ -48,6 +51,10 @@ export class Endboss extends MovableObject {
             this.lastHit = new Date().getTime();
         }
     }
+
+    updateMovement = () => {
+        this.moveLeft();
+    };
 
     updateAnimation = () => {
         // wait till world is loaded/exists before animation starts
@@ -92,8 +99,6 @@ export class Endboss extends MovableObject {
     }
 
     // #endregion
-
-
 
     // why does endboss dissapear when I get close and does not start playing the walking animation
 }
