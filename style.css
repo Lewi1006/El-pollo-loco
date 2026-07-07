@@ -44,6 +44,24 @@ div {
         width: 100px;
         border-radius: 30px;
         position: absolute;
+        bottom: 20px;
+    }
+}
+
+.game-over-screen{
+     position: absolute;
+    img {
+        width: 720px;
+        height: 480px;
+    }
+
+        #restart-button {
+        background-color: aliceblue;
+        height: 40px;
+        width: 100px;
+        border-radius: 30px;
+        position: absolute;
+        bottom: 20px;
     }
 }
 

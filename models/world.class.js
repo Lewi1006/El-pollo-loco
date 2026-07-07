@@ -29,6 +29,7 @@ import { BabyChicken } from "./baby-chicken.class.js";
 export class World {
     // #region properties
     gameStarted = false;
+    gameOver = false;
     character = new Character();
     level = level1; //current level data
     ctx;
@@ -76,9 +77,24 @@ export class World {
 
     // method for running other methods like collision or throwObjects
     run = () => {
+        if (this.gameOver) return;
+
+        this.checkGameOver();
         this.checkCollisions();
         this.checkThrowObjects();
     };
+
+    checkGameOver() {
+        if (this.character.isDead()) {
+            this.gameOver = true;
+
+            IntervalHub.stopAllIntervals();
+
+            const gameOverScreenRef =
+                document.querySelector(`.game-over-screen`);
+            gameOverScreenRef.classList.remove(`d-none`);
+        }
+    }
 
     // loops through the enemies of the level and checks if the enemy collides with the character
     // calls isColliding(), hit() from Character class
@@ -147,12 +163,11 @@ export class World {
 
     stompEnemy() {
         this.level.enemies.forEach((enemy) => {
-            if(enemy.isDead()){
+            if (enemy.isDead()) {
                 return;
             }
 
-            const fallingDown =
-                this.character.speedY < 0;
+            const fallingDown = this.character.speedY < 0;
 
             if (this.character.isColliding(enemy) && fallingDown) {
                 enemy.die();
@@ -165,7 +180,7 @@ export class World {
 
     loseEnergy() {
         this.level.enemies.forEach((enemy) => {
-            if(enemy.isDead()){
+            if (enemy.isDead()) {
                 return;
             }
 
