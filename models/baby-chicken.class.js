@@ -36,10 +36,12 @@ export class BabyChicken extends MovableObject {
     }
 
     updateMovement = () => {
+        if (!this.world || !this.world.gameStarted) return;
         this.moveLeft();
     };
 
     updateAnimation = () => {
+        if (!this.world || !this.world.gameStarted) return;
         if (this.isDead()) {
             this.playAnimation(this.imagesDead);
         } else {

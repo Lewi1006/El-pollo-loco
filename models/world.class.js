@@ -28,6 +28,7 @@ import { BabyChicken } from "./baby-chicken.class.js";
 
 export class World {
     // #region properties
+    gameStarted = false;
     character = new Character();
     level = level1; //current level data
     ctx;
@@ -123,7 +124,6 @@ export class World {
                 this.bottleCounter++;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;
                 this.statusBarBottles.setPercentage(percentage);
-                console.log(this.bottleCounter);
             }
         }
     }
@@ -141,8 +141,6 @@ export class World {
                 this.bottleCounter--;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;
                 this.statusBarBottles.setPercentage(percentage);
-
-                console.log(this.bottleCounter);
             }
         }
     }

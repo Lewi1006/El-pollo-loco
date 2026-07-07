@@ -12,6 +12,7 @@ export class MovableObject extends DrawableObject {
     throwable = false;
     deathTime = 0;
     hasDied = false;
+    world;
     // #endregion
 
     // #region methods

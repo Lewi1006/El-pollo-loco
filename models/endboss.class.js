@@ -19,7 +19,7 @@ export class Endboss extends MovableObject {
         right: 5,
         bottom: 20,
     };
-    world;
+    // world;
     hasStartedWalking = false;
     isAttacking = false;
     // #endregion
@@ -46,7 +46,7 @@ export class Endboss extends MovableObject {
     }
 
     hit() {
-        this.energy -= 50;
+        this.energy -= 20;
         if (this.energy <= 0) {
             this.energy = 0;
             this.die();
@@ -56,9 +56,10 @@ export class Endboss extends MovableObject {
         }
     }
 
-    // flag hasstartedwalking cause we wanna trigger walking once
+    // flag hasstartedwalking cause we wanna trigger walking once 
+    // wait till world exists and also check if game has started
     updateMovement = () => {
-        if (!this.world) return;
+        if (!this.world || !this.world.gameStarted) return;
 
         const distance = this.getDistance();
 
@@ -80,7 +81,7 @@ export class Endboss extends MovableObject {
     updateAnimation = () => {
         // wait till world is loaded/exists before animation starts
         // https://stackoverflow.com/questions/5339121/how-do-you-implement-a-guard-clause-in-javascript
-        if (!this.world) return;
+        if (!this.world || !this.world.gameStarted) return;
 
         if (this.isDead()) {
             this.playDeadAnimation();
@@ -100,8 +101,7 @@ export class Endboss extends MovableObject {
 
         let timePassed = new Date().getTime() - this.deathTime;
         timePassed /= 1000;
-
-        console.log(timePassed);
+        
         // play animation for 4 seconds and then freeze on last frame
         if (timePassed < 4) {
             this.playAnimation(this.imagesDead);

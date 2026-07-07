@@ -8,7 +8,6 @@ export class IntervalHub {
     static startInterval(func, timer) {
         const newInterval = setInterval(func, timer);
         IntervalHub.allIntervals.push(newInterval);
-        // console.log(IntervalHub.allIntervals);
     }
 
     // stops all registered intervals and clears array
