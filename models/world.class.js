@@ -30,6 +30,7 @@ export class World {
     // #region properties
     gameStarted = false;
     gameOver = false;
+    gameWon = false;
     character = new Character();
     level = level1; //current level data
     ctx;
@@ -80,6 +81,7 @@ export class World {
         if (this.gameOver) return;
 
         this.checkGameOver();
+        this.checkGameWon();
         this.checkCollisions();
         this.checkThrowObjects();
     };
@@ -94,6 +96,24 @@ export class World {
                 document.querySelector(`.game-over-screen`);
             gameOverScreenRef.classList.remove(`d-none`);
         }
+    }
+
+    checkGameWon() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof Endboss && enemy.isDead()) {
+                let timePassed = new Date().getTime() - enemy.deathTime;
+                timePassed /= 1000;
+
+                if (timePassed > 1.5) {
+                    this.gameWon = true;
+
+                    IntervalHub.stopAllIntervals();
+
+                    const winScreenRef = document.querySelector(`.win-screen`);
+                    winScreenRef.classList.remove(`d-none`);
+                }
+            }
+        });
     }
 
     // loops through the enemies of the level and checks if the enemy collides with the character
