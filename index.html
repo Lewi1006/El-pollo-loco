@@ -1,74 +1,77 @@
-    <!doctype html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            <title>El pollo loco</title>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>El pollo loco</title>
 
-            <!-- #region import links -->
-            <link rel="stylesheet" href="style.css" />
-            <link rel="stylesheet" href="./styles/fonts.css" />
-            <link rel="stylesheet" href="./styles/standard.css" />
+        <!-- #region import links -->
+        <link rel="stylesheet" href="style.css" />
+        <link rel="stylesheet" href="./styles/fonts.css" />
+        <link rel="stylesheet" href="./styles/standard.css" />
 
-            <script type="module" src="./js/game.js"></script>
-            <link
-                rel="icon"
-                type="image/x-icon"
-                href="./assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"
-            />
+        <script type="module" src="./js/game.js"></script>
+        <link
+            rel="icon"
+            type="image/x-icon"
+            href="./assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png"
+        />
 
-            <!-- #endregion -->
-        </head>
-        <body>
-            <h1>El Pollo Loco</h1>
-            <div class="game-container">
-                <div id="fullscreen">
-                    <canvas width="720" height="480" id="canvas"></canvas>
-                </div>
-
-                <div class="start-screen">
-                    <img
-                        src="./assets/img/9_intro_outro_screens/start/startscreen_1.png"
-                        alt="game start screen"
-                    />
-                    <button id="start-button">Start Game</button>
-                </div>
-
-                <div class="game-over-screen d-none">
-                    <img
-                        src="./assets/img/9_intro_outro_screens/game_over/game over!.png"
-                        alt="game over screen"
-                    />
-                    <button id="restart-button">Try again</button>
-                </div>
-
-                <div class="win-screen d-none">
-                    <img
-                        src="./assets/img/You won, you lost/You won A.png"
-                        alt="win game screen"
-                    />
-                    <button id="restart-button">Try again</button>
-                </div>
+        <!-- #endregion -->
+    </head>
+    <body>
+        <h1>El Pollo Loco</h1>
+        <div class="game-container">
+            <div id="fullscreen">
+                <canvas width="720" height="480" id="canvas"></canvas>
             </div>
 
-            <div>
-                <button id="instructions-button">How to play?</button>
+            <div class="start-screen">
+                <img
+                    src="./assets/img/9_intro_outro_screens/start/startscreen_1.png"
+                    alt="game start screen"
+                />
+                <button id="start-button">Start Game</button>
             </div>
-            <dialog id="dialog" data-id="dialog">
-                <header>
-                    <button id="close-dialog">x</button>
-                    <h2>How to play</h2>
+
+            <div class="game-over-screen d-none">
+                <img
+                    src="./assets/img/9_intro_outro_screens/game_over/game over!.png"
+                    alt="game over screen"
+                />
+                <button id="restart-button">Try again</button>
+            </div>
+
+            <div class="win-screen d-none">
+                <img
+                    src="./assets/img/You won, you lost/You won A.png"
+                    alt="win game screen"
+                />
+                <button id="restart-button">Try again</button>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <div class="content">
+                <button id="instructions-button">?</button>
+            </div>
+        </div>
+
+        <dialog id="dialog" data-id="dialog">
+            <header>
+                <h2>How to play</h2>
+                <button id="close-dialog"><p>x</p></button>
             </header>
 
-            <body>
-                <p>Move Pepe with the arrow keys.</p>
-                <p>Jump with Space.</p>
-                <p>Throw bottles with D.</p>
+            <div class="dialog-content">
+                <p>> Move Pepe with the arrow keys.</p>
+                <p>> Jump with Space.</p>
+                <p>> Throw bottles with D.</p>
                 <p>
-                    Defeat the chickens and the Endboss by jumping onto them or
-                    by throwing a bottle at them!
+                    > Defeat the chickens and the Endboss by jumping onto them
+                    or by throwing a bottle at them!
                 </p>
-            </body>
+            </div>
         </dialog>
     </body>
 </html>

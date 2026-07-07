@@ -79,9 +79,11 @@ document.addEventListener("keyup", (event) => {
 const startButtonRef = document.getElementById("start-button");
 startButtonRef.addEventListener("click", startGame);
 
+
 function startGame() {
     const startScreenRef = document.querySelector(".start-screen");
     startScreenRef.classList.add(`d-none`);
+    instructionsButtonRef.classList.add(`d-none`);
     init();
 
     world.gameStarted = true;
