@@ -18,23 +18,23 @@ export class ThrowableObject extends MovableObject {
         this.width = 50;
 
         this.throw();
-
-        console.log(this.imagesBottleRotation);
+        IntervalHub.startInterval(this.applyGravity, 1000 / 25);
+        IntervalHub.startInterval(this.rotateBottle, 120);
+        IntervalHub.startInterval(this.throwForward, 25);
     }
 
     throw() {
         this.speedY = 30;
         this.applyGravity();
-        IntervalHub.startInterval(() => {
-            this.x += 10;
-        }, 25);
-
+        this.throwForward();
         this.rotateBottle();
     }
 
-    rotateBottle() {
-        IntervalHub.startInterval(() => {
-            this.playAnimation(this.imagesBottleRotation);
-        }, 120);
-    }
+    throwForward = () => {
+        this.x += 10;
+    };
+
+    rotateBottle = () => {
+        this.playAnimation(this.imagesBottleRotation);
+    };
 }

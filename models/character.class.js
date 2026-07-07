@@ -35,57 +35,64 @@ export class Character extends MovableObject {
         this.loadImages(this.imagesHurt);
         this.loadImages(this.imagesIdle);
         this.loadImages(this.imagesLongIdle);
-        this.applyGravity();
+        // this.applyGravity();
+        IntervalHub.startInterval(this.applyGravity, 1000 / 25);
+
         this.animate();
         this.lastMove = new Date().getTime();
+
+        IntervalHub.startInterval(this.updateMovement, 1000 / 60);
+        IntervalHub.startInterval(this.updateAnimation, 50);
     }
 
     // #region methods
 
     animate() {
-        // walking speed
-        IntervalHub.startInterval(() => {
-            if (
-                this.world.keyboard.RIGHT &&
-                this.x < this.world.level.level_end_x
-            ) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.lastMove = new Date().getTime();
-            }
-
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.lastMove = new Date().getTime();
-            }
-
-            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
-                this.jump();
-                this.lastMove = new Date().getTime();
-            }
-
-            // tie camera to character
-            this.world.camera_x = -this.x + 100;
-        }, 1000 / 60);
-
-        // walking, jumping, dead animation
-        IntervalHub.startInterval(() => {
-            if (this.isDead()) {
-                this.playAnimation(this.imagesDead);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.imagesHurt);
-            } else if (this.isAboveGround()) {
-                this.playAnimation(this.imagesJump);
-            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.playAnimation(this.imagesWalk);
-            } else if (this.isLongIdle()) {
-                this.playAnimation(this.imagesLongIdle);
-            } else {
-                this.playAnimation(this.imagesIdle);
-            }
-        }, 50);
+        this.updateMovement;
+        this.updateAnimation;
     }
+
+    // walking movement of character
+    updateMovement = () => {
+        if (
+            this.world.keyboard.RIGHT &&
+            this.x < this.world.level.level_end_x
+        ) {
+            this.moveRight();
+            this.otherDirection = false;
+            this.lastMove = new Date().getTime();
+        }
+
+        if (this.world.keyboard.LEFT && this.x > 0) {
+            this.moveLeft();
+            this.otherDirection = true;
+            this.lastMove = new Date().getTime();
+        }
+
+        if (this.world.keyboard.SPACE && !this.isAboveGround()) {
+            this.jump();
+            this.lastMove = new Date().getTime();
+        }
+
+        // tie camera to character
+        this.world.camera_x = -this.x + 100;
+    };
+
+    updateAnimation = () => {
+        if (this.isDead()) {
+            this.playAnimation(this.imagesDead);
+        } else if (this.isHurt()) {
+            this.playAnimation(this.imagesHurt);
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.imagesJump);
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.imagesWalk);
+        } else if (this.isLongIdle()) {
+            this.playAnimation(this.imagesLongIdle);
+        } else {
+            this.playAnimation(this.imagesIdle);
+        }
+    };
 
     jump() {
         this.speedY = 30;

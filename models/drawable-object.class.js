@@ -44,7 +44,8 @@ export class DrawableObject {
     drawFrame(ctx) {
         // rectangles for collision
 
-        // if (this instanceof Character || this instanceof Chicken) --> doesn't work here cause mO does not know chicken or character
+        // if (this instanceof Character || this instanceof Chicken) 
+        // --> doesn't work here cause mO does not know chicken or character --> needs to be done in world
         ctx.beginPath();
         ctx.lineWidth = 5;
         ctx.strokeStyle = "blue";

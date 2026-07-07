@@ -20,7 +20,6 @@ export class CoinStatus extends DrawableObject {
         let index = this.resolveImageIndex(percentage);
         let path = this.imagesStatusCoins[index];
         this.img = this.imageCache[path];
-        console.log(this.percentage);
     }
 
     resolveImageIndex(percentage) {

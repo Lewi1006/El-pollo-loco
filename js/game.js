@@ -1,4 +1,4 @@
-// game.js is main.js file 
+// game.js is main.js file
 // It initializes canvas, creates World and Keyboard objects
 // init() is called on window load
 // canvas is selected from HTML
@@ -12,7 +12,6 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
-
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
@@ -22,12 +21,10 @@ function init() {
 
 // so that onload works and access to function init is there
 // https://stackoverflow.com/questions/8830074/what-is-the-difference-between-window-onload-init-and-window-onload-init
-window.onload = init;
-
+// window.onload = init;
 
 // #region Keyboard input
 document.addEventListener("keydown", (event) => {
-    //  console.log(keyboard);
     if (event.code == "ArrowLeft") {
         keyboard.LEFT = true;
     }
@@ -36,7 +33,7 @@ document.addEventListener("keydown", (event) => {
         keyboard.RIGHT = true;
     }
 
-     if (event.code == "ArrowUp") {
+    if (event.code == "ArrowUp") {
         keyboard.UP = true;
     }
 
@@ -44,11 +41,11 @@ document.addEventListener("keydown", (event) => {
         keyboard.DOWN = true;
     }
 
-     if (event.code == "Space") {
+    if (event.code == "Space") {
         keyboard.SPACE = true;
     }
 
-    if(event.code == "KeyD"){
+    if (event.code == "KeyD") {
         keyboard.D = true;
     }
 });
@@ -62,7 +59,7 @@ document.addEventListener("keyup", (event) => {
         keyboard.RIGHT = false;
     }
 
-     if (event.code == "ArrowUp") {
+    if (event.code == "ArrowUp") {
         keyboard.UP = false;
     }
 
@@ -70,13 +67,32 @@ document.addEventListener("keyup", (event) => {
         keyboard.DOWN = false;
     }
 
-     if (event.code == "Space") {
+    if (event.code == "Space") {
         keyboard.SPACE = false;
     }
 
-     if(event.code == "KeyD"){
+    if (event.code == "KeyD") {
         keyboard.D = false;
     }
 });
 
+const startButtonRef = document.getElementById("start-button");
+startButtonRef.addEventListener("click", startGame);
+
+function startGame() {
+    const startScreenRef = document.querySelector(".start-screen");
+    startScreenRef.classList.add(`d-none`);
+    init();
+
+    world.gameStarted = true;
+}
+
+
+const restartButtonRef = document.getElementById("restart-button");
+restartButtonRef.addEventListener("click", restartGame);
+
+// https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
+function restartGame(){
+    window.location.reload();
+}
 // #endregion

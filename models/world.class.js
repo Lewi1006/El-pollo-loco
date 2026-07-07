@@ -21,11 +21,16 @@ import { Coin } from "./coin.class.js";
 import { CoinStatus } from "./status-bar-coins.class.js";
 import { BottleStatus } from "./status-bar-bottles.class.js";
 import { EndbossStatus } from "./status-bar-endboss.class.js";
+import { Endboss } from "./endboss.class.js";
+import { BabyChicken } from "./baby-chicken.class.js";
 
 // #endregion
 
 export class World {
     // #region properties
+    gameStarted = false;
+    gameOver = false;
+    gameWon = false;
     character = new Character();
     level = level1; //current level data
     ctx;
@@ -38,9 +43,9 @@ export class World {
     statusBarEndboss = new EndbossStatus();
     throwableObjects = [];
     coinCounter = 0;
-    totalCoins = 16;
+    totalCoins = 30;
     bottleCounter = 0;
-    totalBottles = 5;
+    totalBottles = 8;
 
     // #endregion
 
@@ -55,36 +60,79 @@ export class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
+
         this.setWorld();
         this.draw();
-        this.run();
-
-        console.log(this.throwableObjects);
+        IntervalHub.startInterval(this.run, 200);
     }
 
     // #region methods
     // hand over world instance to character so that keyboard can be accessed ???
     setWorld() {
         this.character.world = this;
+
+        this.level.enemies.forEach((enemy) => {
+            enemy.world = this;
+        });
     }
 
     // method for running other methods like collision or throwObjects
-    run() {
-        IntervalHub.startInterval(() => {
-            this.checkCollisions();
-            this.checkThrowObjects();
-        }, 200);
+    run = () => {
+        if (this.gameOver) return;
+
+        this.checkGameOver();
+        this.checkGameWon();
+        this.checkCollisions();
+        this.checkThrowObjects();
+    };
+
+    checkGameOver() {
+        if (this.character.isDead()) {
+            let timePassed = new Date().getTime() - this.character.deathTime;
+            timePassed /= 1000;
+
+            console.log(this.character.deathTime);
+
+            if (timePassed > 2) {
+                this.gameOver = true;
+
+                IntervalHub.stopAllIntervals();
+
+                const gameOverScreenRef =
+                    document.querySelector(`.game-over-screen`);
+                gameOverScreenRef.classList.remove(`d-none`);
+            }
+        }
+    }
+
+    checkGameWon() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof Endboss && enemy.isDead()) {
+                let timePassed = new Date().getTime() - enemy.deathTime;
+                timePassed /= 1000;
+
+                if (timePassed > 1.5) {
+                    this.gameWon = true;
+
+                    IntervalHub.stopAllIntervals();
+
+                    const winScreenRef = document.querySelector(`.win-screen`);
+                    winScreenRef.classList.remove(`d-none`);
+                }
+            }
+        });
     }
 
     // loops through the enemies of the level and checks if the enemy collides with the character
     // calls isColliding(), hit() from Character class
     // calls setPercentage from StatusBar and passes the characters energy into it as percentage value
     checkCollisions() {
-        this.loseEnergy();
         this.collectCoin();
         this.collectBottle();
         this.checkBottleCollisions();
-        this.checkStompCollision();
+        this.stompEnemy();
+        this.loseEnergy();
+        this.removeDeadEnemy();
     }
 
     checkBottleCollisions() {
@@ -92,63 +140,21 @@ export class World {
             let bottle = this.throwableObjects[i];
 
             this.level.enemies.forEach((enemy) => {
-                if (bottle.isColliding(enemy)) {
+                if (enemy instanceof Endboss && bottle.isColliding(enemy)) {
+                    enemy.hit();
+                    this.statusBarEndboss.setPercentage(enemy.energy);
+                    this.throwableObjects.splice(i, 1);
+                }
+
+                if (
+                    (enemy instanceof Chicken ||
+                        enemy instanceof BabyChicken) &&
+                    bottle.isColliding(enemy)
+                ) {
+                    enemy.die();
                     this.throwableObjects.splice(i, 1);
                 }
             });
-        }
-    }
-
-    //  only works with many conditional statements otherwise it doesn't register
-    checkStompCollision() {
-        this.level.enemies.forEach((enemy) => {
-            const characterBottom =
-                this.character.y +
-                this.character.height +
-                this.character.offset.bottom;
-            const enemyTop = enemy.y + enemy.offset.top;
-
-            // needs to fall down so we need to say that the position of the character was above the enemy
-            const fallingDown =
-                this.character.speedY < 0 && this.character.y < enemy.y;
-
-            const horizontalCollision =
-                this.character.x +
-                    this.character.width -
-                    this.character.offset.left >
-                    enemy.x + enemy.offset.left &&
-                enemy.x + enemy.width - enemy.offset.left >
-                    this.character.x + this.character.offset.left;
-
-            const verticalCollision = characterBottom >= enemyTop;
-
-            if (verticalCollision && horizontalCollision && fallingDown) {
-                console.log("stomp");
-            }
-        });
-    }
-    
-
-    loseEnergy() {
-        this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
-            }
-        });
-    }
-
-    collectCoin() {
-        for (let i = 0; i < this.level.coins.length; i++) {
-            let coin = this.level.coins[i];
-
-            if (this.character.isColliding(coin)) {
-                this.level.coins.splice(i, 1);
-                this.coinCounter++;
-                console.log(this.coinCounter);
-                let percentage = (this.coinCounter / this.totalCoins) * 100;
-                this.statusBarCoins.setPercentage(percentage);
-            }
         }
     }
 
@@ -176,6 +182,75 @@ export class World {
                 this.throwableObjects.push(bottle);
 
                 this.bottleCounter--;
+                let percentage = (this.bottleCounter / this.totalBottles) * 100;
+                this.statusBarBottles.setPercentage(percentage);
+            }
+        }
+    }
+
+    stompEnemy() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.isDead()) {
+                return;
+            }
+
+            const fallingDown = this.character.speedY < 0;
+
+            if (this.character.isColliding(enemy) && fallingDown) {
+                enemy.die();
+
+                // resets speedY to be above 0 again so the falling down condition works every time
+                this.character.speedY = 0;
+            }
+        });
+    }
+
+    loseEnergy() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.isDead()) {
+                return;
+            }
+
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
+            }
+        });
+    }
+
+    collectCoin() {
+        for (let i = 0; i < this.level.coins.length; i++) {
+            let coin = this.level.coins[i];
+
+            if (this.character.isColliding(coin)) {
+                this.level.coins.splice(i, 1);
+                this.coinCounter++;
+                let percentage = (this.coinCounter / this.totalCoins) * 100;
+                this.statusBarCoins.setPercentage(percentage);
+            }
+        }
+    }
+
+    // go through all the enemies array
+    // check if each enemy isDead (energy=0)
+    // in collision we set energy to 0 to mark the death we also time stamp it
+    // and set the variable deathTime in class chicken to the current time
+    // we loop through enemies to check if they are dead
+    // if so we check the time passed since the moment they dies
+    // if it is over 1Second we splice this exact enemy from the array
+    removeDeadEnemy() {
+        for (let i = 0; i < this.level.enemies.length; i++) {
+            let enemy = this.level.enemies[i];
+
+            if (enemy instanceof Chicken || enemy instanceof BabyChicken) {
+                if (enemy.isDead()) {
+                    let timePassed = new Date().getTime() - enemy.deathTime; // difference since death in ms
+                    timePassed /= 1000;
+
+                    if (timePassed > 1) {
+                        this.level.enemies.splice(i, 1);
+                    }
+                }
             }
         }
     }
@@ -231,7 +306,9 @@ export class World {
         // only draw rectangle if its a character or chicken object for implementing collisions
         if (
             mo instanceof Character ||
+            mo instanceof Endboss ||
             mo instanceof Chicken ||
+            mo instanceof BabyChicken ||
             mo instanceof Bottle ||
             mo instanceof Coin
         ) {

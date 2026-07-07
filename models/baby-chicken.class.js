@@ -1,16 +1,21 @@
-import { MovableObject } from "./movable-object.class.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
+import { MovableObject } from "./movable-object.class.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
 
-export class Chicken extends MovableObject {
+export class BabyChicken extends MovableObject {
     // #region properties
-    y = 350;
-    height = 70;
-    width = 80;
-    imagesWalk = ImageHelper.CHICKEN.walk;
-    imagesDead = ImageHelper.CHICKEN.dead;
+    y = 380;
+    height = 40;
+    width = 50;
+    imagesWalk = ImageHelper.BABY_CHICKEN.walk;
+    imagesDead = ImageHelper.BABY_CHICKEN.dead;
+    offset = {
+        top: 5,
+        left: 5,
+        right: 5,
+        bottom: 0,
+    };
     // deathTime = 0;
-
     // #endregion
 
     constructor() {
@@ -18,14 +23,12 @@ export class Chicken extends MovableObject {
         this.loadImage(this.imagesWalk[0]);
         this.loadImages(this.imagesWalk);
         this.loadImages(this.imagesDead);
-        this.x = 300 + Math.random() * 2800;
-        this.speed = 0.15 + Math.random() * 0.5;
+        this.x = 1100 + Math.random() * 3000;
+        this.speed = 1.2 + Math.random() * 3;
         this.animate();
         IntervalHub.startInterval(this.updateMovement, 1000 / 60);
         IntervalHub.startInterval(this.updateAnimation, 200);
     }
-
-    // #region methods
 
     animate() {
         this.updateMovement();
@@ -34,7 +37,6 @@ export class Chicken extends MovableObject {
 
     updateMovement = () => {
         if (!this.world || !this.world.gameStarted) return;
-
         this.moveLeft();
     };
 
@@ -46,6 +48,4 @@ export class Chicken extends MovableObject {
             this.playAnimation(this.imagesWalk);
         }
     };
-
-    // #endregion
 }
