@@ -88,13 +88,20 @@ export class World {
 
     checkGameOver() {
         if (this.character.isDead()) {
-            this.gameOver = true;
+            let timePassed = new Date().getTime() - this.character.deathTime;
+            timePassed /= 1000;
 
-            IntervalHub.stopAllIntervals();
+            console.log(this.character.deathTime);
 
-            const gameOverScreenRef =
-                document.querySelector(`.game-over-screen`);
-            gameOverScreenRef.classList.remove(`d-none`);
+            if (timePassed > 2) {
+                this.gameOver = true;
+
+                IntervalHub.stopAllIntervals();
+
+                const gameOverScreenRef =
+                    document.querySelector(`.game-over-screen`);
+                gameOverScreenRef.classList.remove(`d-none`);
+            }
         }
     }
 
