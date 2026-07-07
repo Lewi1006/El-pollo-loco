@@ -96,3 +96,30 @@ function restartGame(){
     window.location.reload();
 }
 // #endregion
+
+
+
+
+
+
+// #region dialog
+const instructionsButtonRef = document.getElementById(`instructions-button`);
+instructionsButtonRef.addEventListener(`click`, openDialog);
+
+function openDialog() {
+  let dialogRef = document.getElementById(`dialog`);
+  dialogRef.showModal();
+  document.body.classList.add("no-scroll");
+}
+
+
+const closeDialogRef = document.getElementById(`close-dialog`);
+closeDialogRef.addEventListener('click', closeDialog);
+
+function closeDialog() {
+  let dialogRef = document.getElementById(`dialog`);
+  dialogRef.close();
+  document.body.classList.remove("no-scroll");
+}
+
+// #endregion

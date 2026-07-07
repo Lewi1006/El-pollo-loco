@@ -49,14 +49,14 @@ div {
     }
 }
 
-.game-over-screen{
-     position: absolute;
+.game-over-screen {
+    position: absolute;
     img {
         width: 720px;
         height: 480px;
     }
 
-        #restart-button {
+    #restart-button {
         background-color: aliceblue;
         height: 40px;
         width: 100px;
@@ -67,16 +67,15 @@ div {
     }
 }
 
-
-.win-screen{
-     position: absolute;
+.win-screen {
+    position: absolute;
     img {
         width: 720px;
         height: 480px;
         object-fit: contain;
     }
 
-        #restart-button {
+    #restart-button {
         background-color: aliceblue;
         height: 40px;
         width: 100px;
@@ -87,7 +86,10 @@ div {
     }
 }
 
-
-.d-none{
+.d-none {
     display: none;
+}
+
+.no-scroll {
+    overflow: hidden;
 }
