@@ -8,6 +8,7 @@ export class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    damage = 10;
     lastHit = 0;
     throwable = false;
     deathTime = 0;
@@ -34,8 +35,13 @@ export class MovableObject extends DrawableObject {
         }
     }
 
-    hit() {
-        this.energy -= 5;
+    hit(damage) {
+         if (this.hasDied) return;
+        
+        this.energy -= damage;
+
+        console.log(this.energy);
+
         if (this.energy <= 0) {
             this.die();
         } else {
