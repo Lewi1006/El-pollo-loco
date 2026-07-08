@@ -12,6 +12,7 @@ export class MovableObject extends DrawableObject {
     throwable = false;
     deathTime = 0;
     hasDied = false;
+    hurtTime = 0.3;
     world;
     // #endregion
 
@@ -46,7 +47,7 @@ export class MovableObject extends DrawableObject {
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; // difference since last hit in ms
         timePassed /= 1000; // difference in sec
-        return timePassed < 1;
+        return timePassed < this.hurtTime;
     }
 
     die() {

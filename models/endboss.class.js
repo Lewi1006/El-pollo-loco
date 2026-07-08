@@ -22,6 +22,7 @@ export class Endboss extends MovableObject {
     // world;
     hasStartedWalking = false;
     isAttacking = false;
+    hurtTime = 1;
     // #endregion
 
     constructor() {

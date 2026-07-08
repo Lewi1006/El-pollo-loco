@@ -207,7 +207,7 @@ export class World {
         for (let i = 0; i < this.throwableObjects.length; i++) {
             let bottle = this.throwableObjects[i];
 
-              if (bottle.hasSplashed) {
+            if (bottle.hasSplashed) {
                 let timePassed = new Date().getTime() - bottle.splashTime;
                 timePassed /= 1000;
 
@@ -228,9 +228,16 @@ export class World {
                 return;
             }
 
-            const fallingDown = this.character.speedY < 0;
 
-            if (this.character.isColliding(enemy) && fallingDown) {
+            const fallingDown = this.character.speedY <= 0;
+            const characterAboveEnemy =
+                this.character.y + this.character.height <= enemy.y + 40;
+
+            if (
+                this.character.isColliding(enemy) &&
+                fallingDown &&
+                characterAboveEnemy
+            ) {
                 enemy.die();
 
                 // resets speedY to be above 0 again so the falling down condition works every time
@@ -245,7 +252,7 @@ export class World {
                 return;
             }
 
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
             }
@@ -288,7 +295,6 @@ export class World {
             }
         }
     }
-
 
     // draws all objects onto canvas
     // addToMap --> draws one object
