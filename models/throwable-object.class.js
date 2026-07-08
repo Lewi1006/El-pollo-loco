@@ -7,7 +7,9 @@ export class ThrowableObject extends MovableObject {
 
     throwable = true;
 
-    constructor(x, y) {
+    // when we create bottle in world we pass the coordinates as well as the diection
+    // the character has because bottle should be thrown the way the character is walking into
+    constructor(x, y, otherDirection) {
         super();
         this.loadImage(ImageHelper.BOTTLE.rotation[0]);
         this.loadImages(this.imagesBottleRotation);
@@ -16,7 +18,9 @@ export class ThrowableObject extends MovableObject {
         this.y = y;
         this.height = 60;
         this.width = 50;
+        this.otherDirection = otherDirection;
 
+        console.log(this.otherDirection);
         this.throw();
         this.lastThrow = new Date().getTime();
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
@@ -31,9 +35,12 @@ export class ThrowableObject extends MovableObject {
         this.rotateBottle();
     }
 
-
     throwForward = () => {
-        this.x += 10;
+        if (this.otherDirection) {
+            this.x -= 10;
+        } else {
+            this.x += 10;
+        }
     };
 
     rotateBottle = () => {

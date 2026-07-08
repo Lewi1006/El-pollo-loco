@@ -179,9 +179,19 @@ export class World {
             timePassed /= 1000;
 
             if (timePassed > 0.5 && this.keyboard.D) {
+                let bottleX
+
+                if(this.character.otherDirection){
+                    bottleX = this.character.x -10;
+                } else {
+                    bottleX = this.character.x + 100;
+                }
+
+
                 let bottle = new ThrowableObject(
-                    this.character.x + 100,
+                    bottleX,
                     this.character.y + 100,
+                    this.character.otherDirection,
                 );
                 this.throwableObjects.push(bottle);
 
