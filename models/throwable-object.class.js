@@ -23,12 +23,11 @@ export class ThrowableObject extends MovableObject {
         this.height = 60;
         this.width = 50;
         this.otherDirection = otherDirection;
-       
 
         this.throw();
         this.lastThrow = new Date().getTime();
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
-        IntervalHub.startInterval(this.checkBottleLocation, 1000 / 25);
+        // IntervalHub.startInterval(this.checkBottleLocation, 1000 / 25);
         IntervalHub.startInterval(this.rotateBottle, 120);
         IntervalHub.startInterval(this.throwForward, 25);
     }
@@ -40,14 +39,14 @@ export class ThrowableObject extends MovableObject {
         this.rotateBottle();
     }
 
-    applyGravity = () =>{
+    applyGravity = () => {
         if (this.hasSplashed) return;
 
-           if (this.isAboveGround() || this.speedY > 0) {
+        if (this.isAboveGround() || this.speedY > 0) {
             this.y -= this.speedY;
             this.speedY -= this.acceleration;
         }
-    }
+    };
 
     throwForward = () => {
         if (this.hasSplashed) return;
@@ -64,17 +63,16 @@ export class ThrowableObject extends MovableObject {
         this.playAnimation(this.imagesBottleRotation);
     };
 
-
-    isOnGround(){
-        return this.y + this.height >= 440;
+    isOnGround() {
+        return this.y >= 380;
     }
 
-    checkBottleLocation = () =>{
-        if (this.isOnGround() && !this.hasSplashed && !this.hasHitEnemy){
-            this.hasSplashed = true;
-            console.log("Bottle splashed at y:", this.y);
-             this.splashTime = new Date().getTime();
-            this.playAnimation(this.imagesBottleSplash);
-        } 
+    splashBottle() {
+        if (this.hasSplashed) return;
+
+        this.hasSplashed = true;
+        this.splashTime = new Date().getTime();
+        this.playAnimation(this.imagesBottleSplash);
     }
+
 }

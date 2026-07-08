@@ -64,7 +64,7 @@ export class World {
 
         this.setWorld();
         this.draw();
-        IntervalHub.startInterval(this.run, 200);
+        IntervalHub.startInterval(this.run, 1000 / 60);
     }
 
     // #region methods
@@ -83,6 +83,7 @@ export class World {
 
         this.checkGameOver();
         this.checkGameWon();
+        this.checkBottleLocation();
         this.checkCollisions();
         this.checkThrowObjects();
     };
@@ -132,7 +133,7 @@ export class World {
         this.stompEnemy();
         this.loseEnergy();
         this.removeDeadEnemy();
-        this.removeSplashedBottles();
+        // this.removeSplashedBottles();
     }
 
     checkBottleCollisions() {
@@ -198,6 +199,25 @@ export class World {
                 this.bottleCounter--;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;
                 this.statusBarBottles.setPercentage(percentage);
+            }
+        }
+    }
+
+    checkBottleLocation() {
+        for (let i = 0; i < this.throwableObjects.length; i++) {
+            let bottle = this.throwableObjects[i];
+
+              if (bottle.hasSplashed) {
+                let timePassed = new Date().getTime() - bottle.splashTime;
+                timePassed /= 1000;
+
+                if (timePassed > 0.3) {
+                    this.throwableObjects.splice(i, 1);
+                }
+            }
+
+            if (bottle.isOnGround() && !bottle.hasSplashed) {
+                bottle.splashBottle();
             }
         }
     }
@@ -269,19 +289,6 @@ export class World {
         }
     }
 
-    removeSplashedBottles() {
-        for (let i = 0; i < this.throwableObjects.length; i++) {
-            let bottle = this.throwableObjects[i];
-            if (bottle.hasSplashed) {
-                let timePassed = new Date().getTime() - bottle.splashTime;
-                timePassed /= 1000;
-
-                if (timePassed > 0.3) {
-                    this.throwableObjects.splice(i, 1);
-                }
-            }
-        }
-    }
 
     // draws all objects onto canvas
     // addToMap --> draws one object
