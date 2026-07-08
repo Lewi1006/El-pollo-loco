@@ -92,8 +92,6 @@ export class World {
             let timePassed = new Date().getTime() - this.character.deathTime;
             timePassed /= 1000;
 
-            console.log(this.character.deathTime);
-
             if (timePassed > 2) {
                 this.gameOver = true;
 
@@ -134,6 +132,7 @@ export class World {
         this.stompEnemy();
         this.loseEnergy();
         this.removeDeadEnemy();
+        this.removeSplashedBottles();
     }
 
     checkBottleCollisions() {
@@ -179,14 +178,13 @@ export class World {
             timePassed /= 1000;
 
             if (timePassed > 0.5 && this.keyboard.D) {
-                let bottleX
+                let bottleX;
 
-                if(this.character.otherDirection){
-                    bottleX = this.character.x -10;
+                if (this.character.otherDirection) {
+                    bottleX = this.character.x - 10;
                 } else {
                     bottleX = this.character.x + 100;
                 }
-
 
                 let bottle = new ThrowableObject(
                     bottleX,
@@ -266,6 +264,20 @@ export class World {
                     if (timePassed > 1) {
                         this.level.enemies.splice(i, 1);
                     }
+                }
+            }
+        }
+    }
+
+    removeSplashedBottles() {
+        for (let i = 0; i < this.throwableObjects.length; i++) {
+            let bottle = this.throwableObjects[i];
+            if (bottle.hasSplashed) {
+                let timePassed = new Date().getTime() - bottle.splashTime;
+                timePassed /= 1000;
+
+                if (timePassed > 0.3) {
+                    this.throwableObjects.splice(i, 1);
                 }
             }
         }

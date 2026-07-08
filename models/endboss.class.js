@@ -96,16 +96,6 @@ export class Endboss extends MovableObject {
         }
     };
 
-    // playDeadAnimation() {
-    //     let timePassed = new Date().getTime() - this.deathTime;
-    //     timePassed /= 1000;
-
-    //     // play animation for 4 seconds and then freeze on last frame
-    //     if (timePassed < 4) {
-    //         this.playAnimation(this.imagesDead);
-    //     }
-    // }
-
     // https://stackoverflow.com/questions/20916953/get-distance-between-two-points-in-canvas
     getDistance() {
         const distanceX = this.world.character.x - this.x;

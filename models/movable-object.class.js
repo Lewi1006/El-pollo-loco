@@ -84,5 +84,6 @@ export class MovableObject extends DrawableObject {
         this.currentImage++;
     }
 
+
     // #endregion
 }
