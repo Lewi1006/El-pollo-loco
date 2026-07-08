@@ -46,6 +46,7 @@ export class World {
     totalCoins = 30;
     bottleCounter = 0;
     totalBottles = 8;
+    lastThrow = 0;
 
     // #endregion
 
@@ -174,12 +175,17 @@ export class World {
     // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
     checkThrowObjects() {
         if (this.bottleCounter <= this.totalBottles && this.bottleCounter > 0) {
-            if (this.keyboard.D) {
+            let timePassed = new Date().getTime() - this.lastThrow;
+            timePassed /= 1000;
+
+            if (timePassed > 0.5 && this.keyboard.D) {
                 let bottle = new ThrowableObject(
                     this.character.x + 100,
                     this.character.y + 100,
                 );
                 this.throwableObjects.push(bottle);
+
+                this.lastThrow = new Date().getTime();
 
                 this.bottleCounter--;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;

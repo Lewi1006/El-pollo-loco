@@ -90,7 +90,7 @@ div {
         object-fit: contain;
     }
 
-    #restart-button {
+    #restart-button-won {
         background-color: rgba(221, 232, 235);
         letter-spacing: 1px;
         font-size: 24px;

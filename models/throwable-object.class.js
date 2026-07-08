@@ -18,6 +18,7 @@ export class ThrowableObject extends MovableObject {
         this.width = 50;
 
         this.throw();
+        this.lastThrow = new Date().getTime();
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
         IntervalHub.startInterval(this.rotateBottle, 120);
         IntervalHub.startInterval(this.throwForward, 25);
@@ -29,6 +30,7 @@ export class ThrowableObject extends MovableObject {
         this.throwForward();
         this.rotateBottle();
     }
+
 
     throwForward = () => {
         this.x += 10;

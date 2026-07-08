@@ -93,6 +93,9 @@ function startGame() {
 const restartButtonRef = document.getElementById("restart-button");
 restartButtonRef.addEventListener("click", restartGame);
 
+const restartButtonWonRef = document.getElementById(`restart-button-won`);
+restartButtonWonRef.addEventListener(`click`, restartGame);
+
 // https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
 function restartGame(){
     window.location.reload();

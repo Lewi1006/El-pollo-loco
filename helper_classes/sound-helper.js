@@ -1,6 +1,6 @@
 class SoundHub {
     // Audio
-    static jump = new Audio(...);
+    static jump = new Audio();
 
     // Array containing all audio files
     static allSounds = [SoundHub.piano, SoundHub.guitar, SoundHub.drums];
