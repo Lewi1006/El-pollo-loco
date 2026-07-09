@@ -1,6 +1,7 @@
 import { MovableObject } from "./movable-object.class.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 export class Character extends MovableObject {
     // #region properties
@@ -72,6 +73,7 @@ export class Character extends MovableObject {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
             this.lastMove = new Date().getTime();
+            SoundHub.playOne(SoundHub.jump);
         }
 
         // tie camera to character

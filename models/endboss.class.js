@@ -47,6 +47,7 @@ export class Endboss extends MovableObject {
         this.updateMovement();
     }
 
+    // endboss energy
     hit() {
         this.energy -= 20;
         if (this.energy <= 0) {

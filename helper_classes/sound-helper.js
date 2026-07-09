@@ -1,13 +1,13 @@
-class SoundHub {
+export class SoundHub {
     // Audio
-    static jump = new Audio();
+    static jump = new Audio("../assets/sounds/character/characterJump.wav");
 
     // Array containing all audio files
-    static allSounds = [SoundHub.piano, SoundHub.guitar, SoundHub.drums];
+    static allSounds = [ SoundHub.jump,];
 
 
     // plays a single audio file
-    static playOne(sound, instrumentId) {  
+    static playOne(sound) {  
         sound.volume = 0.2; 
         sound.currentTime = 0; 
         sound.play();  
@@ -21,7 +21,7 @@ class SoundHub {
     }
 
     //pauses a single audio file
-    static pauseOne(sound, instrumentId) {
+    static pauseOne(sound) {
         sound.pause();  
     }
 }
