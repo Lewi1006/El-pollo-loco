@@ -8,10 +8,12 @@ export class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    damage = 10;
     lastHit = 0;
     throwable = false;
     deathTime = 0;
     hasDied = false;
+    hurtTime = 0.3;
     world;
     // #endregion
 
@@ -33,8 +35,13 @@ export class MovableObject extends DrawableObject {
         }
     }
 
-    hit() {
-        this.energy -= 5;
+    hit(damage) {
+         if (this.hasDied) return;
+        
+        this.energy -= damage;
+
+        console.log(this.energy);
+
         if (this.energy <= 0) {
             this.die();
         } else {
@@ -46,7 +53,7 @@ export class MovableObject extends DrawableObject {
     isHurt() {
         let timePassed = new Date().getTime() - this.lastHit; // difference since last hit in ms
         timePassed /= 1000; // difference in sec
-        return timePassed < 1;
+        return timePassed < this.hurtTime;
     }
 
     die() {
@@ -83,6 +90,7 @@ export class MovableObject extends DrawableObject {
         this.img = this.imageCache[path];
         this.currentImage++;
     }
+
 
     // #endregion
 }

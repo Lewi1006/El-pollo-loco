@@ -46,6 +46,7 @@ export class World {
     totalCoins = 30;
     bottleCounter = 0;
     totalBottles = 8;
+    lastThrow = 0;
 
     // #endregion
 
@@ -63,7 +64,7 @@ export class World {
 
         this.setWorld();
         this.draw();
-        IntervalHub.startInterval(this.run, 200);
+        IntervalHub.startInterval(this.run, 1000 / 60);
     }
 
     // #region methods
@@ -82,6 +83,7 @@ export class World {
 
         this.checkGameOver();
         this.checkGameWon();
+        this.checkBottleLocation();
         this.checkCollisions();
         this.checkThrowObjects();
     };
@@ -90,8 +92,6 @@ export class World {
         if (this.character.isDead()) {
             let timePassed = new Date().getTime() - this.character.deathTime;
             timePassed /= 1000;
-
-            console.log(this.character.deathTime);
 
             if (timePassed > 2) {
                 this.gameOver = true;
@@ -133,6 +133,7 @@ export class World {
         this.stompEnemy();
         this.loseEnergy();
         this.removeDeadEnemy();
+        // this.removeSplashedBottles();
     }
 
     checkBottleCollisions() {
@@ -174,16 +175,49 @@ export class World {
     // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
     checkThrowObjects() {
         if (this.bottleCounter <= this.totalBottles && this.bottleCounter > 0) {
-            if (this.keyboard.D) {
+            let timePassed = new Date().getTime() - this.lastThrow;
+            timePassed /= 1000;
+
+            if (timePassed > 0.5 && this.keyboard.D) {
+                let bottleX;
+
+                if (this.character.otherDirection) {
+                    bottleX = this.character.x - 10;
+                } else {
+                    bottleX = this.character.x + 100;
+                }
+
                 let bottle = new ThrowableObject(
-                    this.character.x + 100,
+                    bottleX,
                     this.character.y + 100,
+                    this.character.otherDirection,
                 );
                 this.throwableObjects.push(bottle);
+
+                this.lastThrow = new Date().getTime();
 
                 this.bottleCounter--;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;
                 this.statusBarBottles.setPercentage(percentage);
+            }
+        }
+    }
+
+    checkBottleLocation() {
+        for (let i = 0; i < this.throwableObjects.length; i++) {
+            let bottle = this.throwableObjects[i];
+
+            if (bottle.hasSplashed) {
+                let timePassed = new Date().getTime() - bottle.splashTime;
+                timePassed /= 1000;
+
+                if (timePassed > 0.3) {
+                    this.throwableObjects.splice(i, 1);
+                }
+            }
+
+            if (bottle.isOnGround() && !bottle.hasSplashed) {
+                bottle.splashBottle();
             }
         }
     }
@@ -194,9 +228,16 @@ export class World {
                 return;
             }
 
-            const fallingDown = this.character.speedY < 0;
 
-            if (this.character.isColliding(enemy) && fallingDown) {
+            const fallingDown = this.character.speedY <= 0;
+            const characterAboveEnemy =
+                this.character.y + this.character.height <= enemy.y + 40;
+
+            if (
+                this.character.isColliding(enemy) &&
+                fallingDown &&
+                characterAboveEnemy
+            ) {
                 enemy.die();
 
                 // resets speedY to be above 0 again so the falling down condition works every time
@@ -211,8 +252,8 @@ export class World {
                 return;
             }
 
-            if (this.character.isColliding(enemy)) {
-                this.character.hit();
+            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+                this.character.hit(enemy.damage);
                 this.statusBar.setPercentage(this.character.energy);
             }
         });

@@ -28,20 +28,50 @@
 
             <div class="start-screen">
                 <img
-                    src="./assets/img/9_intro_outro_screens/start/startscreen_1.png" alt="game start screen"
+                    src="./assets/img/9_intro_outro_screens/start/startscreen_1.png"
+                    alt="game start screen"
                 />
                 <button id="start-button">Start Game</button>
             </div>
 
             <div class="game-over-screen d-none">
-                <img src="./assets/img/9_intro_outro_screens/game_over/game over!.png" alt="game over screen">
+                <img
+                    src="./assets/img/9_intro_outro_screens/game_over/game over!.png"
+                    alt="game over screen"
+                />
                 <button id="restart-button">Try again</button>
             </div>
 
             <div class="win-screen d-none">
-                <img src="./assets/img/You won, you lost/You won A.png" alt="win game screen">
-                <button id="restart-button">Try again</button>
+                <img
+                    src="./assets/img/You won, you lost/You won A.png"
+                    alt="win game screen"
+                />
+                <button id="restart-button-won">Try again</button>
             </div>
         </div>
+
+        <div class="navigation">
+            <div class="content">
+                <button id="instructions-button">?</button>
+            </div>
+        </div>
+
+        <dialog id="dialog" data-id="dialog">
+            <header>
+                <h2>How to play</h2>
+                <button id="close-dialog"><p>x</p></button>
+            </header>
+
+            <div class="dialog-content">
+                <p>> Move Pepe with the arrow keys.</p>
+                <p>> Jump with Space.</p>
+                <p>> Throw bottles with D.</p>
+                <p>
+                    > Defeat the chickens and the Endboss by jumping onto them
+                    or by throwing a bottle at them!
+                </p>
+            </div>
+        </dialog>
     </body>
 </html>

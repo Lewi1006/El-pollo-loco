@@ -1,3 +1,11 @@
+.d-none {
+    display: none;
+}
+
+.no-scroll {
+    overflow: hidden;
+}
+
 body {
     display: flex;
     justify-content: center;
@@ -39,9 +47,13 @@ div {
     }
 
     #start-button {
-        background-color: aliceblue;
-        height: 40px;
-        width: 100px;
+        _background-color: rgba(44, 169, 206);
+        background-color: rgba(221, 232, 235);
+        letter-spacing: 1px;
+        font-size: 24px;
+        height: fit-content;
+        width: fit-content;
+        padding: 8px 25px;
         border-radius: 30px;
         position: absolute;
         bottom: 20px;
@@ -49,17 +61,20 @@ div {
     }
 }
 
-.game-over-screen{
-     position: absolute;
+.game-over-screen {
+    position: absolute;
     img {
         width: 720px;
         height: 480px;
     }
 
-        #restart-button {
-        background-color: aliceblue;
-        height: 40px;
-        width: 100px;
+    #restart-button {
+        background-color: rgba(221, 232, 235);
+        letter-spacing: 1px;
+        font-size: 24px;
+        height: fit-content;
+        width: fit-content;
+        padding: 8px 25px;
         border-radius: 30px;
         position: absolute;
         bottom: 20px;
@@ -67,19 +82,21 @@ div {
     }
 }
 
-
-.win-screen{
-     position: absolute;
+.win-screen {
+    position: absolute;
     img {
         width: 720px;
         height: 480px;
         object-fit: contain;
     }
 
-        #restart-button {
-        background-color: aliceblue;
-        height: 40px;
-        width: 100px;
+    #restart-button-won {
+        background-color: rgba(221, 232, 235);
+        letter-spacing: 1px;
+        font-size: 24px;
+        height: fit-content;
+        width: fit-content;
+        padding: 8px 25px;
         border-radius: 30px;
         position: absolute;
         bottom: 20px;
@@ -87,7 +104,68 @@ div {
     }
 }
 
+.navigation {
+    width: 100%;
+    height: 70px;
+    _background-color: blue;
 
-.d-none{
-    display: none;
+    .content {
+        width: 720px;
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+
+        #instructions-button {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: rgba(221, 232, 235);
+            font-size: 20px;
+        }
+    }
+}
+
+#dialog {
+    height: 300px;
+    width: 280px;
+    background-color: rgba(221, 232, 235);
+    margin: auto;
+    border-radius: 30px;
+    padding: 20px;
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 30px;
+        width: 100%;
+
+        h2 {
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        button p {
+            /* font-family: 'Nunito'; */
+            font-size: 20px;
+        }
+    }
+
+    .dialog-content {
+        padding-top: 10px;
+        height: calc(100% - 30px);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        p {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 16px;
+            text-align: left;
+            line-height: 1;
+        }
+    }
 }

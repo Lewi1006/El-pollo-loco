@@ -4,20 +4,28 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 
 export class ThrowableObject extends MovableObject {
     imagesBottleRotation = ImageHelper.BOTTLE.rotation;
+    imagesBottleSplash = ImageHelper.BOTTLE.splash;
 
     throwable = true;
+    hasSplashed = false;
+    splashTime = 0;
 
-    constructor(x, y) {
+    // when we create bottle in world we pass the coordinates as well as the diection
+    // the character has because bottle should be thrown the way the character is walking into
+    constructor(x, y, otherDirection) {
         super();
         this.loadImage(ImageHelper.BOTTLE.rotation[0]);
         this.loadImages(this.imagesBottleRotation);
+        this.loadImages(this.imagesBottleSplash);
 
         this.x = x;
         this.y = y;
         this.height = 60;
         this.width = 50;
+        this.otherDirection = otherDirection;
 
         this.throw();
+        this.lastThrow = new Date().getTime();
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
         IntervalHub.startInterval(this.rotateBottle, 120);
         IntervalHub.startInterval(this.throwForward, 25);
@@ -30,11 +38,40 @@ export class ThrowableObject extends MovableObject {
         this.rotateBottle();
     }
 
+    applyGravity = () => {
+        if (this.hasSplashed) return;
+
+        if (this.isAboveGround() || this.speedY > 0) {
+            this.y -= this.speedY;
+            this.speedY -= this.acceleration;
+        }
+    };
+
     throwForward = () => {
-        this.x += 10;
+        if (this.hasSplashed) return;
+
+        if (this.otherDirection) {
+            this.x -= 10;
+        } else {
+            this.x += 10;
+        }
     };
 
     rotateBottle = () => {
+        if (this.hasSplashed) return;
         this.playAnimation(this.imagesBottleRotation);
     };
+
+    isOnGround() {
+        return this.y >= 380;
+    }
+
+    splashBottle() {
+        if (this.hasSplashed) return;
+
+        this.hasSplashed = true;
+        this.splashTime = new Date().getTime();
+        this.playAnimation(this.imagesBottleSplash);
+    }
+
 }
