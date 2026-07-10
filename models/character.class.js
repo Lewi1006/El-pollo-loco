@@ -25,6 +25,8 @@ export class Character extends MovableObject {
     };
     lastMove = 0;
     longIdleStart = 15;
+    isRunSoundPlaying = false;
+    
     // #endregion
 
     constructor() {
@@ -73,12 +75,32 @@ export class Character extends MovableObject {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
             this.lastMove = new Date().getTime();
-            SoundHub.playOne(SoundHub.jump);
+            // SoundHub.playOne(SoundHub.jump);
         }
+
+        this.manageRunSound();
+        // this.manageJumpSound();
 
         // tie camera to character
         this.world.camera_x = -this.x + 100;
     };
+
+    manageRunSound() {
+        if (
+            (this.world.keyboard.LEFT || this.world.keyboard.RIGHT) &&
+            !this.isAboveGround()
+        ) {
+            if (!this.isRunSoundPlaying) {
+                SoundHub.playOne(SoundHub.run);
+                this.isRunSoundPlaying = true;
+            }
+        } else {
+            SoundHub.pauseOne(SoundHub.run);
+            this.isRunSoundPlaying = false;
+        }
+    }
+
+
 
     updateAnimation = () => {
         if (this.isDead()) {
@@ -98,6 +120,7 @@ export class Character extends MovableObject {
 
     jump() {
         this.speedY = 30;
+        SoundHub.playOne(SoundHub.jump);
     }
 
     // we add long idle state so that character falls asleep if it has not been moved for 15 seconds

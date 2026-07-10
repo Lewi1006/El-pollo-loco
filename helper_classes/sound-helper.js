@@ -1,9 +1,12 @@
 export class SoundHub {
     // Audio
     static jump = new Audio("../assets/sounds/character/characterJump.wav");
+    static run = new Audio("../assets/sounds/character/characterRun.mp3");
+    static damage = new Audio ("../assets/sounds/character/characterDamage.mp3");
+
 
     // Array containing all audio files
-    static allSounds = [ SoundHub.jump,];
+    static allSounds = [ SoundHub.jump, SoundHub.run, SoundHub.damage];
 
 
     // plays a single audio file
