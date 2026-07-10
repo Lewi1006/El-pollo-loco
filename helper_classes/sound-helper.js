@@ -1,10 +1,16 @@
 export class SoundHub {
     // Audio
+    // #region character
     static jump = new Audio("../assets/sounds/character/characterJump.wav");
     static run = new Audio("../assets/sounds/character/characterRun.mp3");
     static damage = new Audio ("../assets/sounds/character/characterDamage.mp3");
     static dead = new Audio ("../assets/sounds/character/characterDead.wav");
     static snore = new Audio ("../assets/sounds/character/characterSnoring.mp3");
+    // #endregion
+
+    // #region chicken
+    static chickenDead = new Audio("../assets/sounds/chicken/chickenDead.mp3");
+    // #endregion
 
 
 
