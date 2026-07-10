@@ -26,7 +26,8 @@ export class Character extends MovableObject {
     lastMove = 0;
     longIdleStart = 15;
     isRunSoundPlaying = false;
-    
+    isSnoreSoundPlaying = false;
+
     // #endregion
 
     constructor() {
@@ -79,10 +80,27 @@ export class Character extends MovableObject {
         }
 
         this.manageRunSound();
-        // this.manageJumpSound();
 
         // tie camera to character
         this.world.camera_x = -this.x + 100;
+    };
+
+    updateAnimation = () => {
+        if (this.isDead()) {
+            this.playAnimation(this.imagesDead);
+        } else if (this.isHurt()) {
+            this.playAnimation(this.imagesHurt);
+        } else if (this.isAboveGround()) {
+            this.playAnimation(this.imagesJump);
+        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            this.playAnimation(this.imagesWalk);
+        } else if (this.isLongIdle()) {
+            this.playAnimation(this.imagesLongIdle);
+        } else {
+            this.playAnimation(this.imagesIdle);
+        }
+
+        this.manageSnoreSound();
     };
 
     manageRunSound() {
@@ -100,27 +118,30 @@ export class Character extends MovableObject {
         }
     }
 
-
-
-    updateAnimation = () => {
-        if (this.isDead()) {
-            this.playAnimation(this.imagesDead);
-        } else if (this.isHurt()) {
-            this.playAnimation(this.imagesHurt);
-        } else if (this.isAboveGround()) {
-            this.playAnimation(this.imagesJump);
-        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-            this.playAnimation(this.imagesWalk);
-        } else if (this.isLongIdle()) {
-            this.playAnimation(this.imagesLongIdle);
+    manageSnoreSound(){
+        if(this.isLongIdle()){
+            if(!this.isSnoreSoundPlaying){
+                SoundHub.playOne(SoundHub.snore);
+                this.isSnoreSoundPlaying = true;
+            } 
         } else {
-            this.playAnimation(this.imagesIdle);
+            SoundHub.pauseOne(SoundHub.snore);
+            this.isSnoreSoundPlaying = false;
         }
-    };
+    }
+
+
+
 
     jump() {
         this.speedY = 30;
         SoundHub.playOne(SoundHub.jump);
+    }
+
+    // call super so all conditions are still valid? other wise no timePassed delay
+    die(){
+        super.die();
+        SoundHub.playOne(SoundHub.dead);
     }
 
     // we add long idle state so that character falls asleep if it has not been moved for 15 seconds

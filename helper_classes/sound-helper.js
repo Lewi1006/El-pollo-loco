@@ -3,8 +3,12 @@ export class SoundHub {
     static jump = new Audio("../assets/sounds/character/characterJump.wav");
     static run = new Audio("../assets/sounds/character/characterRun.mp3");
     static damage = new Audio ("../assets/sounds/character/characterDamage.mp3");
+    static dead = new Audio ("../assets/sounds/character/characterDead.wav");
+    static snore = new Audio ("../assets/sounds/character/characterSnoring.mp3");
 
 
+
+   
     // Array containing all audio files
     static allSounds = [ SoundHub.jump, SoundHub.run, SoundHub.damage];
 
@@ -28,3 +32,5 @@ export class SoundHub {
         sound.pause();  
     }
 }
+
+ SoundHub.snore.loop = true;
