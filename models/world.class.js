@@ -23,6 +23,7 @@ import { BottleStatus } from "./status-bar-bottles.class.js";
 import { EndbossStatus } from "./status-bar-endboss.class.js";
 import { Endboss } from "./endboss.class.js";
 import { BabyChicken } from "./baby-chicken.class.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 // #endregion
 
@@ -168,6 +169,7 @@ export class World {
                 this.bottleCounter++;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;
                 this.statusBarBottles.setPercentage(percentage);
+                SoundHub.playOne(SoundHub.bottle);
             }
         }
     }
@@ -268,6 +270,7 @@ export class World {
                 this.coinCounter++;
                 let percentage = (this.coinCounter / this.totalCoins) * 100;
                 this.statusBarCoins.setPercentage(percentage);
+                SoundHub.playOne(SoundHub.coin);
             }
         }
     }

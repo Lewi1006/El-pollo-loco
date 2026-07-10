@@ -8,10 +8,12 @@ export class SoundHub {
     static snore = new Audio ("../assets/sounds/character/characterSnoring.mp3");
     // #endregion
 
-    // #region chicken
     static chickenDead = new Audio("../assets/sounds/chicken/chickenDead.mp3");
+   
+    // #region collectibles
+    static bottle = new Audio("../assets/sounds/collectibles/bottleCollectSound.wav");
+    static coin = new Audio("../assets/sounds/collectibles/collectSound.wav");
     // #endregion
-
 
 
    
