@@ -146,6 +146,8 @@ export class World {
                     enemy.hit();
                     this.statusBarEndboss.setPercentage(enemy.energy);
                     this.throwableObjects.splice(i, 1);
+                    // bottle.splashBottle();
+                    SoundHub.playOne(SoundHub.break, 0.2);
                 }
 
                 if (
@@ -155,6 +157,8 @@ export class World {
                 ) {
                     enemy.die();
                     this.throwableObjects.splice(i, 1);
+                    // bottle.splashBottle();
+                    SoundHub.playOne(SoundHub.break, 0.2);
                 }
             });
         }
@@ -230,7 +234,6 @@ export class World {
                 return;
             }
 
-
             const fallingDown = this.character.speedY <= 0;
             const characterAboveEnemy =
                 this.character.y + this.character.height <= enemy.y + 40;
@@ -270,7 +273,7 @@ export class World {
                 this.coinCounter++;
                 let percentage = (this.coinCounter / this.totalCoins) * 100;
                 this.statusBarCoins.setPercentage(percentage);
-                SoundHub.playOne(SoundHub.coin, 0.1);
+                SoundHub.playOne(SoundHub.coin, 0.2);
             }
         }
     }

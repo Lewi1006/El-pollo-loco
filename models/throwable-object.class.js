@@ -1,6 +1,7 @@
 import { MovableObject } from "./movable-object.class.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 export class ThrowableObject extends MovableObject {
     imagesBottleRotation = ImageHelper.BOTTLE.rotation;
@@ -72,6 +73,8 @@ export class ThrowableObject extends MovableObject {
         this.hasSplashed = true;
         this.splashTime = new Date().getTime();
         this.playAnimation(this.imagesBottleSplash);
+
+        SoundHub.playOne(SoundHub.break, 0.2);
     }
 
 }
