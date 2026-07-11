@@ -52,6 +52,7 @@ export class Endboss extends MovableObject {
     // endboss energy
     hit() {
         this.energy -= 20;
+        SoundHub.playOne(SoundHub.endbossHit, 0.2);
         if (this.energy <= 0) {
             this.energy = 0;
             this.die();
@@ -113,7 +114,7 @@ export class Endboss extends MovableObject {
 
     manageApproachSound(){
         if(this.hasStartedWalking && !this.isApproachSoundPlaying){
-            SoundHub.playOne(SoundHub.endbossApproaching, 1);
+            SoundHub.playOne(SoundHub.endbossApproaching, 0.2);
             this.isApproachSoundPlaying = true;
 
         }

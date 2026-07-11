@@ -20,7 +20,13 @@ export class SoundHub {
 
     // #region endboss
     static endbossApproaching = new Audio(
-        "../assets/sounds/endboss/endbossApproach.wav",
+        "../assets/sounds/endboss/endbossApproachLoud.wav",
+    );
+    static endbossHit = new Audio(
+        "../assets/sounds/endboss/endbossHit2.wav",
+    );
+    static endbossAttck = new Audio(
+        "../assets/sounds/endboss/endbossAttack.wav",
     );
     // #endregion
 
