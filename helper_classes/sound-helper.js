@@ -25,7 +25,7 @@ export class SoundHub {
     static endbossHit = new Audio(
         "../assets/sounds/endboss/endbossHit2.wav",
     );
-    static endbossAttck = new Audio(
+    static endbossAttack = new Audio(
         "../assets/sounds/endboss/endbossAttack.wav",
     );
     // #endregion
@@ -60,5 +60,4 @@ export class SoundHub {
 }
 
 SoundHub.snore.loop = true;
-// SoundHub.coin.volume = 0;
-// SoundHub.endbossApproaching.volume = 1;
+SoundHub.endbossAttack.loop = true;

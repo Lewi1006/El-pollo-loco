@@ -26,6 +26,7 @@ export class Endboss extends MovableObject {
     hurtTime = 1;
     damage = 20;
     isApproachSoundPlaying = false;
+    isAttackSoundPlaying = false;
     // #endregion
 
     constructor() {
@@ -83,6 +84,7 @@ export class Endboss extends MovableObject {
         }
 
         this.manageApproachSound();
+        this.manageAttackSound();
     };
 
     updateAnimation = () => {
@@ -112,11 +114,21 @@ export class Endboss extends MovableObject {
     }
 
 
+    // manage sound with flags and true and false because in update movement it 
+    // plays in an interval so my sound would continously be triggered and never plays in one
     manageApproachSound(){
         if(this.hasStartedWalking && !this.isApproachSoundPlaying){
             SoundHub.playOne(SoundHub.endbossApproaching, 0.2);
             this.isApproachSoundPlaying = true;
 
+        }
+    }
+
+
+    manageAttackSound(){
+        if(this.isAttacking && !this.isAttackSoundPlaying){
+            SoundHub.playOne(SoundHub.endbossAttack, 0.2);
+            this.isAttackSoundPlaying = true;
         }
     }
     // #endregion
