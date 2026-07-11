@@ -7,6 +7,7 @@
 
 import { World } from "../models/world.class.js";
 import { Keyboard } from "../helper_classes/keyboard-manager.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 let canvas;
 let world;
@@ -87,6 +88,7 @@ function startGame() {
     init();
 
     world.gameStarted = true;
+    SoundHub.playOne(SoundHub.start, 0.2);
 }
 
 

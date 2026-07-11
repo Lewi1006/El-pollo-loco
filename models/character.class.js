@@ -76,7 +76,6 @@ export class Character extends MovableObject {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
             this.lastMove = new Date().getTime();
-            // SoundHub.playOne(SoundHub.jump);
         }
 
         this.manageRunSound();
@@ -109,11 +108,11 @@ export class Character extends MovableObject {
             !this.isAboveGround()
         ) {
             if (!this.isRunSoundPlaying) {
-                SoundHub.playOne(SoundHub.run);
+                SoundHub.playOne(SoundHub.run, 0.2);
                 this.isRunSoundPlaying = true;
             }
         } else {
-            SoundHub.pauseOne(SoundHub.run);
+            SoundHub.pauseOne(SoundHub.run, 0.2);
             this.isRunSoundPlaying = false;
         }
     }
@@ -121,11 +120,11 @@ export class Character extends MovableObject {
     manageSnoreSound(){
         if(this.isLongIdle()){
             if(!this.isSnoreSoundPlaying){
-                SoundHub.playOne(SoundHub.snore);
+                SoundHub.playOne(SoundHub.snore, 0.1);
                 this.isSnoreSoundPlaying = true;
             } 
         } else {
-            SoundHub.pauseOne(SoundHub.snore);
+            SoundHub.pauseOne(SoundHub.snore, 0.1);
             this.isSnoreSoundPlaying = false;
         }
     }
@@ -135,13 +134,13 @@ export class Character extends MovableObject {
 
     jump() {
         this.speedY = 30;
-        SoundHub.playOne(SoundHub.jump);
+        SoundHub.playOne(SoundHub.jump, 0.2);
     }
 
     // call super so all conditions are still valid? other wise no timePassed delay
     die(){
         super.die();
-        SoundHub.playOne(SoundHub.dead);
+        SoundHub.playOne(SoundHub.dead, 0.2);
     }
 
     // we add long idle state so that character falls asleep if it has not been moved for 15 seconds

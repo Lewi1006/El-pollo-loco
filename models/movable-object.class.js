@@ -41,7 +41,7 @@ export class MovableObject extends DrawableObject {
          if (this.hasDied) return;
         
         this.energy -= damage;
-        SoundHub.playOne(SoundHub.damage)
+        SoundHub.playOne(SoundHub.damage, 0.2)
 
         if (this.energy <= 0) {
             this.die();

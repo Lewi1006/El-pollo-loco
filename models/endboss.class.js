@@ -1,6 +1,7 @@
 import { MovableObject } from "./movable-object.class.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 export class Endboss extends MovableObject {
     // #region properties
@@ -24,6 +25,7 @@ export class Endboss extends MovableObject {
     isAttacking = false;
     hurtTime = 1;
     damage = 20;
+    isApproachSoundPlaying = false;
     // #endregion
 
     constructor() {
@@ -78,6 +80,8 @@ export class Endboss extends MovableObject {
         if (this.hasStartedWalking && !this.isAttacking) {
             this.moveLeft();
         }
+
+        this.manageApproachSound();
     };
 
     updateAnimation = () => {
@@ -106,7 +110,13 @@ export class Endboss extends MovableObject {
         return Math.hypot(distanceX, distanceY);
     }
 
-    // #endregion
 
-    // why does endboss dissapear when I get close and does not start playing the walking animation
+    manageApproachSound(){
+        if(this.hasStartedWalking && !this.isApproachSoundPlaying){
+            SoundHub.playOne(SoundHub.endbossApproaching, 1);
+            this.isApproachSoundPlaying = true;
+
+        }
+    }
+    // #endregion
 }

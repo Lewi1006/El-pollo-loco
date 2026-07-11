@@ -169,7 +169,7 @@ export class World {
                 this.bottleCounter++;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;
                 this.statusBarBottles.setPercentage(percentage);
-                SoundHub.playOne(SoundHub.bottle);
+                SoundHub.playOne(SoundHub.bottle, 0.2);
             }
         }
     }
@@ -270,7 +270,7 @@ export class World {
                 this.coinCounter++;
                 let percentage = (this.coinCounter / this.totalCoins) * 100;
                 this.statusBarCoins.setPercentage(percentage);
-                SoundHub.playOne(SoundHub.coin);
+                SoundHub.playOne(SoundHub.coin, 0.1);
             }
         }
     }

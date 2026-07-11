@@ -51,7 +51,7 @@ export class Chicken extends MovableObject {
 
       die(){
         super.die();
-        SoundHub.playOne(SoundHub.chickenDead);
+        SoundHub.playOne(SoundHub.chickenDead, 0.2);
     }
 
     // #endregion
