@@ -19,7 +19,7 @@ export class Chicken extends MovableObject {
         this.loadImage(this.imagesWalk[0]);
         this.loadImages(this.imagesWalk);
         this.loadImages(this.imagesDead);
-        this.x = 300 + Math.random() * 2800;
+        this.x = 400 + Math.random() * 5000;
         this.speed = 0.15 + Math.random() * 0.5;
         this.animate();
         IntervalHub.startInterval(this.updateMovement, 1000 / 60);
@@ -51,7 +51,7 @@ export class Chicken extends MovableObject {
 
       die(){
         super.die();
-        SoundHub.playOne(SoundHub.chickenDead, 0.2);
+        SoundHub.playOne(SoundHub.chickenDead, 0.6);
     }
 
     // #endregion

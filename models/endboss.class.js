@@ -118,7 +118,7 @@ export class Endboss extends MovableObject {
     // plays in an interval so my sound would continously be triggered and never plays in one
     manageApproachSound(){
         if(this.hasStartedWalking && !this.isApproachSoundPlaying){
-            SoundHub.playOne(SoundHub.endbossApproaching, 0.2);
+            SoundHub.playOne(SoundHub.endbossApproaching, 0.1);
             this.isApproachSoundPlaying = true;
 
         }

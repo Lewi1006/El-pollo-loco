@@ -80,7 +80,6 @@ document.addEventListener("keyup", (event) => {
 const startButtonRef = document.getElementById("start-button");
 startButtonRef.addEventListener("click", startGame);
 
-
 function startGame() {
     const startScreenRef = document.querySelector(".start-screen");
     startScreenRef.classList.add(`d-none`);
@@ -88,9 +87,8 @@ function startGame() {
     init();
 
     world.gameStarted = true;
-    SoundHub.playOne(SoundHub.start, 0.2);
+    SoundHub.playOne(SoundHub.start, 0.4);
 }
-
 
 const restartButtonRef = document.getElementById("restart-button");
 restartButtonRef.addEventListener("click", restartGame);
@@ -99,34 +97,43 @@ const restartButtonWonRef = document.getElementById(`restart-button-won`);
 restartButtonWonRef.addEventListener(`click`, restartGame);
 
 // https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
-function restartGame(){
+function restartGame() {
     window.location.reload();
 }
 // #endregion
-
-
-
-
-
 
 // #region dialog
 const instructionsButtonRef = document.getElementById(`instructions-button`);
 instructionsButtonRef.addEventListener(`click`, openDialog);
 
 function openDialog() {
-  let dialogRef = document.getElementById(`dialog`);
-  dialogRef.showModal();
-  document.body.classList.add("no-scroll");
+    let dialogRef = document.getElementById(`dialog`);
+    dialogRef.showModal();
+    document.body.classList.add("no-scroll");
 }
 
-
 const closeDialogRef = document.getElementById(`close-dialog`);
-closeDialogRef.addEventListener('click', closeDialog);
+closeDialogRef.addEventListener("click", closeDialog);
 
 function closeDialog() {
-  let dialogRef = document.getElementById(`dialog`);
-  dialogRef.close();
-  document.body.classList.remove("no-scroll");
+    let dialogRef = document.getElementById(`dialog`);
+    dialogRef.close();
+    document.body.classList.remove("no-scroll");
 }
 
 // #endregion
+
+const soundButtonRef = document.getElementById(`sound-button`);
+const soundIconRef = document.getElementById(`sound-icon`);
+
+soundButtonRef.addEventListener("click", () => {
+    //    https://stackoverflow.com/questions/11604409/how-to-toggle-a-boolean?
+    SoundHub.isMuted = !SoundHub.isMuted;
+
+    if (SoundHub.isMuted) {
+        SoundHub.pauseAll();
+        soundIconRef.src = "./assets/icons/sound_off.png";
+    } else {
+        soundIconRef.src = "./assets/icons/sound_on.png";
+    }
+});

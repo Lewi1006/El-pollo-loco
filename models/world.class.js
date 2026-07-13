@@ -98,6 +98,7 @@ export class World {
                 this.gameOver = true;
 
                 IntervalHub.stopAllIntervals();
+                SoundHub.pauseAll();
 
                 const gameOverScreenRef =
                     document.querySelector(`.game-over-screen`);
@@ -116,6 +117,7 @@ export class World {
                     this.gameWon = true;
 
                     IntervalHub.stopAllIntervals();
+                    SoundHub.pauseAll();
 
                     const winScreenRef = document.querySelector(`.win-screen`);
                     winScreenRef.classList.remove(`d-none`);
@@ -173,7 +175,7 @@ export class World {
                 this.bottleCounter++;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;
                 this.statusBarBottles.setPercentage(percentage);
-                SoundHub.playOne(SoundHub.bottle, 0.2);
+                SoundHub.playOne(SoundHub.bottle, 0.4);
             }
         }
     }
@@ -235,13 +237,11 @@ export class World {
             }
 
             const fallingDown = this.character.speedY <= 0;
-            const characterAboveEnemy =
-                this.character.y + this.character.height <= enemy.y + 40;
 
             if (
                 this.character.isColliding(enemy) &&
                 fallingDown &&
-                characterAboveEnemy
+                this.character.isAboveGround()
             ) {
                 enemy.die();
 
@@ -273,7 +273,7 @@ export class World {
                 this.coinCounter++;
                 let percentage = (this.coinCounter / this.totalCoins) * 100;
                 this.statusBarCoins.setPercentage(percentage);
-                SoundHub.playOne(SoundHub.coin, 0.2);
+                SoundHub.playOne(SoundHub.coin, 0.05);
             }
         }
     }

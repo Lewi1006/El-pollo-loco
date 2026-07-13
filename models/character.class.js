@@ -108,11 +108,11 @@ export class Character extends MovableObject {
             !this.isAboveGround()
         ) {
             if (!this.isRunSoundPlaying) {
-                SoundHub.playOne(SoundHub.run, 0.2);
+                SoundHub.playOne(SoundHub.run, 0.1);
                 this.isRunSoundPlaying = true;
             }
         } else {
-            SoundHub.pauseOne(SoundHub.run, 0.2);
+            SoundHub.pauseOne(SoundHub.run, 0.1);
             this.isRunSoundPlaying = false;
         }
     }
@@ -140,7 +140,7 @@ export class Character extends MovableObject {
     // call super so all conditions are still valid? other wise no timePassed delay
     die(){
         super.die();
-        SoundHub.playOne(SoundHub.dead, 0.2);
+        SoundHub.playOne(SoundHub.dead, 0.15);
     }
 
     // we add long idle state so that character falls asleep if it has not been moved for 15 seconds
