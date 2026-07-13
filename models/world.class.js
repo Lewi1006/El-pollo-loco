@@ -13,7 +13,7 @@ import { Cloud } from "./cloud.class.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { Level } from "./level.class.js";
-import { level1 } from "../levels/level1.js";
+import { initLevel1} from "../levels/level1.js";
 import { StatusBarHealth } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 import { Bottle } from "./bottle.class.js";
@@ -69,7 +69,7 @@ export class World {
         this.showGameWonScreen = showGameWonScreen;
 
         this.character = new Character();
-        this.level = level1; //current level data
+        this.level = initLevel1(); //current level data
 
         this.setWorld();
         this.draw();
