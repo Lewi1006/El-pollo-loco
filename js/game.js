@@ -13,9 +13,19 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+function showGameOverScreen() {
+    const gameOverScreenRef = document.querySelector(`.game-over-screen`);
+    gameOverScreenRef.classList.remove(`d-none`);
+}
+
+function showGameWonScreen() {
+    const winScreenRef = document.querySelector(`.win-screen`);
+    winScreenRef.classList.remove(`d-none`);
+}
+
 function init() {
     canvas = document.getElementById("canvas");
-    world = new World(canvas, keyboard);
+    world = new World(canvas, keyboard, showGameOverScreen, showGameWonScreen);
     // window.world = world;
     // window.keyboard = keyboard;
     // SoundHub.getSoundFromLocalStorage();
@@ -94,7 +104,6 @@ const homeButtonRef = document.getElementById("home-button");
 startButtonRef.addEventListener("click", startGame);
 
 function startGame() {
-    startScreenRef.classList.add(`d-none`);
     showGameUI();
     init();
 
@@ -109,40 +118,16 @@ function restartGame() {
     winScreenRef.classList.add("d-none");
     showGameUI();
 
-    keyboard = new Keyboard();
     init();
     world.gameStarted = true;
-
 }
 
 homeButtonRef.addEventListener("click", goToHomeScreen);
 
 function goToHomeScreen() {
-    // stop game
     world.stopGame();
     showHomeUI();
-
-    
-    // // show start screen
-    // startScreenRef.classList.remove("d-none");
-
-    // // hide other screens
-    // gameOverScreenRef.classList.add("d-none");
-    // winScreenRef.classList.add("d-none");
 }
-
-soundButtonRef.addEventListener("click", () => {
-    SoundHub.toggleSound();
-
-    if (SoundHub.isMuted) {
-        soundIconRef.src = "./assets/icons/sound_off.png";
-    } else {
-        soundIconRef.src = "./assets/icons/sound_on.png";
-    }
-
-    // https://www.w3schools.com/JSREF/met_html_blur.asp
-    soundButtonRef.blur();
-});
 
 function showHomeUI() {
     // show start screen
@@ -162,6 +147,19 @@ function showGameUI() {
     instructionsButtonRef.classList.add(`d-none`);
     homeButtonRef.classList.remove(`d-none`);
 }
+
+soundButtonRef.addEventListener("click", () => {
+    SoundHub.toggleSound();
+
+    if (SoundHub.isMuted) {
+        soundIconRef.src = "./assets/icons/sound_off.png";
+    } else {
+        soundIconRef.src = "./assets/icons/sound_on.png";
+    }
+
+    // https://www.w3schools.com/JSREF/met_html_blur.asp
+    soundButtonRef.blur();
+});
 
 // #region dialog
 instructionsButtonRef.addEventListener(`click`, openDialog);
