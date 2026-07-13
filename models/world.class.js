@@ -83,6 +83,7 @@ export class World {
 
     // method for running other methods like collision or throwObjects
     run = () => {
+        console.log("running");
         if (this.gameOver) return;
 
         this.checkGameOver();

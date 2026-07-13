@@ -107,9 +107,12 @@ restartButtonWonRef.addEventListener(`click`, restartGame);
 function restartGame() {
     gameOverScreenRef.classList.add("d-none");
     winScreenRef.classList.add("d-none");
+    showGameUI();
 
     keyboard = new Keyboard();
     init();
+    world.gameStarted = true;
+
 }
 
 homeButtonRef.addEventListener("click", goToHomeScreen);
