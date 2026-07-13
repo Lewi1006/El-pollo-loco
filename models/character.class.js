@@ -25,6 +25,9 @@ export class Character extends MovableObject {
     };
     lastMove = 0;
     longIdleStart = 15;
+    isRunSoundPlaying = false;
+    isSnoreSoundPlaying = false;
+
     // #endregion
 
     constructor() {
@@ -73,8 +76,9 @@ export class Character extends MovableObject {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
             this.lastMove = new Date().getTime();
-            SoundHub.playOne(SoundHub.jump);
         }
+
+        this.manageRunSound();
 
         // tie camera to character
         this.world.camera_x = -this.x + 100;
@@ -94,10 +98,49 @@ export class Character extends MovableObject {
         } else {
             this.playAnimation(this.imagesIdle);
         }
+
+        this.manageSnoreSound();
     };
+
+    manageRunSound() {
+        if (
+            (this.world.keyboard.LEFT || this.world.keyboard.RIGHT) &&
+            !this.isAboveGround()
+        ) {
+            if (!this.isRunSoundPlaying) {
+                SoundHub.playOne(SoundHub.run, 0.1);
+                this.isRunSoundPlaying = true;
+            }
+        } else {
+            SoundHub.pauseOne(SoundHub.run, 0.1);
+            this.isRunSoundPlaying = false;
+        }
+    }
+
+    manageSnoreSound(){
+        if(this.isLongIdle()){
+            if(!this.isSnoreSoundPlaying){
+                SoundHub.playOne(SoundHub.snore, 0.1);
+                this.isSnoreSoundPlaying = true;
+            } 
+        } else {
+            SoundHub.pauseOne(SoundHub.snore, 0.1);
+            this.isSnoreSoundPlaying = false;
+        }
+    }
+
+
+
 
     jump() {
         this.speedY = 30;
+        SoundHub.playOne(SoundHub.jump, 0.2);
+    }
+
+    // call super so all conditions are still valid? other wise no timePassed delay
+    die(){
+        super.die();
+        SoundHub.playOne(SoundHub.dead, 0.15);
     }
 
     // we add long idle state so that character falls asleep if it has not been moved for 15 seconds

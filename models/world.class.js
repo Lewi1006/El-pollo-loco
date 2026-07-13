@@ -23,6 +23,7 @@ import { BottleStatus } from "./status-bar-bottles.class.js";
 import { EndbossStatus } from "./status-bar-endboss.class.js";
 import { Endboss } from "./endboss.class.js";
 import { BabyChicken } from "./baby-chicken.class.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 // #endregion
 
@@ -31,8 +32,8 @@ export class World {
     gameStarted = false;
     gameOver = false;
     gameWon = false;
-    character = new Character();
-    level = level1; //current level data
+    character;
+    level;
     ctx;
     canvas;
     keyboard;
@@ -61,6 +62,9 @@ export class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
+
+        this.character = new Character();
+        this.level = level1; //current level data
 
         this.setWorld();
         this.draw();
@@ -96,13 +100,15 @@ export class World {
             if (timePassed > 2) {
                 this.gameOver = true;
 
-                IntervalHub.stopAllIntervals();
-
-                const gameOverScreenRef =
-                    document.querySelector(`.game-over-screen`);
-                gameOverScreenRef.classList.remove(`d-none`);
+                this.stopGame();
+                this.showGameOverScreen();
             }
         }
+    }
+
+    showGameOverScreen() {
+        const gameOverScreenRef = document.querySelector(`.game-over-screen`);
+        gameOverScreenRef.classList.remove(`d-none`);
     }
 
     checkGameWon() {
@@ -114,14 +120,24 @@ export class World {
                 if (timePassed > 1.5) {
                     this.gameWon = true;
 
-                    IntervalHub.stopAllIntervals();
-
-                    const winScreenRef = document.querySelector(`.win-screen`);
-                    winScreenRef.classList.remove(`d-none`);
+                    this.stopGame();
+                    this.showGameWonScreen();
                 }
             }
         });
     }
+
+    showGameWonScreen() {
+        const winScreenRef = document.querySelector(`.win-screen`);
+        winScreenRef.classList.remove(`d-none`);
+    }
+
+
+    stopGame() {
+        IntervalHub.stopAllIntervals();
+        SoundHub.pauseAll();
+    }
+
 
     // loops through the enemies of the level and checks if the enemy collides with the character
     // calls isColliding(), hit() from Character class
@@ -145,6 +161,8 @@ export class World {
                     enemy.hit();
                     this.statusBarEndboss.setPercentage(enemy.energy);
                     this.throwableObjects.splice(i, 1);
+                    // bottle.splashBottle();
+                    SoundHub.playOne(SoundHub.break, 0.2);
                 }
 
                 if (
@@ -154,6 +172,8 @@ export class World {
                 ) {
                     enemy.die();
                     this.throwableObjects.splice(i, 1);
+                    // bottle.splashBottle();
+                    SoundHub.playOne(SoundHub.break, 0.2);
                 }
             });
         }
@@ -168,6 +188,7 @@ export class World {
                 this.bottleCounter++;
                 let percentage = (this.bottleCounter / this.totalBottles) * 100;
                 this.statusBarBottles.setPercentage(percentage);
+                SoundHub.playOne(SoundHub.bottle, 0.4);
             }
         }
     }
@@ -228,15 +249,12 @@ export class World {
                 return;
             }
 
-
             const fallingDown = this.character.speedY <= 0;
-            const characterAboveEnemy =
-                this.character.y + this.character.height <= enemy.y + 40;
 
             if (
                 this.character.isColliding(enemy) &&
                 fallingDown &&
-                characterAboveEnemy
+                this.character.isAboveGround()
             ) {
                 enemy.die();
 
@@ -268,6 +286,7 @@ export class World {
                 this.coinCounter++;
                 let percentage = (this.coinCounter / this.totalCoins) * 100;
                 this.statusBarCoins.setPercentage(percentage);
+                SoundHub.playOne(SoundHub.coin, 0.05);
             }
         }
     }

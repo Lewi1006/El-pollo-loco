@@ -1,6 +1,7 @@
 import { MovableObject } from "./movable-object.class.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 export class Endboss extends MovableObject {
     // #region properties
@@ -24,6 +25,8 @@ export class Endboss extends MovableObject {
     isAttacking = false;
     hurtTime = 1;
     damage = 20;
+    isApproachSoundPlaying = false;
+    isAttackSoundPlaying = false;
     // #endregion
 
     constructor() {
@@ -50,6 +53,7 @@ export class Endboss extends MovableObject {
     // endboss energy
     hit() {
         this.energy -= 20;
+        SoundHub.playOne(SoundHub.endbossHit, 0.2);
         if (this.energy <= 0) {
             this.energy = 0;
             this.die();
@@ -78,6 +82,9 @@ export class Endboss extends MovableObject {
         if (this.hasStartedWalking && !this.isAttacking) {
             this.moveLeft();
         }
+
+        this.manageApproachSound();
+        this.manageAttackSound();
     };
 
     updateAnimation = () => {
@@ -106,7 +113,23 @@ export class Endboss extends MovableObject {
         return Math.hypot(distanceX, distanceY);
     }
 
-    // #endregion
 
-    // why does endboss dissapear when I get close and does not start playing the walking animation
+    // manage sound with flags and true and false because in update movement it 
+    // plays in an interval so my sound would continously be triggered and never plays in one
+    manageApproachSound(){
+        if(this.hasStartedWalking && !this.isApproachSoundPlaying){
+            SoundHub.playOne(SoundHub.endbossApproaching, 0.1);
+            this.isApproachSoundPlaying = true;
+
+        }
+    }
+
+
+    manageAttackSound(){
+        if(this.isAttacking && !this.isAttackSoundPlaying){
+            SoundHub.playOne(SoundHub.endbossAttack, 0.2);
+            this.isAttackSoundPlaying = true;
+        }
+    }
+    // #endregion
 }

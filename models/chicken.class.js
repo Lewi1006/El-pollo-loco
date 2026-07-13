@@ -1,6 +1,7 @@
 import { MovableObject } from "./movable-object.class.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 export class Chicken extends MovableObject {
     // #region properties
@@ -18,7 +19,7 @@ export class Chicken extends MovableObject {
         this.loadImage(this.imagesWalk[0]);
         this.loadImages(this.imagesWalk);
         this.loadImages(this.imagesDead);
-        this.x = 300 + Math.random() * 2800;
+        this.x = 400 + Math.random() * 5000;
         this.speed = 0.15 + Math.random() * 0.5;
         this.animate();
         IntervalHub.startInterval(this.updateMovement, 1000 / 60);
@@ -46,6 +47,12 @@ export class Chicken extends MovableObject {
             this.playAnimation(this.imagesWalk);
         }
     };
+
+
+      die(){
+        super.die();
+        SoundHub.playOne(SoundHub.chickenDead, 0.6);
+    }
 
     // #endregion
 }

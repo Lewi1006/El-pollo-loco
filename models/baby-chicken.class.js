@@ -1,6 +1,7 @@
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { MovableObject } from "./movable-object.class.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
+import { SoundHub } from "../helper_classes/sound-helper.js";
 
 export class BabyChicken extends MovableObject {
     // #region properties
@@ -48,4 +49,9 @@ export class BabyChicken extends MovableObject {
             this.playAnimation(this.imagesWalk);
         }
     };
+
+        die(){
+            super.die();
+            SoundHub.playOne(SoundHub.babyChickenDead, 0.8);
+        }
 }
