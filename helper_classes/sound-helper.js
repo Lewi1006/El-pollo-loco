@@ -41,14 +41,12 @@ export class SoundHub {
         SoundHub.babyChickenDead,
     ];
 
-
     static isMuted = false;
-
 
     // plays a single audio file
     static playOne(sound, volume) {
-        if(SoundHub.isMuted) return;
-        
+        if (SoundHub.isMuted) return;
+
         sound.volume = volume;
         sound.currentTime = 0;
         sound.play();
@@ -65,7 +63,30 @@ export class SoundHub {
     static pauseOne(sound) {
         sound.pause();
     }
-}
 
+    static saveSoundToLocalStorage() {
+        localStorage.setItem("soundMuted", JSON.stringify(SoundHub.isMuted));
+    }
+
+    static getSoundFromLocalStorage() {
+        const storedSound = localStorage.getItem("soundMuted");
+
+        if (storedSound !== null) {
+            SoundHub.isMuted = JSON.parse(storedSound);
+        }
+    }
+
+    static toggleSound() {
+        //    https://stackoverflow.com/questions/11604409/how-to-toggle-a-boolean?
+        SoundHub.isMuted = !SoundHub.isMuted;
+
+        // save the state to storage
+        SoundHub.saveSoundToLocalStorage();
+
+        if (SoundHub.isMuted) {
+            SoundHub.pauseAll();
+        }
+    }
+}
 SoundHub.snore.loop = true;
 SoundHub.endbossAttack.loop = true;

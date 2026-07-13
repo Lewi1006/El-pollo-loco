@@ -127,13 +127,15 @@ const soundButtonRef = document.getElementById(`sound-button`);
 const soundIconRef = document.getElementById(`sound-icon`);
 
 soundButtonRef.addEventListener("click", () => {
-    //    https://stackoverflow.com/questions/11604409/how-to-toggle-a-boolean?
-    SoundHub.isMuted = !SoundHub.isMuted;
+    SoundHub.toggleSound();
 
     if (SoundHub.isMuted) {
-        SoundHub.pauseAll();
         soundIconRef.src = "./assets/icons/sound_off.png";
     } else {
         soundIconRef.src = "./assets/icons/sound_on.png";
     }
+
+
+    // https://www.w3schools.com/JSREF/met_html_blur.asp
+    soundButtonRef.blur();
 });
