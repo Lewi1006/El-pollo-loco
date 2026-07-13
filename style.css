@@ -44,7 +44,7 @@ body {
                 display: flex;
                 flex-direction: row;
                 gap: 10px;
-                justify-content: flex-end;
+                justify-content: flex-start;
 
                 #instructions-button {
                     width: 25px;
@@ -52,6 +52,23 @@ body {
                     border-radius: 50%;
                     background-color: rgba(221, 232, 235);
                     font-size: 20px;
+                }
+
+                #home-button{
+                     width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    background-color: rgba(221, 232, 235);
+                    font-size: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img {
+                        height: 18px;
+                        width: auto;
+                    }
+
                 }
 
                 #sound-button {

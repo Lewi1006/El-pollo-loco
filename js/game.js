@@ -78,33 +78,89 @@ document.addEventListener("keyup", (event) => {
     }
 });
 
+// #endregion
+
+const startScreenRef = document.querySelector(".start-screen");
+const gameOverScreenRef = document.querySelector(".game-over-screen");
+const winScreenRef = document.querySelector(".win-screen");
 const startButtonRef = document.getElementById("start-button");
+const restartButtonRef = document.getElementById("restart-button");
+const restartButtonWonRef = document.getElementById(`restart-button-won`);
+const instructionsButtonRef = document.getElementById(`instructions-button`);
+const soundButtonRef = document.getElementById(`sound-button`);
+const soundIconRef = document.getElementById(`sound-icon`);
+const homeButtonRef = document.getElementById("home-button");
+
 startButtonRef.addEventListener("click", startGame);
 
 function startGame() {
-    const startScreenRef = document.querySelector(".start-screen");
     startScreenRef.classList.add(`d-none`);
-    instructionsButtonRef.classList.add(`d-none`);
+    showGameUI();
     init();
 
     world.gameStarted = true;
     SoundHub.playOne(SoundHub.start, 0.4);
 }
 
-const restartButtonRef = document.getElementById("restart-button");
 restartButtonRef.addEventListener("click", restartGame);
-
-const restartButtonWonRef = document.getElementById(`restart-button-won`);
 restartButtonWonRef.addEventListener(`click`, restartGame);
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
 function restartGame() {
-    window.location.reload();
+    gameOverScreenRef.classList.add("d-none");
+    winScreenRef.classList.add("d-none");
+
+    keyboard = new Keyboard();
+    init();
 }
-// #endregion
+
+homeButtonRef.addEventListener("click", goToHomeScreen);
+
+function goToHomeScreen() {
+    // stop game
+    world.stopGame();
+    showHomeUI();
+
+    
+    // // show start screen
+    // startScreenRef.classList.remove("d-none");
+
+    // // hide other screens
+    // gameOverScreenRef.classList.add("d-none");
+    // winScreenRef.classList.add("d-none");
+}
+
+soundButtonRef.addEventListener("click", () => {
+    SoundHub.toggleSound();
+
+    if (SoundHub.isMuted) {
+        soundIconRef.src = "./assets/icons/sound_off.png";
+    } else {
+        soundIconRef.src = "./assets/icons/sound_on.png";
+    }
+
+    // https://www.w3schools.com/JSREF/met_html_blur.asp
+    soundButtonRef.blur();
+});
+
+function showHomeUI() {
+    // show start screen
+    startScreenRef.classList.remove("d-none");
+
+    // hide other screens
+    gameOverScreenRef.classList.add("d-none");
+    winScreenRef.classList.add("d-none");
+
+    instructionsButtonRef.classList.remove(`d-none`);
+    homeButtonRef.classList.add(`d-none`);
+}
+
+function showGameUI() {
+    startScreenRef.classList.add(`d-none`);
+
+    instructionsButtonRef.classList.add(`d-none`);
+    homeButtonRef.classList.remove(`d-none`);
+}
 
 // #region dialog
-const instructionsButtonRef = document.getElementById(`instructions-button`);
 instructionsButtonRef.addEventListener(`click`, openDialog);
 
 function openDialog() {
@@ -123,19 +179,3 @@ function closeDialog() {
 }
 
 // #endregion
-
-const soundButtonRef = document.getElementById(`sound-button`);
-const soundIconRef = document.getElementById(`sound-icon`);
-
-soundButtonRef.addEventListener("click", () => {
-    SoundHub.toggleSound();
-
-    if (SoundHub.isMuted) {
-        soundIconRef.src = "./assets/icons/sound_off.png";
-    } else {
-        soundIconRef.src = "./assets/icons/sound_on.png";
-    }
-
-    // https://www.w3schools.com/JSREF/met_html_blur.asp
-    soundButtonRef.blur();
-});

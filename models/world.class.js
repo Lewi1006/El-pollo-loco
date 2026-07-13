@@ -32,8 +32,8 @@ export class World {
     gameStarted = false;
     gameOver = false;
     gameWon = false;
-    character = new Character();
-    level = level1; //current level data
+    character;
+    level;
     ctx;
     canvas;
     keyboard;
@@ -62,6 +62,9 @@ export class World {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
+
+        this.character = new Character();
+        this.level = level1; //current level data
 
         this.setWorld();
         this.draw();
@@ -129,13 +132,12 @@ export class World {
         winScreenRef.classList.remove(`d-none`);
     }
 
-    
+
     stopGame() {
         IntervalHub.stopAllIntervals();
         SoundHub.pauseAll();
     }
 
-    restartGame() {}
 
     // loops through the enemies of the level and checks if the enemy collides with the character
     // calls isColliding(), hit() from Character class
