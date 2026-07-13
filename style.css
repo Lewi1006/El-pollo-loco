@@ -24,6 +24,121 @@ body {
         letter-spacing: 3px;
         text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
     }
+
+    .game-container {
+        width: 720px;
+        height: 480px;
+
+        .navigation {
+            position: absolute;
+            bottom: 20px;
+            z-index: 2;
+
+            width: 100%;
+            height: fit-content;
+            _background-color: blue;
+
+            .content {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: row;
+                gap: 10px;
+                justify-content: flex-end;
+
+                #instructions-button {
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    background-color: rgba(221, 232, 235);
+                    font-size: 20px;
+                }
+
+                #sound-button {
+                    width: 25px;
+                    height: 25px;
+                    border-radius: 50%;
+                    background-color: rgba(221, 232, 235);
+                    font-size: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    img {
+                        height: 20px;
+                        width: auto;
+                    }
+                }
+            }
+        }
+
+        .start-screen {
+            position: absolute;
+            img {
+                width: 720px;
+                height: 480px;
+            }
+
+            #start-button {
+                background-color: rgba(221, 232, 235);
+                z-index: 20;
+                letter-spacing: 1px;
+                font-size: 24px;
+                height: fit-content;
+                width: fit-content;
+                padding: 8px 25px;
+                border-radius: 30px;
+                position: absolute;
+                bottom: 20px;
+                cursor: pointer;
+            }
+        }
+
+        .game-over-screen {
+            position: absolute;
+            img {
+                width: 720px;
+                height: 480px;
+            }
+
+            #restart-button {
+                background-color: rgba(221, 232, 235);
+                z-index: 20;
+                letter-spacing: 1px;
+                font-size: 24px;
+                height: fit-content;
+                width: fit-content;
+                padding: 8px 25px;
+                border-radius: 30px;
+                position: absolute;
+                bottom: 20px;
+                cursor: pointer;
+            }
+        }
+
+        .win-screen {
+            position: absolute;
+            img {
+                width: 720px;
+                height: 480px;
+                object-fit: contain;
+            }
+
+            #restart-button-won {
+                background-color: rgba(221, 232, 235);
+                z-index: 20;
+                letter-spacing: 1px;
+                font-size: 24px;
+                height: fit-content;
+                width: fit-content;
+                padding: 8px 25px;
+                border-radius: 30px;
+                position: absolute;
+                bottom: 20px;
+                cursor: pointer;
+            }
+        }
+    }
 }
 
 div {
@@ -36,111 +151,6 @@ div {
         background-color: black;
         width: 720px;
         height: 480px;
-    }
-}
-
-.start-screen {
-    position: absolute;
-    img {
-        width: 720px;
-        height: 480px;
-    }
-
-    #start-button {
-        _background-color: rgba(44, 169, 206);
-        background-color: rgba(221, 232, 235);
-        letter-spacing: 1px;
-        font-size: 24px;
-        height: fit-content;
-        width: fit-content;
-        padding: 8px 25px;
-        border-radius: 30px;
-        position: absolute;
-        bottom: 20px;
-        cursor: pointer;
-    }
-}
-
-.game-over-screen {
-    position: absolute;
-    img {
-        width: 720px;
-        height: 480px;
-    }
-
-    #restart-button {
-        background-color: rgba(221, 232, 235);
-        letter-spacing: 1px;
-        font-size: 24px;
-        height: fit-content;
-        width: fit-content;
-        padding: 8px 25px;
-        border-radius: 30px;
-        position: absolute;
-        bottom: 20px;
-        cursor: pointer;
-    }
-}
-
-.win-screen {
-    position: absolute;
-    img {
-        width: 720px;
-        height: 480px;
-        object-fit: contain;
-    }
-
-    #restart-button-won {
-        background-color: rgba(221, 232, 235);
-        letter-spacing: 1px;
-        font-size: 24px;
-        height: fit-content;
-        width: fit-content;
-        padding: 8px 25px;
-        border-radius: 30px;
-        position: absolute;
-        bottom: 20px;
-        cursor: pointer;
-    }
-}
-
-.navigation {
-    width: 100%;
-    height: 70px;
-    _background-color: blue;
-
-    .content {
-        width: 720px;
-        height: 100%;
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        justify-content: flex-start;
-        align-items: flex-start;
-
-        #instructions-button {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background-color: rgba(221, 232, 235);
-            font-size: 20px;
-        }
-
-        #sound-button{
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background-color: rgba(221, 232, 235);
-            font-size: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            img{
-                height: 20px;
-                width: auto;
-            }
-        }
     }
 }
 

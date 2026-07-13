@@ -97,14 +97,15 @@ export class World {
             if (timePassed > 2) {
                 this.gameOver = true;
 
-                IntervalHub.stopAllIntervals();
-                SoundHub.pauseAll();
-
-                const gameOverScreenRef =
-                    document.querySelector(`.game-over-screen`);
-                gameOverScreenRef.classList.remove(`d-none`);
+                this.stopGame();
+                this.showGameOverScreen();
             }
         }
+    }
+
+    showGameOverScreen() {
+        const gameOverScreenRef = document.querySelector(`.game-over-screen`);
+        gameOverScreenRef.classList.remove(`d-none`);
     }
 
     checkGameWon() {
@@ -116,15 +117,25 @@ export class World {
                 if (timePassed > 1.5) {
                     this.gameWon = true;
 
-                    IntervalHub.stopAllIntervals();
-                    SoundHub.pauseAll();
-
-                    const winScreenRef = document.querySelector(`.win-screen`);
-                    winScreenRef.classList.remove(`d-none`);
+                    this.stopGame();
+                    this.showGameWonScreen();
                 }
             }
         });
     }
+
+    showGameWonScreen() {
+        const winScreenRef = document.querySelector(`.win-screen`);
+        winScreenRef.classList.remove(`d-none`);
+    }
+
+    
+    stopGame() {
+        IntervalHub.stopAllIntervals();
+        SoundHub.pauseAll();
+    }
+
+    restartGame() {}
 
     // loops through the enemies of the level and checks if the enemy collides with the character
     // calls isColliding(), hit() from Character class

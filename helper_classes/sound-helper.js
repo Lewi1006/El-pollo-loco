@@ -65,12 +65,15 @@ export class SoundHub {
     }
 
     static saveSoundToLocalStorage() {
+        console.log("saving:", SoundHub.isMuted);
         localStorage.setItem("soundMuted", JSON.stringify(SoundHub.isMuted));
     }
 
     static getSoundFromLocalStorage() {
         const storedSound = localStorage.getItem("soundMuted");
 
+          console.log("loaded:", storedSound);
+          
         if (storedSound !== null) {
             SoundHub.isMuted = JSON.parse(storedSound);
         }

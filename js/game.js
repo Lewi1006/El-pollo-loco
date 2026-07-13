@@ -18,6 +18,7 @@ function init() {
     world = new World(canvas, keyboard);
     // window.world = world;
     // window.keyboard = keyboard;
+    // SoundHub.getSoundFromLocalStorage();
 }
 
 // so that onload works and access to function init is there
@@ -134,7 +135,6 @@ soundButtonRef.addEventListener("click", () => {
     } else {
         soundIconRef.src = "./assets/icons/sound_on.png";
     }
-
 
     // https://www.w3schools.com/JSREF/met_html_blur.asp
     soundButtonRef.blur();
