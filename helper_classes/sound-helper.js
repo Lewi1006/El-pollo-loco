@@ -65,7 +65,6 @@ export class SoundHub {
     }
 
     static saveSoundToLocalStorage() {
-        console.log("saving:", SoundHub.isMuted);
         localStorage.setItem("soundMuted", JSON.stringify(SoundHub.isMuted));
     }
 
@@ -91,5 +90,6 @@ export class SoundHub {
         }
     }
 }
+
 SoundHub.snore.loop = true;
 SoundHub.endbossAttack.loop = true;
