@@ -14,81 +14,23 @@ let world;
 let keyboard = new Keyboard();
 
 function showGameOverScreen() {
+    hideGameControls();
     const gameOverScreenRef = document.querySelector(`.game-over-screen`);
     gameOverScreenRef.classList.remove(`d-none`);
 }
 
 function showGameWonScreen() {
+    hideGameControls();
     const winScreenRef = document.querySelector(`.win-screen`);
     winScreenRef.classList.remove(`d-none`);
 }
 
+
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard, showGameOverScreen, showGameWonScreen);
-    // window.world = world;
-    // window.keyboard = keyboard;
-    // SoundHub.getSoundFromLocalStorage();
 }
 
-// so that onload works and access to function init is there
-// https://stackoverflow.com/questions/8830074/what-is-the-difference-between-window-onload-init-and-window-onload-init
-// window.onload = init;
-
-// #region Keyboard input
-// document.addEventListener("keydown", (event) => {
-//     if (event.code == "ArrowLeft") {
-//         keyboard.LEFT = true;
-//     }
-
-//     if (event.code == "ArrowRight") {
-//         keyboard.RIGHT = true;
-//     }
-
-//     if (event.code == "ArrowUp") {
-//         keyboard.UP = true;
-//     }
-
-//     if (event.code == "ArrowDown") {
-//         keyboard.DOWN = true;
-//     }
-
-//     if (event.code == "Space") {
-//         keyboard.SPACE = true;
-//     }
-
-//     if (event.code == "KeyD") {
-//         keyboard.D = true;
-//     }
-// });
-
-// document.addEventListener("keyup", (event) => {
-//     if (event.code == "ArrowLeft") {
-//         keyboard.LEFT = false;
-//     }
-
-//     if (event.code == "ArrowRight") {
-//         keyboard.RIGHT = false;
-//     }
-
-//     if (event.code == "ArrowUp") {
-//         keyboard.UP = false;
-//     }
-
-//     if (event.code == "ArrowDown") {
-//         keyboard.DOWN = false;
-//     }
-
-//     if (event.code == "Space") {
-//         keyboard.SPACE = false;
-//     }
-
-//     if (event.code == "KeyD") {
-//         keyboard.D = false;
-//     }
-// });
-
-// #endregion
 
 const startScreenRef = document.querySelector(".start-screen");
 const gameOverScreenRef = document.querySelector(".game-over-screen");
@@ -105,6 +47,7 @@ startButtonRef.addEventListener("click", startGame);
 
 function startGame() {
     showGameUI();
+    showGameControls();
     init();
 
     world.gameStarted = true;
@@ -117,6 +60,7 @@ function restartGame() {
     gameOverScreenRef.classList.add("d-none");
     winScreenRef.classList.add("d-none");
     showGameUI();
+    showGameControls();
 
     init();
     world.gameStarted = true;
@@ -125,6 +69,7 @@ function restartGame() {
 homeButtonRef.addEventListener("click", goToHomeScreen);
 
 function goToHomeScreen() {
+    hideGameControls();
     world.stopGame();
     showHomeUI();
 }
@@ -146,6 +91,14 @@ function showGameUI() {
 
     instructionsButtonRef.classList.add(`d-none`);
     homeButtonRef.classList.remove(`d-none`);
+}
+
+function showGameControls() {
+    document.querySelector(".game-controls").classList.remove("d-none");
+}
+
+function hideGameControls() {
+    document.querySelector(".game-controls").classList.add("d-none");
 }
 
 soundButtonRef.addEventListener("click", () => {

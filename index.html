@@ -21,6 +21,7 @@
     </head>
     <body>
         <h1>El Pollo Loco</h1>
+        <div class="rotate-message">Rotate your phone!</div>
         <div class="game-container">
             <div id="fullscreen">
                 <canvas width="720" height="480" id="canvas"></canvas>
@@ -69,25 +70,36 @@
                 />
                 <button id="restart-button-won">Try again</button>
             </div>
-        </div>
 
-        <div class="game-controls">
-            <div class="panel-wrapper">
-                <button id="btn-left">
-                    <img src="./assets/icons/left.png" alt="left arrow" />
-                </button>
-                <button id="btn-right">
-                    <img src="./assets/icons/right.png" alt="right arrow" />
-                </button>
-            </div>
+            <div class="game-controls d-none">
+                <div class="game-controls-wrapper">
+                    <div class="panel-wrapper">
+                        <button id="btn-left">
+                            <img
+                                src="./assets/icons/left.png"
+                                alt="left arrow"
+                            />
+                        </button>
+                        <button id="btn-right">
+                            <img
+                                src="./assets/icons/right.png"
+                                alt="right arrow"
+                            />
+                        </button>
+                    </div>
 
-            <div class="panel-wrapper">
-                <button id="btn-jump">
-                    <img src="./assets/icons/up.png" alt="up arrow" />
-                </button>
-                <button id="btn-throw">
-                    <img src="./assets/icons/bottle.png" alt="bottle icon" />
-                </button>
+                    <div class="panel-wrapper">
+                        <button id="btn-jump">
+                            <img src="./assets/icons/up.png" alt="up arrow" />
+                        </button>
+                        <button id="btn-throw">
+                            <img
+                                src="./assets/icons/bottle.png"
+                                alt="bottle icon"
+                            />
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
 
