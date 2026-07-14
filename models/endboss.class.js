@@ -69,11 +69,11 @@ export class Endboss extends MovableObject {
 
         const distance = this.getDistance();
 
-        if (distance <= 350 && !this.hasStartedWalking) {
+        if (distance <= 450 && !this.hasStartedWalking) {
             this.hasStartedWalking = true;
         }
 
-        if (distance <= 140) {
+        if (distance <= 130) {
             this.isAttacking = true;
         } else {
             this.isAttacking = false;

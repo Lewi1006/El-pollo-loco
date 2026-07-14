@@ -13,7 +13,7 @@ import { Cloud } from "./cloud.class.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { Level } from "./level.class.js";
-import { level1 } from "../levels/level1.js";
+import { initLevel1} from "../levels/level1.js";
 import { StatusBarHealth } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 import { Bottle } from "./bottle.class.js";
@@ -48,6 +48,8 @@ export class World {
     bottleCounter = 0;
     totalBottles = 8;
     lastThrow = 0;
+    showGameOverScreen;
+    showGameWonScreen;
 
     // #endregion
 
@@ -58,13 +60,16 @@ export class World {
     // --> drawing the elements and run intervals
     // Gives the Character a reference to the World instance,
     // allowing the Character to access things like keyboard, level, and camera.
-    constructor(canvas, keyboard) {
+    constructor(canvas, keyboard, showGameOverScreen, showGameWonScreen) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
         this.keyboard = keyboard;
 
+        this.showGameOverScreen = showGameOverScreen;
+        this.showGameWonScreen = showGameWonScreen;
+
         this.character = new Character();
-        this.level = level1; //current level data
+        this.level = initLevel1(); //current level data
 
         this.setWorld();
         this.draw();
@@ -106,11 +111,6 @@ export class World {
         }
     }
 
-    showGameOverScreen() {
-        const gameOverScreenRef = document.querySelector(`.game-over-screen`);
-        gameOverScreenRef.classList.remove(`d-none`);
-    }
-
     checkGameWon() {
         this.level.enemies.forEach((enemy) => {
             if (enemy instanceof Endboss && enemy.isDead()) {
@@ -127,17 +127,10 @@ export class World {
         });
     }
 
-    showGameWonScreen() {
-        const winScreenRef = document.querySelector(`.win-screen`);
-        winScreenRef.classList.remove(`d-none`);
-    }
-
-
     stopGame() {
         IntervalHub.stopAllIntervals();
         SoundHub.pauseAll();
     }
-
 
     // loops through the enemies of the level and checks if the enemy collides with the character
     // calls isColliding(), hit() from Character class
