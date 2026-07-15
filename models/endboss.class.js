@@ -20,7 +20,6 @@ export class Endboss extends MovableObject {
         right: 5,
         bottom: 20,
     };
-    // world;
     hasStartedWalking = false;
     isAttacking = false;
     hurtTime = 1;
