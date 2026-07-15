@@ -146,7 +146,7 @@ main {
             width: 100%;
             height: 40px;
 
-            _display: none;
+            display: none;
 
             .game-controls-wrapper {
                 height: 40px;
@@ -406,6 +406,7 @@ footer {
 
             .game-controls {
                 width: 100%;
+                display: flex;
 
                 .game-controls-wrapper {
                     width: 100%;
