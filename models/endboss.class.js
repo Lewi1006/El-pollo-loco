@@ -94,7 +94,6 @@ export class Endboss extends MovableObject {
 
         if (this.isDead()) {
             this.playAnimation(this.imagesDead);
-            // this.playDeadAnimation();
         } else if (this.isHurt()) {
             this.playAnimation(this.imagesHurt);
         } else if (this.isAttacking) {
@@ -113,20 +112,17 @@ export class Endboss extends MovableObject {
         return Math.hypot(distanceX, distanceY);
     }
 
-
-    // manage sound with flags and true and false because in update movement it 
+    // manage sound with flags and true and false because in update movement it
     // plays in an interval so my sound would continously be triggered and never plays in one
-    manageApproachSound(){
-        if(this.hasStartedWalking && !this.isApproachSoundPlaying){
+    manageApproachSound() {
+        if (this.hasStartedWalking && !this.isApproachSoundPlaying) {
             SoundHub.playOne(SoundHub.endbossApproaching, 0.1);
             this.isApproachSoundPlaying = true;
-
         }
     }
 
-
-    manageAttackSound(){
-        if(this.isAttacking && !this.isAttackSoundPlaying){
+    manageAttackSound() {
+        if (this.isAttacking && !this.isAttackSoundPlaying) {
             SoundHub.playOne(SoundHub.endbossAttack, 0.2);
             this.isAttackSoundPlaying = true;
         }
