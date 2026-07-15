@@ -13,6 +13,8 @@ let canvas;
 let world;
 let keyboard = new Keyboard();
 
+SoundHub.getSoundFromLocalStorage();
+
 function showGameOverScreen() {
     hideGameControls();
     const gameOverScreenRef = document.querySelector(`.game-over-screen`);
@@ -103,13 +105,8 @@ function hideGameControls() {
 
 soundButtonRef.addEventListener("click", () => {
     SoundHub.toggleSound();
-
-    if (SoundHub.isMuted) {
-        soundIconRef.src = "./assets/icons/sound_off.png";
-    } else {
-        soundIconRef.src = "./assets/icons/sound_on.png";
-    }
-
+   SoundHub.toggleSoundIcon();
+    
     // https://www.w3schools.com/JSREF/met_html_blur.asp
     soundButtonRef.blur();
 });

@@ -70,23 +70,32 @@ export class SoundHub {
 
     static getSoundFromLocalStorage() {
         const storedSound = localStorage.getItem("soundMuted");
-
-          console.log("loaded:", storedSound);
-          
         if (storedSound !== null) {
             SoundHub.isMuted = JSON.parse(storedSound);
         }
-    }
 
+        SoundHub.toggleSoundIcon();
+        
+    }
+    
     static toggleSound() {
         //    https://stackoverflow.com/questions/11604409/how-to-toggle-a-boolean?
         SoundHub.isMuted = !SoundHub.isMuted;
-
+        
         // save the state to storage
         SoundHub.saveSoundToLocalStorage();
-
+        
         if (SoundHub.isMuted) {
             SoundHub.pauseAll();
+        }
+    }
+    
+    static toggleSoundIcon() {
+        const soundIconRef = document.getElementById(`sound-icon`);
+        if (SoundHub.isMuted) {
+            soundIconRef.src = "./assets/icons/sound_off.png";
+        } else {
+            soundIconRef.src = "./assets/icons/sound_on.png";
         }
     }
 }

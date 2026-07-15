@@ -20,93 +20,103 @@
         <!-- #endregion -->
     </head>
     <body>
-        <h1>El Pollo Loco</h1>
-        <div class="rotate-message">Rotate your phone!</div>
-        <div class="game-container">
-            <div id="fullscreen">
+        <header>
+            <h1>El Pollo Loco</h1>
+        </header>
+
+        <main>
+            <div class="rotate-message">Rotate your device!</div>
+            <div class="game-container">
+                <!-- <div id="fullscreen"> -->
                 <canvas width="720" height="480" id="canvas"></canvas>
-            </div>
+                <!-- </div> -->
 
-            <div class="navigation">
-                <div class="content">
-                    <button id="home-button">
-                        <img
-                            id="home-icon"
-                            src="./assets/icons/home.svg"
-                            alt="home"
-                        />
-                    </button>
-                    <button id="sound-button">
-                        <img
-                            id="sound-icon"
-                            src="./assets/icons/sound_on.png"
-                            alt="sound-on"
-                        />
-                    </button>
-                    <button id="instructions-button">?</button>
-                </div>
-            </div>
-
-            <div class="start-screen">
-                <img
-                    src="./assets/img/9_intro_outro_screens/start/startscreen_1.png"
-                    alt="game start screen"
-                />
-                <button id="start-button">Start Game</button>
-            </div>
-
-            <div class="game-over-screen d-none">
-                <img
-                    src="./assets/img/9_intro_outro_screens/game_over/game over!.png"
-                    alt="game over screen"
-                />
-                <button id="restart-button">Try again</button>
-            </div>
-
-            <div class="win-screen d-none">
-                <img
-                    src="./assets/img/You won, you lost/You won A.png"
-                    alt="win game screen"
-                />
-                <button id="restart-button-won">Try again</button>
-            </div>
-
-            <div class="game-controls d-none">
-                <div class="game-controls-wrapper">
-                    <div class="panel-wrapper">
-                        <button id="btn-left">
+                <div class="navigation">
+                    <div class="content">
+                        <button id="home-button">
                             <img
-                                src="./assets/icons/left.png"
-                                alt="left arrow"
+                                id="home-icon"
+                                src="./assets/icons/home.svg"
+                                alt="home"
                             />
                         </button>
-                        <button id="btn-right">
+                        <button id="sound-button">
                             <img
-                                src="./assets/icons/right.png"
-                                alt="right arrow"
+                                id="sound-icon"
+                                src="./assets/icons/sound_on.png"
+                                alt="sound-on"
                             />
                         </button>
-                    </div>
-
-                    <div class="panel-wrapper">
-                        <button id="btn-jump">
-                            <img src="./assets/icons/up.png" alt="up arrow" />
-                        </button>
-                        <button id="btn-throw">
-                            <img
-                                src="./assets/icons/bottle.png"
-                                alt="bottle icon"
-                            />
-                        </button>
+                        <button id="instructions-button">?</button>
                     </div>
                 </div>
+
+                <!-- UI -->
+                <div class="game-controls d-none">
+                    <div class="game-controls-wrapper">
+                        <div class="panel-wrapper">
+                            <button id="btn-left">
+                                <img
+                                    src="./assets/icons/left.png"
+                                    alt="left arrow"
+                                />
+                            </button>
+                            <button id="btn-right">
+                                <img
+                                    src="./assets/icons/right.png"
+                                    alt="right arrow"
+                                />
+                            </button>
+                        </div>
+
+                        <div class="panel-wrapper">
+                            <button id="btn-jump">
+                                <img
+                                    src="./assets/icons/up.png"
+                                    alt="up arrow"
+                                />
+                            </button>
+                            <button id="btn-throw">
+                                <img
+                                    src="./assets/icons/bottle.png"
+                                    alt="bottle icon"
+                                />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OVERLAYS -->
+                <div class="start-screen">
+                    <img
+                        src="./assets/img/9_intro_outro_screens/start/startscreen_1.png"
+                        alt="game start screen"
+                    />
+                    <button id="start-button">Start Game</button>
+                </div>
+
+                <div class="game-over-screen d-none">
+                    <img
+                        src="./assets/img/9_intro_outro_screens/game_over/game over!.png"
+                        alt="game over screen"
+                    />
+                    <button id="restart-button">Try again</button>
+                </div>
+
+                <div class="win-screen d-none">
+                    <img
+                        src="./assets/img/You won, you lost/You won A.png"
+                        alt="win game screen"
+                    />
+                    <button id="restart-button-won">Try again</button>
+                </div>
             </div>
-        </div>
+        </main>
 
         <dialog id="dialog" data-id="dialog">
             <header>
                 <h2>How to play</h2>
-                <button id="close-dialog"><p>x</p></button>
+                <button id="close-dialog">x</button>
             </header>
 
             <div class="dialog-content">
@@ -119,5 +129,13 @@
                 </p>
             </div>
         </dialog>
+
+        <footer>
+            <div class="impressum">
+                <a href="impressum.html" target="_blank">
+                    <p>Impressum</p>
+                </a>
+            </div>
+        </footer>
     </body>
 </html>
