@@ -31,6 +31,7 @@ export class BabyChicken extends MovableObject {
         IntervalHub.startInterval(this.updateAnimation, 200);
     }
 
+    // #region methods
     animate() {
         this.updateMovement();
         this.updateAnimation();
@@ -50,8 +51,10 @@ export class BabyChicken extends MovableObject {
         }
     };
 
-        die(){
-            super.die();
-            SoundHub.playOne(SoundHub.babyChickenDead, 0.8);
-        }
+    die() {
+        super.die();
+        SoundHub.playOne(SoundHub.babyChickenDead, 0.8);
+    }
+
+    // #endregion
 }

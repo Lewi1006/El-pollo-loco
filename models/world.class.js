@@ -13,7 +13,7 @@ import { Cloud } from "./cloud.class.js";
 import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { ImageHelper } from "../helper_classes/image-helper.js";
 import { Level } from "./level.class.js";
-import { initLevel1} from "../levels/level1.js";
+import { initLevel1 } from "../levels/level1.js";
 import { StatusBarHealth } from "./status-bar.class.js";
 import { ThrowableObject } from "./throwable-object.class.js";
 import { Bottle } from "./bottle.class.js";
@@ -86,6 +86,7 @@ export class World {
         });
     }
 
+    // #region game start/stop
     // method for running other methods like collision or throwObjects
     run = () => {
         if (this.gameOver) return;
@@ -97,6 +98,13 @@ export class World {
         this.checkThrowObjects();
     };
 
+    stopGame() {
+        IntervalHub.stopAllIntervals();
+        SoundHub.pauseAll();
+    }
+    // #endregion
+
+    // #region game state
     checkGameOver() {
         if (this.character.isDead()) {
             let timePassed = new Date().getTime() - this.character.deathTime;
@@ -127,11 +135,9 @@ export class World {
         });
     }
 
-    stopGame() {
-        IntervalHub.stopAllIntervals();
-        SoundHub.pauseAll();
-    }
+    // #endregion
 
+    // #region collisions
     // loops through the enemies of the level and checks if the enemy collides with the character
     // calls isColliding(), hit() from Character class
     // calls setPercentage from StatusBar and passes the characters energy into it as percentage value
@@ -142,33 +148,19 @@ export class World {
         this.stompEnemy();
         this.loseEnergy();
         this.removeDeadEnemy();
-        // this.removeSplashedBottles();
     }
 
-    checkBottleCollisions() {
-        for (let i = 0; i < this.throwableObjects.length; i++) {
-            let bottle = this.throwableObjects[i];
+    collectCoin() {
+        for (let i = 0; i < this.level.coins.length; i++) {
+            let coin = this.level.coins[i];
 
-            this.level.enemies.forEach((enemy) => {
-                if (enemy instanceof Endboss && bottle.isColliding(enemy)) {
-                    enemy.hit();
-                    this.statusBarEndboss.setPercentage(enemy.energy);
-                    this.throwableObjects.splice(i, 1);
-                    // bottle.splashBottle();
-                    SoundHub.playOne(SoundHub.break, 0.2);
-                }
-
-                if (
-                    (enemy instanceof Chicken ||
-                        enemy instanceof BabyChicken) &&
-                    bottle.isColliding(enemy)
-                ) {
-                    enemy.die();
-                    this.throwableObjects.splice(i, 1);
-                    // bottle.splashBottle();
-                    SoundHub.playOne(SoundHub.break, 0.2);
-                }
-            });
+            if (this.character.isColliding(coin)) {
+                this.level.coins.splice(i, 1);
+                this.coinCounter++;
+                let percentage = (this.coinCounter / this.totalCoins) * 100;
+                this.statusBarCoins.setPercentage(percentage);
+                SoundHub.playOne(SoundHub.coin, 0.05);
+            }
         }
     }
 
@@ -186,54 +178,17 @@ export class World {
         }
     }
 
-    // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
-    checkThrowObjects() {
-        if (this.bottleCounter <= this.totalBottles && this.bottleCounter > 0) {
-            let timePassed = new Date().getTime() - this.lastThrow;
-            timePassed /= 1000;
-
-            if (timePassed > 0.5 && this.keyboard.D) {
-                let bottleX;
-
-                if (this.character.otherDirection) {
-                    bottleX = this.character.x - 10;
-                } else {
-                    bottleX = this.character.x + 100;
-                }
-
-                let bottle = new ThrowableObject(
-                    bottleX,
-                    this.character.y + 100,
-                    this.character.otherDirection,
-                );
-                this.throwableObjects.push(bottle);
-
-                this.lastThrow = new Date().getTime();
-
-                this.bottleCounter--;
-                let percentage = (this.bottleCounter / this.totalBottles) * 100;
-                this.statusBarBottles.setPercentage(percentage);
-            }
-        }
-    }
-
-    checkBottleLocation() {
-        for (let i = 0; i < this.throwableObjects.length; i++) {
-            let bottle = this.throwableObjects[i];
-
-            if (bottle.hasSplashed) {
-                let timePassed = new Date().getTime() - bottle.splashTime;
-                timePassed /= 1000;
-
-                if (timePassed > 0.3) {
-                    this.throwableObjects.splice(i, 1);
-                }
+    loseEnergy() {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy.isDead()) {
+                return;
             }
 
-            if (bottle.isOnGround() && !bottle.hasSplashed) {
-                bottle.splashBottle();
+            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
+                this.character.hit(enemy.damage);
+                this.statusBar.setPercentage(this.character.energy);
             }
-        }
+        });
     }
 
     stompEnemy() {
@@ -255,33 +210,6 @@ export class World {
                 this.character.speedY = 0;
             }
         });
-    }
-
-    loseEnergy() {
-        this.level.enemies.forEach((enemy) => {
-            if (enemy.isDead()) {
-                return;
-            }
-
-            if (this.character.isColliding(enemy) && !this.character.isHurt()) {
-                this.character.hit(enemy.damage);
-                this.statusBar.setPercentage(this.character.energy);
-            }
-        });
-    }
-
-    collectCoin() {
-        for (let i = 0; i < this.level.coins.length; i++) {
-            let coin = this.level.coins[i];
-
-            if (this.character.isColliding(coin)) {
-                this.level.coins.splice(i, 1);
-                this.coinCounter++;
-                let percentage = (this.coinCounter / this.totalCoins) * 100;
-                this.statusBarCoins.setPercentage(percentage);
-                SoundHub.playOne(SoundHub.coin, 0.05);
-            }
-        }
     }
 
     // go through all the enemies array
@@ -307,16 +235,119 @@ export class World {
             }
         }
     }
+    // #endregion
 
+    // #region throwable object
+    checkBottleCollisions() {
+        for (let i = 0; i < this.throwableObjects.length; i++) {
+            let bottle = this.throwableObjects[i];
+
+            this.checkCollisionWithEndboss(bottle, i);
+            this.checkCollisionWithEnemies(bottle, i);
+        }
+    }
+
+    checkCollisionWithEndboss(bottle, i) {
+        this.level.enemies.forEach((enemy) => {
+            if (enemy instanceof Endboss && bottle.isColliding(enemy)) {
+                enemy.hit();
+                this.statusBarEndboss.setPercentage(enemy.energy);
+                this.throwableObjects.splice(i, 1);
+                SoundHub.playOne(SoundHub.break, 0.2);
+            }
+        });
+    }
+
+    checkCollisionWithEnemies(bottle, i) {
+        this.level.enemies.forEach((enemy) => {
+            if (
+                (enemy instanceof Chicken || enemy instanceof BabyChicken) &&
+                bottle.isColliding(enemy)
+            ) {
+                enemy.die();
+                this.throwableObjects.splice(i, 1);
+                SoundHub.playOne(SoundHub.break, 0.2);
+            }
+        });
+    }
+
+    // creates new ThrowableObject if D is pressed on keyboard and pushes it (bottle) into array
+    checkThrowObjects() {
+        if (this.bottleCounter <= this.totalBottles && this.bottleCounter > 0) {
+            let timePassed = new Date().getTime() - this.lastThrow;
+            timePassed /= 1000;
+
+            this.throwBottle(timePassed);
+        }
+    }
+
+    throwBottle(timePassed) {
+        if (timePassed > 0.5 && this.keyboard.D) {
+            let bottle = new ThrowableObject(
+                this.getBottleX(),
+                this.character.y + 100,
+                this.character.otherDirection,
+            );
+
+            this.throwableObjects.push(bottle);
+
+            this.lastThrow = new Date().getTime();
+
+            this.bottleCounter--;
+            let percentage = (this.bottleCounter / this.totalBottles) * 100;
+            this.statusBarBottles.setPercentage(percentage);
+        }
+    }
+
+    getBottleX() {
+        if (this.character.otherDirection) {
+            return this.character.x - 10;
+        } else {
+            return this.character.x + 100;
+        }
+    }
+
+    checkBottleLocation() {
+        for (let i = 0; i < this.throwableObjects.length; i++) {
+            let bottle = this.throwableObjects[i];
+
+            if (bottle.hasSplashed) {
+                let timePassed = new Date().getTime() - bottle.splashTime;
+                timePassed /= 1000;
+
+                if (timePassed > 0.3) {
+                    this.throwableObjects.splice(i, 1);
+                }
+            }
+
+            if (bottle.isOnGround() && !bottle.hasSplashed) {
+                bottle.splashBottle();
+            }
+        }
+    }
+
+    // #endregion
+
+    // #region draw
     // draws all objects onto canvas
     // addToMap --> draws one object
     // addObjectsToMap --> draws an array / is a loop
     draw() {
-        // Clears previous frame
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.clearCanvas();
+        this.drawWorld();
+        this.drawStatusBar();
+        // main game loop
+        requestAnimationFrame(() => this.draw());
+    }
 
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    drawWorld() {
         // camera movement scroll effect
-        this.ctx.translate(this.camera_x, 0);
+        // reset camera so that status bar sticks to position when character is moving
+        this.ctx.translate(this.camera_x, 0); // move camera forward
 
         // Draw world objects (affected by camera)
         this.addObjectsToMap(this.level.backgroundObjects);
@@ -328,18 +359,14 @@ export class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottles);
 
-        // reset camera so that status bar sticks to position when character is moving
         this.ctx.translate(-this.camera_x, 0); // move camera back
+    }
+
+    drawStatusBar() {
         this.addToMap(this.statusBar);
         this.addToMap(this.statusBarCoins);
         this.addToMap(this.statusBarBottles);
         this.addToMap(this.statusBarEndboss);
-        this.ctx.translate(this.camera_x, 0); // move camera forward
-
-        this.ctx.translate(-this.camera_x, 0);
-
-        // main game loop
-        requestAnimationFrame(() => this.draw());
     }
 
     addObjectsToMap(objects) {
@@ -384,5 +411,6 @@ export class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
+    // #endregion
     // #endregion
 }

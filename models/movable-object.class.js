@@ -1,4 +1,3 @@
-import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { DrawableObject } from "./drawable-object.class.js";
 import { SoundHub } from "../helper_classes/sound-helper.js";
 
@@ -41,7 +40,7 @@ export class MovableObject extends DrawableObject {
          if (this.hasDied) return;
         
         this.energy -= damage;
-        SoundHub.playOne(SoundHub.damage, 0.2)
+        SoundHub.playOne(SoundHub.damage, 0.2);
 
         if (this.energy <= 0) {
             this.die();
