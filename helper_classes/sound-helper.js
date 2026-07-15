@@ -1,26 +1,26 @@
 export class SoundHub {
     // #region Audio
-    static jump = new Audio("../assets/sounds/character/characterJump.wav");
-    static run = new Audio("../assets/sounds/character/characterRun.mp3");
-    static damage = new Audio("../assets/sounds/character/characterDamage.mp3");
-    static dead = new Audio("../assets/sounds/character/characterDead.wav");
-    static snore = new Audio("../assets/sounds/character/characterSnoring.mp3");
-    static chickenDead = new Audio("../assets/sounds/chicken/chickenDead.mp3");
+    static jump = new Audio("./assets/sounds/character/characterJump.wav");
+    static run = new Audio("./assets/sounds/character/characterRun.mp3");
+    static damage = new Audio("./assets/sounds/character/characterDamage.mp3");
+    static dead = new Audio("./assets/sounds/character/characterDead.wav");
+    static snore = new Audio("./assets/sounds/character/characterSnoring.mp3");
+    static chickenDead = new Audio("./assets/sounds/chicken/chickenDead.mp3");
     static bottle = new Audio(
-        "../assets/sounds/collectibles/bottleCollectSound.wav",
+        "./assets/sounds/collectibles/bottleCollectSound.wav",
     );
-    static break = new Audio("../assets/sounds/throwable/bottleBreak.mp3");
-    static coin = new Audio("../assets/sounds/collectibles/collectSound.wav");
+    static break = new Audio("./assets/sounds/throwable/bottleBreak.mp3");
+    static coin = new Audio("./assets/sounds/collectibles/collectSound.wav");
     static endbossApproaching = new Audio(
-        "../assets/sounds/endboss/endbossApproachLoud.wav",
+        "./assets/sounds/endboss/endbossApproachLoud.wav",
     );
-    static endbossHit = new Audio("../assets/sounds/endboss/endbossHit2.wav");
+    static endbossHit = new Audio("./assets/sounds/endboss/endbossHit2.wav");
     static endbossAttack = new Audio(
-        "../assets/sounds/endboss/endbossAttack.wav",
+        "./assets/sounds/endboss/endbossAttack.wav",
     );
-    static start = new Audio("../assets/sounds/game/gameStart.mp3");
+    static start = new Audio("./assets/sounds/game/gameStart.mp3");
     static babyChickenDead = new Audio(
-        "../assets/sounds/baby_chicken/babyChickenDeadShort.wav",
+        "./assets/sounds/baby_chicken/babyChickenDeadShort.wav",
     );
     // #endregion
 
