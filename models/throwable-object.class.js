@@ -4,12 +4,14 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
 import { SoundHub } from "../helper_classes/sound-helper.js";
 
 export class ThrowableObject extends MovableObject {
+    // #region properties
     imagesBottleRotation = ImageHelper.BOTTLE.rotation;
     imagesBottleSplash = ImageHelper.BOTTLE.splash;
 
     throwable = true;
     hasSplashed = false;
     splashTime = 0;
+    // #endregion
 
     // when we create bottle in world we pass the coordinates as well as the diection
     // the character has because bottle should be thrown the way the character is walking into
@@ -32,12 +34,7 @@ export class ThrowableObject extends MovableObject {
         IntervalHub.startInterval(this.throwForward, 25);
     }
 
-    throw() {
-        this.speedY = 30;
-        this.applyGravity();
-        this.throwForward();
-        this.rotateBottle();
-    }
+    // #region methods
 
     applyGravity = () => {
         if (this.hasSplashed) return;
@@ -47,6 +44,13 @@ export class ThrowableObject extends MovableObject {
             this.speedY -= this.acceleration;
         }
     };
+
+    throw() {
+        this.speedY = 30;
+        this.applyGravity();
+        this.throwForward();
+        this.rotateBottle();
+    }
 
     throwForward = () => {
         if (this.hasSplashed) return;
@@ -76,5 +80,5 @@ export class ThrowableObject extends MovableObject {
 
         SoundHub.playOne(SoundHub.break, 0.2);
     }
-
+    // #endregion
 }

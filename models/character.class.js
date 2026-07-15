@@ -39,7 +39,6 @@ export class Character extends MovableObject {
         this.loadImages(this.imagesHurt);
         this.loadImages(this.imagesIdle);
         this.loadImages(this.imagesLongIdle);
-        // this.applyGravity();
         IntervalHub.startInterval(this.applyGravity, 1000 / 25);
 
         this.animate();
@@ -58,6 +57,15 @@ export class Character extends MovableObject {
 
     // walking movement of character
     updateMovement = () => {
+        this.manageWalking();
+        this.manageJump();
+        this.manageRunSound();
+
+        // tie camera to character
+        this.world.camera_x = -this.x + 100;
+    };
+
+    manageWalking() {
         if (
             this.world.keyboard.RIGHT &&
             this.x < this.world.level.level_end_x
@@ -72,17 +80,14 @@ export class Character extends MovableObject {
             this.otherDirection = true;
             this.lastMove = new Date().getTime();
         }
+    }
 
+    manageJump() {
         if (this.world.keyboard.SPACE && !this.isAboveGround()) {
             this.jump();
             this.lastMove = new Date().getTime();
         }
-
-        this.manageRunSound();
-
-        // tie camera to character
-        this.world.camera_x = -this.x + 100;
-    };
+    }
 
     updateAnimation = () => {
         if (this.isDead()) {
@@ -117,20 +122,17 @@ export class Character extends MovableObject {
         }
     }
 
-    manageSnoreSound(){
-        if(this.isLongIdle()){
-            if(!this.isSnoreSoundPlaying){
+    manageSnoreSound() {
+        if (this.isLongIdle()) {
+            if (!this.isSnoreSoundPlaying) {
                 SoundHub.playOne(SoundHub.snore, 0.1);
                 this.isSnoreSoundPlaying = true;
-            } 
+            }
         } else {
             SoundHub.pauseOne(SoundHub.snore, 0.1);
             this.isSnoreSoundPlaying = false;
         }
     }
-
-
-
 
     jump() {
         this.speedY = 30;
@@ -138,7 +140,7 @@ export class Character extends MovableObject {
     }
 
     // call super so all conditions are still valid? other wise no timePassed delay
-    die(){
+    die() {
         super.die();
         SoundHub.playOne(SoundHub.dead, 0.15);
     }
