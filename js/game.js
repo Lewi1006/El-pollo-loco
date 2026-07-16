@@ -54,6 +54,7 @@ function startGame() {
     
     world.gameStarted = true;
     SoundHub.playOne(SoundHub.start, 0.4);
+    SoundHub.playBackground();
 }
 
 function restartGame() {

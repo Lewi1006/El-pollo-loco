@@ -101,6 +101,7 @@ export class World {
     stopGame() {
         IntervalHub.stopAllIntervals();
         SoundHub.pauseAll();
+        SoundHub.stopBackground();
     }
     // #endregion
 
@@ -193,6 +194,10 @@ export class World {
 
     stompEnemy() {
         this.level.enemies.forEach((enemy) => {
+         if (enemy instanceof Endboss) {
+            return;
+        }
+
             if (enemy.isDead()) {
                 return;
             }
@@ -211,6 +216,7 @@ export class World {
             }
         });
     }
+    
 
     // go through all the enemies array
     // check if each enemy isDead (energy=0)

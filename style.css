@@ -42,7 +42,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    _flex: 1;
 
     .rotate-message {
         display: none;
@@ -101,6 +100,7 @@ main {
                     border-radius: 50%;
                     background-color: rgba(221, 232, 235);
                     font-size: 20px;
+                    cursor: pointer;
                 }
 
                 #home-button {
@@ -109,9 +109,7 @@ main {
                     border-radius: 50%;
                     background-color: rgba(221, 232, 235);
                     font-size: 20px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+                    cursor: pointer;
 
                     img {
                         height: 18px;
@@ -128,6 +126,7 @@ main {
                     display: flex;
                     justify-content: center;
                     align-items: center;
+                    cursor: pointer;
 
                     img {
                         height: 20px;
@@ -297,8 +296,11 @@ main {
             letter-spacing: 1px;
         }
 
-        button p {
-            font-size: 20px;
+        button {
+            cursor: pointer;
+            p {
+                font-size: 20px;
+            }
         }
     }
 
@@ -340,11 +342,13 @@ footer {
 
 .impressum-info {
     width: fit-content;
-    height: 8dvw;
-    padding: 16px;
+    height: fit-content;
+    padding: 24px;
     border-radius: 30px;
     background-color: rgba(221, 232, 235);
-
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
     p {
         font-family: "Inter";
         font-weight: 800;
@@ -387,6 +391,10 @@ footer {
     main {
         width: 100vw;
         height: 100dvh;
+        padding-top: env(safe-area-inset-top);
+        padding-right: env(safe-area-inset-right);
+        padding-bottom: env(safe-area-inset-bottom);
+        padding-left: env(safe-area-inset-left);
 
         .rotate-message {
             display: none;
@@ -396,9 +404,8 @@ footer {
             width: 100%;
             height: 100%;
             canvas {
-                width: 100%;
+                width: 100vw;
                 height: 100dvh;
-               
             }
 
             .mobile-impressum {
