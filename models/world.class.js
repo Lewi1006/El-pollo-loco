@@ -101,6 +101,7 @@ export class World {
     stopGame() {
         IntervalHub.stopAllIntervals();
         SoundHub.pauseAll();
+        SoundHub.stopBackground();
     }
     // #endregion
 

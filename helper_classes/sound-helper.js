@@ -22,6 +22,7 @@ export class SoundHub {
     static babyChickenDead = new Audio(
         "./assets/sounds/baby_chicken/babyChickenDeadShort.wav",
     );
+    static background = new Audio("./assets/sounds/background/background3.mp3");
     // #endregion
 
     // Array containing all audio files
@@ -39,6 +40,7 @@ export class SoundHub {
         SoundHub.endbossAttack,
         SoundHub.start,
         SoundHub.babyChickenDead,
+        SoundHub.background,
     ];
 
     static isMuted = false;
@@ -64,6 +66,26 @@ export class SoundHub {
         sound.pause();
     }
 
+    // play background music 
+    static playBackground() {
+        if (SoundHub.isMuted) return;
+        SoundHub.background.loop = true;
+        SoundHub.background.volume = 0.7;
+        SoundHub.background.play();
+    }
+
+    // stop background music
+    static stopBackground(){
+        SoundHub.background.pause();
+        SoundHub.currentTime = 0;
+    }
+
+
+
+
+
+
+
     static saveSoundToLocalStorage() {
         localStorage.setItem("soundMuted", JSON.stringify(SoundHub.isMuted));
     }
@@ -75,21 +97,22 @@ export class SoundHub {
         }
 
         SoundHub.toggleSoundIcon();
-        
     }
-    
+
     static toggleSound() {
         //    https://stackoverflow.com/questions/11604409/how-to-toggle-a-boolean?
         SoundHub.isMuted = !SoundHub.isMuted;
-        
+
         // save the state to storage
         SoundHub.saveSoundToLocalStorage();
-        
+
         if (SoundHub.isMuted) {
             SoundHub.pauseAll();
+        } else {
+            SoundHub.playBackground();
         }
     }
-    
+
     static toggleSoundIcon() {
         const soundIconRef = document.getElementById(`sound-icon`);
         if (SoundHub.isMuted) {
