@@ -11,9 +11,9 @@ export class BabyChicken extends MovableObject {
     imagesWalk = ImageHelper.BABY_CHICKEN.walk;
     imagesDead = ImageHelper.BABY_CHICKEN.dead;
     offset = {
-        top: 5,
-        left: 5,
-        right: 5,
+        top: 0,
+        left: 0,
+        right: 0,
         bottom: 0,
     };
     // deathTime = 0;
