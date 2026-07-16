@@ -109,9 +109,6 @@ main {
                     border-radius: 50%;
                     background-color: rgba(221, 232, 235);
                     font-size: 20px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
                     cursor: pointer;
 
                     img {
