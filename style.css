@@ -101,179 +101,183 @@ main {
                     border-radius: 50%;
                     background-color: rgba(221, 232, 235);
                     font-size: 20px;
-                }
-
-                #home-button {
-                    width: 25px;
-                    height: 25px;
-                    border-radius: 50%;
-                    background-color: rgba(221, 232, 235);
-                    font-size: 20px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-
-                    img {
-                        height: 18px;
-                        width: auto;
-                    }
-                }
-
-                #sound-button {
-                    width: 25px;
-                    height: 25px;
-                    border-radius: 50%;
-                    background-color: rgba(221, 232, 235);
-                    font-size: 20px;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-
-                    img {
-                        height: 20px;
-                        width: auto;
-                    }
+                    cursor: pointer;
                 }
             }
-        }
 
-        .game-controls {
-            position: absolute;
-            bottom: 15px;
-            left: 0;
-            z-index: 10;
-
-            width: 100%;
-            height: 40px;
-
-            display: none;
-
-            .game-controls-wrapper {
-                height: 40px;
-                width: 720px;
-                _background-color: blue;
+            #home-button {
+                width: 25px;
+                height: 25px;
+                border-radius: 50%;
+                background-color: rgba(221, 232, 235);
+                font-size: 20px;
                 display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                padding: 0 16px;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
 
-                .panel-wrapper {
-                    width: fit-content;
-                    height: fit-content;
-                    display: flex;
-                    flex-direction: row;
-                    gap: 24px;
-
-                    button {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 50%;
-                        background-color: rgba(221, 232, 235);
-                        font-size: 20px;
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-
-                        img {
-                            height: 30px;
-                            width: auto;
-                        }
-                    }
-                }
+            img {
+                height: 18px;
+                width: auto;
             }
         }
 
-        .start-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 20;
-            img {
-                width: 720px;
-                height: 480px;
-            }
-
-            #start-button {
-                background-color: rgba(221, 232, 235);
-                z-index: 20;
-                letter-spacing: 1px;
-                font-size: 24px;
-                height: fit-content;
-                width: fit-content;
-                padding: 8px 25px;
-                border-radius: 30px;
-                position: absolute;
-                bottom: 20px;
-                cursor: pointer;
-            }
+        #sound-button {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: rgba(221, 232, 235);
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
         }
 
-        .game-over-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 20;
-
-            img {
-                width: 720px;
-                height: 480px;
-            }
-
-            #restart-button {
-                background-color: rgba(221, 232, 235);
-                z-index: 20;
-                letter-spacing: 1px;
-                font-size: 24px;
-                height: fit-content;
-                width: fit-content;
-                padding: 8px 25px;
-                border-radius: 30px;
-                position: absolute;
-                bottom: 20px;
-                cursor: pointer;
-            }
+        img {
+            height: 20px;
+            width: auto;
         }
+    }
+}
 
-        .win-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 20;
+.game-controls {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    z-index: 10;
 
-            img {
-                width: 720px;
-                height: 480px;
-                object-fit: contain;
+    width: 100%;
+    height: 40px;
+
+    display: none;
+
+    .game-controls-wrapper {
+        height: 40px;
+        width: 720px;
+        _background-color: blue;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 16px;
+
+        .panel-wrapper {
+            width: fit-content;
+            height: fit-content;
+            display: flex;
+            flex-direction: row;
+            gap: 24px;
+
+            button {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background-color: rgba(221, 232, 235);
+                font-size: 20px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
             }
 
-            #restart-button-won {
-                background-color: rgba(221, 232, 235);
-                z-index: 20;
-                letter-spacing: 1px;
-                font-size: 24px;
-                height: fit-content;
-                width: fit-content;
-                padding: 8px 25px;
-                border-radius: 30px;
-                position: absolute;
-                bottom: 20px;
-                cursor: pointer;
+            img {
+                height: 30px;
+                width: auto;
             }
         }
     }
+}
 
-    div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+.start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+    img {
+        width: 720px;
+        height: 480px;
+    }
 
-        canvas {
-            background-color: black;
-            display: block;
-            width: 720px;
-            height: 480px;
-        }
+    #start-button {
+        background-color: rgba(221, 232, 235);
+        z-index: 20;
+        letter-spacing: 1px;
+        font-size: 24px;
+        height: fit-content;
+        width: fit-content;
+        padding: 8px 25px;
+        border-radius: 30px;
+        position: absolute;
+        bottom: 20px;
+        cursor: pointer;
+    }
+}
+
+.game-over-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+
+    img {
+        width: 720px;
+        height: 480px;
+    }
+
+    #restart-button {
+        background-color: rgba(221, 232, 235);
+        z-index: 20;
+        letter-spacing: 1px;
+        font-size: 24px;
+        height: fit-content;
+        width: fit-content;
+        padding: 8px 25px;
+        border-radius: 30px;
+        position: absolute;
+        bottom: 20px;
+        cursor: pointer;
+    }
+}
+
+.win-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 20;
+
+    img {
+        width: 720px;
+        height: 480px;
+        object-fit: contain;
+    }
+
+    #restart-button-won {
+        background-color: rgba(221, 232, 235);
+        z-index: 20;
+        letter-spacing: 1px;
+        font-size: 24px;
+        height: fit-content;
+        width: fit-content;
+        padding: 8px 25px;
+        border-radius: 30px;
+        position: absolute;
+        bottom: 20px;
+        cursor: pointer;
+    }
+}
+
+div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    canvas {
+        background-color: black;
+        display: block;
+        width: 720px;
+        height: 480px;
     }
 }
 
@@ -297,8 +301,11 @@ main {
             letter-spacing: 1px;
         }
 
-        button p {
-            font-size: 20px;
+        button {
+            cursor: pointer;
+            p {
+                font-size: 20px;
+            }
         }
     }
 
@@ -398,7 +405,6 @@ footer {
             canvas {
                 width: 100%;
                 height: 100dvh;
-               
             }
 
             .mobile-impressum {
