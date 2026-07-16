@@ -1,8 +1,13 @@
 {
-  "source": {
-    "include": ["./models/world.class.js"]
-  },
-  "opts": {
-    "destination": "./out"
-  }
+    "source": {
+        "include": [
+            "./models/world.class.js",
+            "./models/drawable-object.class.js",
+            "./models/movable-object.class.js",
+            "./models/throwable-object.class.js"
+        ]
+    },
+    "opts": {
+        "destination": "./out"
+    }
 }

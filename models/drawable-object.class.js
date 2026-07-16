@@ -11,7 +11,7 @@ import { IntervalHub } from "../helper_classes/interval-helper.js";
  * as the foundation for displaying sprites and handling their position in
  * the game world.
  *
- * @class DrawableObject
+ * @class 
  */
 export class DrawableObject {
     // #region properties

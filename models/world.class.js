@@ -33,7 +33,7 @@ import { MovableObject } from "./movable-object.class.js";
  *
  * The World class manages rendering, player movement, enemies,
  * collectibles, UI elements and game states.
- * @class World 
+ * @class
  */
 export class World {
     // #region properties
