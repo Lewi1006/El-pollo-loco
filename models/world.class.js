@@ -27,8 +27,15 @@ import { SoundHub } from "../helper_classes/sound-helper.js";
 
 // #endregion
 
+/**
+ * Creates a new game world
+ * @class
+ */
 export class World {
     // #region properties
+    /**
+     * 
+     */
     gameStarted = false;
     gameOver = false;
     gameWon = false;
@@ -60,6 +67,14 @@ export class World {
     // --> drawing the elements and run intervals
     // Gives the Character a reference to the World instance,
     // allowing the Character to access things like keyboard, level, and camera.
+
+    /**
+     * 
+     * @param {*} canvas - game canvas
+     * @param {*} keyboard - global keyboard
+     * @param {*} showGameOverScreen - method to show screen
+     * @param {*} showGameWonScreen 
+     */
     constructor(canvas, keyboard, showGameOverScreen, showGameWonScreen) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -78,6 +93,9 @@ export class World {
 
     // #region methods
     // hand over world instance to character so that keyboard can be accessed ???
+    /**
+     * 
+     */
     setWorld() {
         this.character.world = this;
 

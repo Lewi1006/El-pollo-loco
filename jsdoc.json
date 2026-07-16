@@ -1,0 +1,8 @@
+{
+  "source": {
+    "include": ["./models/world.class.js"]
+  },
+  "opts": {
+    "destination": "./out"
+  }
+}
