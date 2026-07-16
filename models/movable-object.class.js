@@ -31,7 +31,7 @@ export class MovableObject extends DrawableObject {
         if (this.throwable == true) {
             return true;
         } else {
-            return this.y < 140;
+            return this.y <= 140;
         }
     }
 
