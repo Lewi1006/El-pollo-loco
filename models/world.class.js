@@ -193,7 +193,10 @@ export class World {
 
     stompEnemy() {
         this.level.enemies.forEach((enemy) => {
-        
+         if (enemy instanceof Endboss) {
+            return;
+        }
+
             if (enemy.isDead()) {
                 return;
             }
