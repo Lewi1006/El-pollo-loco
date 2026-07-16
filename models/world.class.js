@@ -28,13 +28,36 @@ import { SoundHub } from "../helper_classes/sound-helper.js";
 // #endregion
 
 /**
- * Creates a new game world
+ * Represents the complete game world and controls the main game.
+ *
+ * The World class manages rendering, player movement, enemies,
+ * collectibles, UI elements and game states.
  * @class
  */
 export class World {
     // #region properties
     /**
-     * 
+     * @property {boolean} gameStarted - Indicates whether the game has started.
+     * @property {boolean} gameOver - Indicates whether the player has lost.
+     * @property {boolean} gameWon - Indicates whether the player has won.
+     * @property {Character} character - The playable character instance.
+     * @property {Level} level - The currently active game level.
+     * @property {CanvasRenderingContext2D} ctx - The canvas drawing context.
+     * @property {HTMLCanvasElement} canvas - The game canvas element.
+     * @property {Keyboard} keyboard - Keyboard input handler.
+     * @property {number} camera_x - Current camera offset for scrolling.
+     * @property {StatusBarHealth} statusBar - Player health display.
+     * @property {CoinStatus} statusBar - Coin counter display.
+     * @property {BottleStatus} statusBar - Bottle counter display.
+     * @property {EndbossStatus} statusBar - Endboss health display.
+     * @property {ThrowableObject[]} throwableObjects - Array of active throwable objects.
+     * @property {number} coinCounter - Amount of collected coins.
+     * @property {number} totalCoins - Total coins available in the level.
+     * @property {number} bottleCounter - Amount of collected bottles.
+     * @property {number} totalBottles - Total bottles available in the level.
+     * @property {number} lastThrow - Timestamp of the last throwable object creation.
+     * @property {function} showGameOverScreen - Function used to display the game over screen.
+     * @property {function} showGameWonScreen - Function used to display the game won screen.
      */
     gameStarted = false;
     gameOver = false;
@@ -60,20 +83,25 @@ export class World {
 
     // #endregion
 
-    // create canvas with predefined canvas.getContext("2d");
-    // constructor receives canvas and keyboard variables from game.js
-    // canvas and keyboard are assigned to variables within World class so they are accessible
-    // initialize methods in constructor for setting world(whole world class is made accesible to character)
-    // --> drawing the elements and run intervals
-    // Gives the Character a reference to the World instance,
-    // allowing the Character to access things like keyboard, level, and camera.
-
     /**
-     * 
-     * @param {*} canvas - game canvas
-     * @param {*} keyboard - global keyboard
-     * @param {*} showGameOverScreen - method to show screen
-     * @param {*} showGameWonScreen 
+     * Creates a new World instance and initializes the game.
+     *
+     * The constructor receives the canvas and keyboard instances from game.js and
+     * stores them inside the World class, making them accessible throughout the
+     * entire game world.
+     *
+     * The constructor creates the canvas rendering context using the predefined 2D context,
+     * stores references to keyboard input and screen callbacks,
+     * creates the character and level,
+     * connects game objects to the world instance,
+     * starts rendering and activates the game loop.
+     *
+     * @constructor
+     *
+     * @param {HTMLCanvasElement} canvas - Canvas element used for rendering.
+     * @param {Keyboard} keyboard - Global keyboard input handler.
+     * @param {() => void} showGameOverScreen - Callback function that displays the game over screen.
+     * @param {() => void} showGameWonScreen - Callback function that displays the victory screen.
      */
     constructor(canvas, keyboard, showGameOverScreen, showGameWonScreen) {
         this.ctx = canvas.getContext("2d");
@@ -92,9 +120,13 @@ export class World {
     }
 
     // #region methods
-    // hand over world instance to character so that keyboard can be accessed ???
+
     /**
-     * 
+     * setWorld() assigns this World instance as a reference to the character and enemies.
+     * This reference allows game objects to access shared world information such as
+     * keyboard input, level data, and camera position.
+     *
+     * @returns {void}
      */
     setWorld() {
         this.character.world = this;
@@ -106,6 +138,13 @@ export class World {
 
     // #region game start/stop
     // method for running other methods like collision or throwObjects
+    /**
+     * This method is called repeatedly by the game loop (interval)
+     * it coordinates checks, including game over conditions, victory conditions,
+     * bottle collection, collisions, and throwing objects.
+     *
+     * @returns {void}
+     */
     run = () => {
         if (this.gameOver) return;
 
@@ -116,6 +155,12 @@ export class World {
         this.checkThrowObjects();
     };
 
+    /**
+     * This method stops all running intervals to pause game updates and sounds, 
+     * when game is won lost or exited.
+     *
+     * @returns {void}
+     */
     stopGame() {
         IntervalHub.stopAllIntervals();
         SoundHub.pauseAll();
