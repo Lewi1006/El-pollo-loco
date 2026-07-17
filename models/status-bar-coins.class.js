@@ -7,7 +7,7 @@ import { DrawableObject } from "./drawable-object.class.js";
  * CoinStatus extends DrawableObject and displays the player's collected coins.
  * The displayed image changes depending on the current coin percentage.
  *
- * @class CoinStatus
+ * @class
  */
 export class CoinStatus extends DrawableObject {
     /**
