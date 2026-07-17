@@ -8,7 +8,7 @@
  * - Keyboard controls (arrow keys, space and D key)
  * - Mobile touch controls
  *
- * @class Keyboard
+ * @class 
  */
 export class Keyboard {
     LEFT = false;
