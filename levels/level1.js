@@ -7,6 +7,17 @@ import { Coin } from "../models/coin.class.js";
 import { Bottle } from "../models/bottle.class.js";
 import { BabyChicken } from "../models/baby-chicken.class.js";
 
+/**
+ * Creates and initializes the first game level.
+ *
+ * Creates all objects required for Level 1, including enemies, clouds,
+ * background layers, coins, and bottles, and returns them as a new Level
+ * instance.
+ *
+ * @function initLevel1
+ *
+ * @returns {Level} A fully initialized Level 1 instance.
+ */
 export function initLevel1(){
     return new Level(
         [

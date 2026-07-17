@@ -13,7 +13,7 @@ import { SoundHub } from "../helper_classes/sound-helper.js";
  * The class provides the image sets required for the walking and death
  * animations.
  *
- * @class Chicken
+ * @class
  */
 export class Chicken extends MovableObject {
     // #region properties

@@ -1,3 +1,14 @@
+/**
+ * Manages all game audio.
+ *
+ * SoundHub provides centralized access to all sound effects and controls
+ * playing, pausing, muting, and saving the sound settings.
+ *
+ * All audio files are stored as static properties so they can be accessed
+ * from any game object without creating a SoundHub instance.
+ *
+ * @class SoundHub
+ */
 export class SoundHub {
     // #region Audio
     static jump = new Audio("./assets/sounds/character/characterJump.wav");
@@ -25,7 +36,7 @@ export class SoundHub {
     static background = new Audio("./assets/sounds/background/background3.mp3");
     // #endregion
 
-    // Array containing all audio files
+    // Array containing all audio objects
     static allSounds = [
         SoundHub.jump,
         SoundHub.run,
@@ -43,9 +54,20 @@ export class SoundHub {
         SoundHub.background,
     ];
 
+    // Stores the current mute state
     static isMuted = false;
 
-    // plays a single audio file
+    /**
+     * Plays one sound effect.
+     *
+     * Resets the audio position before playing and ignores playback when sound
+     * is muted.
+     *
+     * @param {HTMLAudioElement} sound - Audio object that should be played.
+     * @param {number} volume - Volume level between 0 and 1.
+     *
+     * @returns {void}
+     */
     static playOne(sound, volume) {
         if (SoundHub.isMuted) return;
 
@@ -54,42 +76,48 @@ export class SoundHub {
         sound.play();
     }
 
-    // pauses all audio files
+    /**
+     * Pauses all registered sounds.
+     *
+     * Iterates through all sounds stored in allSounds and pauses each one.
+     *
+     * @returns {void}
+     */
     static pauseAll() {
         SoundHub.allSounds.forEach((sound) => {
             sound.pause();
         });
     }
 
-    //pauses a single audio file
+    /**
+     * Pauses a single sound.
+     *
+     * @param {HTMLAudioElement} sound - Audio object that should be paused.
+     *
+     * @returns {void}
+     */
     static pauseOne(sound) {
         sound.pause();
     }
 
-    // play background music 
-    static playBackground() {
-        if (SoundHub.isMuted) return;
-        SoundHub.background.loop = true;
-        SoundHub.background.volume = 0.7;
-        SoundHub.background.play();
-    }
-
-    // stop background music
-    static stopBackground(){
-        SoundHub.background.pause();
-        SoundHub.currentTime = 0;
-    }
-
-
-
-
-
-
-
+    /**
+     * Saves the current mute state to local storage.
+     *
+     * Allows the sound preference to remain after reloading the page.
+     *
+     * @returns {void}
+     */
     static saveSoundToLocalStorage() {
         localStorage.setItem("soundMuted", JSON.stringify(SoundHub.isMuted));
     }
 
+    /**
+     * Loads the saved mute state from local storage.
+     *
+     * Restores the previous sound preference and updates the sound icon.
+     *
+     * @returns {void}
+     */
     static getSoundFromLocalStorage() {
         const storedSound = localStorage.getItem("soundMuted");
         if (storedSound !== null) {
@@ -99,6 +127,14 @@ export class SoundHub {
         SoundHub.toggleSoundIcon();
     }
 
+    /**
+     * Toggles sound on or off.
+     *
+     * Updates the mute state, saves the preference, and pauses all sounds
+     * when sound is muted.
+     *
+     * @returns {void}
+     */
     static toggleSound() {
         //    https://stackoverflow.com/questions/11604409/how-to-toggle-a-boolean?
         SoundHub.isMuted = !SoundHub.isMuted;
@@ -113,6 +149,13 @@ export class SoundHub {
         }
     }
 
+    /**
+     * Updates the sound icon depending on the current mute state.
+     *
+     * Shows the sound-off icon when muted and the sound-on icon otherwise.
+     *
+     * @returns {void}
+     */
     static toggleSoundIcon() {
         const soundIconRef = document.getElementById(`sound-icon`);
         if (SoundHub.isMuted) {
@@ -123,5 +166,6 @@ export class SoundHub {
     }
 }
 
+// Sounds that should continue playing until manually stopped
 SoundHub.snore.loop = true;
 SoundHub.endbossAttack.loop = true;

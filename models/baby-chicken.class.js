@@ -11,7 +11,7 @@ import { SoundHub } from "../helper_classes/sound-helper.js";
  *
  * It has its own walking and death animations.
  *
- * @class BabyChicken
+ * @class
  */
 export class BabyChicken extends MovableObject {
     // #region properties

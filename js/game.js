@@ -9,7 +9,6 @@ import { World } from "../models/world.class.js";
 import { Keyboard } from "../helper_classes/keyboard-manager.js";
 import { SoundHub } from "../helper_classes/sound-helper.js";
 
-
 // #region variables
 let canvas;
 let world;
@@ -34,6 +33,14 @@ const closeDialogRef = document.getElementById(`close-dialog`);
 
 SoundHub.getSoundFromLocalStorage();
 
+/**
+ * Initializes the game.
+ *
+ * Gets the canvas element and creates a new World instance. The screen
+ * callbacks are passed to World so it can trigger the correct end screens.
+ *
+ * @returns {void}
+ */
 function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard, showGameOverScreen, showGameWonScreen);
@@ -47,25 +54,48 @@ restartButtonRef.addEventListener("click", restartGame);
 restartButtonWonRef.addEventListener(`click`, restartGame);
 homeButtonRef.addEventListener("click", goToHomeScreen);
 
+/**
+ * Starts a new game session.
+ *
+ * Shows the game interface and controls, initializes the world, activates the
+ * game loop, and plays the start sound.
+ *
+ * @returns {void}
+ */
 function startGame() {
     showGameUI();
     showGameControls();
     init();
-    
+
     world.gameStarted = true;
     SoundHub.playOne(SoundHub.start, 0.4);
     SoundHub.playBackground();
 }
 
+/**
+ * Restarts the game after winning or losing.
+ *
+ * Hides end screens, resets the game interface, creates a new world instance,
+ * and starts the game again.
+ *
+ * @returns {void}
+ */
 function restartGame() {
     hideEndScreen();
     showGameUI();
     showGameControls();
-    
+
     init();
     world.gameStarted = true;
 }
 
+/**
+ * Returns the player to the home screen.
+ *
+ * Stops the current game, hides game controls, and displays the start screen.
+ *
+ * @returns {void}
+ */
 function goToHomeScreen() {
     hideGameControls();
     world.stopGame();
@@ -74,13 +104,26 @@ function goToHomeScreen() {
 // #endregion
 
 // #region screen management
-
+/**
+ * Displays the game over screen.
+ *
+ * Called by World when the character loses all energy.
+ *
+ * @returns {void}
+ */
 function showGameOverScreen() {
     hideGameControls();
     const gameOverScreenRef = document.querySelector(`.game-over-screen`);
     gameOverScreenRef.classList.remove(`d-none`);
 }
 
+/**
+ * Displays the victory screen.
+ *
+ * Called by World when the endboss is defeated.
+ *
+ * @returns {void}
+ */
 function showGameWonScreen() {
     hideGameControls();
     const winScreenRef = document.querySelector(`.win-screen`);
@@ -90,27 +133,25 @@ function showGameWonScreen() {
 function showHomeUI() {
     // show start screen
     startScreenRef.classList.remove("d-none");
-    
+
     // hide other screens
     gameOverScreenRef.classList.add("d-none");
     winScreenRef.classList.add("d-none");
-    
+
     instructionsButtonRef.classList.remove(`d-none`);
     homeButtonRef.classList.add(`d-none`);
 }
 
 function showGameUI() {
     startScreenRef.classList.add(`d-none`);
-    
+
     instructionsButtonRef.classList.add(`d-none`);
     homeButtonRef.classList.remove(`d-none`);
 }
 
-
-function hideEndScreen(){
+function hideEndScreen() {
     gameOverScreenRef.classList.add("d-none");
     winScreenRef.classList.add("d-none");
-    
 }
 
 function showGameControls() {
@@ -126,10 +167,10 @@ function hideGameControls() {
 // #region sound
 soundButtonRef.addEventListener("click", toggleSound);
 
-function toggleSound(){
+function toggleSound() {
     SoundHub.toggleSound();
     SoundHub.toggleSoundIcon();
-    
+
     // https://www.w3schools.com/JSREF/met_html_blur.asp
     soundButtonRef.blur();
 }

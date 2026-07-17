@@ -1,3 +1,15 @@
+/**
+ * Handles all player input controls.
+ *
+ * Keyboard stores the current state of keyboard and mobile button inputs.
+ * The game checks these values to control movement, jumping and throwing.
+ *
+ * Supports:
+ * - Keyboard controls (arrow keys, space and D key)
+ * - Mobile touch controls
+ *
+ * @class 
+ */
 export class Keyboard {
     LEFT = false;
     RIGHT = false;
@@ -6,11 +18,28 @@ export class Keyboard {
     SPACE = false;
     D = false;
 
+    /**
+     * Creates a new Keyboard controller.
+     *
+     * Registers keyboard events and mobile button events so the game can react
+     * to player input.
+     *
+     * @constructor
+     */
     constructor() {
         this.bindBtnPressEvents();
         this.bindKeyPressEvents();
     }
 
+    /**
+     * Registers keyboard input events.
+     *
+     * Updates the corresponding control properties when keys are pressed or
+     * released. These values are checked by the character and world classes
+     * to control gameplay actions.
+     *
+     * @returns {void}
+     */
     bindKeyPressEvents() {
         document.addEventListener("keydown", (event) => {
             if (event.code == "ArrowLeft") {
@@ -65,6 +94,14 @@ export class Keyboard {
         });
     }
 
+    /**
+     * Registers touch events for mobile controls.
+     *
+     * Updates the same control properties as keyboard input, allowing the game
+     * to be played on touch devices.
+     *
+     * @returns {void}
+     */
     bindBtnPressEvents() {
         document
             .getElementById(`btn-left`)
