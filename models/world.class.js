@@ -1,10 +1,3 @@
-// World is the main game state --> created after game.js initializes everything
-// imports all elements of the game as well as IntervalHub and ImageHelper
-// no need to import drawableObjects > (movableObjects )--> cause they are only used by their subclasses??
-// StatusBar is on the same hierachy level as MovableObject --> siblings
-// character gets initialized
-// levels are connected here
-
 // #region Imports
 import { BackgroundObject } from "./background-object.class.js";
 import { Character } from "./character.class.js";
@@ -93,8 +86,7 @@ export class World {
      *
      * The constructor creates the canvas rendering context using the predefined 2D context,
      * stores references to keyboard input and screen callbacks,
-     * creates the character and level,
-     * connects game objects to the world instance,
+     * creates the character and level, connects game objects to the world instance,
      * starts rendering and activates the game loop.
      *
      * @constructor
@@ -138,7 +130,6 @@ export class World {
     }
 
     // #region game start/stop
-    // method for running other methods like collision or throwObjects
     /**
      * This method is called repeatedly by the game loop (interval)
      * it coordinates checks, including game over conditions, victory conditions,
@@ -350,16 +341,10 @@ export class World {
      *
      * The method loops through all enemies and checks whether they are dead (energy=0).
      * When an enemy dies, its death time is stored in the enemy object.
-     * (the variable deathTime is set to the current time)
-     *
      * During collision handling, dead enemies are marked by setting their energy
      * to zero and saving the current timestamp as their death time.
-     *
      * This method checks how much time has passed since the enemy died and removes the enemy
      * from the level after the death animation has finished.
-     *
-     * Currently, only Chicken and BabyChicken enemies are removed. Other enemy
-     * types, such as the Endboss, remain in the level after death.
      *
      * @returns {void}
      */
@@ -369,7 +354,7 @@ export class World {
 
             if (enemy instanceof Chicken || enemy instanceof BabyChicken) {
                 if (enemy.isDead()) {
-                    let timePassed = new Date().getTime() - enemy.deathTime; // difference since death in ms
+                    let timePassed = new Date().getTime() - enemy.deathTime;
                     timePassed /= 1000;
 
                     if (timePassed > 1) {
@@ -573,7 +558,7 @@ export class World {
         this.clearCanvas();
         this.drawWorld();
         this.drawStatusBar();
-        // main game loop
+        
         requestAnimationFrame(() => this.draw());
     }
 

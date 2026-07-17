@@ -1,10 +1,3 @@
-// game.js is main.js file
-// It initializes canvas, creates World and Keyboard objects
-// init() is called on window load
-// canvas is selected from HTML
-// canvas and keyboard variables are passed into World object
-// eventListener makes keyboard globally accesible
-
 import { World } from "../models/world.class.js";
 import { Keyboard } from "../helper_classes/keyboard-manager.js";
 import { SoundHub } from "../helper_classes/sound-helper.js";
@@ -132,10 +125,14 @@ function showGameWonScreen() {
 }
 
 function showHomeUI() {
-    // show start screen
+    /**
+     * show start screen
+     */
     startScreenRef.classList.remove("d-none");
 
-    // hide other screens
+    /**
+     * hide other screens
+     */
     gameOverScreenRef.classList.add("d-none");
     winScreenRef.classList.add("d-none");
 
@@ -171,8 +168,6 @@ soundButtonRef.addEventListener("click", toggleSound);
 function toggleSound() {
     SoundHub.toggleSound();
     SoundHub.toggleSoundIcon();
-
-    // https://www.w3schools.com/JSREF/met_html_blur.asp
     soundButtonRef.blur();
 }
 // #endregion

@@ -40,6 +40,7 @@ main {
     width: 100%;
     height: fit-content;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 
@@ -47,10 +48,20 @@ main {
         display: none;
         width: 200px;
         height: 70px;
-        border-radius: 10px;
-        background-color: rgba(221, 232, 235);
-        font-family: "Courier New", Courier, monospace;
-        font-size: 16px;
+        
+        p{
+            border-radius: 10px;
+            background-color: rgba(221, 232, 235);
+            padding: 16px;
+            _font-family: "Inter", sans-serif;
+            _font-family: "Courier New", Courier, monospace;
+            font-size: 24px;
+        }
+
+        img{
+            height: 350px;
+            width: auto;
+        }
     }
 
     .game-container {

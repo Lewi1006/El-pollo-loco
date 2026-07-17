@@ -24,12 +24,16 @@ export class Character extends MovableObject {
      * @property {string[]} imagesHurt - Image paths used for the hurt animation.
      * @property {string[]} imagesIdle - Image paths used for the idle animation.
      * @property {string[]} imagesLongIdle - Image paths used for the long idle animation.
+     * @property {number} currentIdleImage - Stores the current frame index of the idle animation.
+     * @property {boolean} idleStarted - Tracks whether the idle animation has started.
      * @property {World} world - Reference to the current game world instance.
      * @property {Object} offset - Collision hitbox offsets used to adjust the character's collision area.
      * @property {number} lastMove - Timestamp of the last movement input.
      * @property {number} longIdleStart - Time threshold before triggering the long idle animation.
      * @property {boolean} isRunSoundPlaying - Tracks whether the running sound effect is currently active.
      * @property {boolean} isSnoreSoundPlaying - Tracks whether the snoring sound effect is currently active.
+     * @property {boolean} jumpStarted - Tracks wether Character started jumping.
+     * @property {number} currentJumpImage - Stores the current frame index of the jump animation.
      */
     height = 280;
     y = 140;
@@ -40,9 +44,9 @@ export class Character extends MovableObject {
     imagesHurt = ImageHelper.CHARACTER.hurt;
     imagesIdle = ImageHelper.CHARACTER.idle;
     imagesLongIdle = ImageHelper.CHARACTER.longIdle;
-    // setWorld  assigns world class to this property so world is available to character
+    currentIdleImage = 0;
+    idleStarted = false;
     world;
-
     offset = {
         top: 100,
         left: 30,
@@ -53,6 +57,8 @@ export class Character extends MovableObject {
     longIdleStart = 15;
     isRunSoundPlaying = false;
     isSnoreSoundPlaying = false;
+    jumpStarted = false;
+    currentJumpImage = 0;
 
     // #endregion
 
@@ -84,6 +90,8 @@ export class Character extends MovableObject {
 
         IntervalHub.startInterval(this.updateMovement, 1000 / 60);
         IntervalHub.startInterval(this.updateAnimation, 50);
+        IntervalHub.startInterval(this.updateJumpAnimation, 120);
+        IntervalHub.startInterval(this.updateIdleAnimation, 150);
     }
 
     // #region methods
@@ -167,38 +175,76 @@ export class Character extends MovableObject {
     /**
      * Updates the character animation based on the current state.
      *
-     * Selects the appropriate animation depending on the character's condition.
-     *
-     * Possible animation states include:
-     * - Dead animation when the character has no energy left.
-     * - Hurt animation after receiving damage.
-     * - Jump animation while above the ground.
-     * - Walking animation while moving left or right.
-     * - Long idle animation after being inactive for a certain time.
-     * - Normal idle animation when no other state applies.
-     *
-     * The method also manages the snoring sound for idle states.
-     *
-     * This method is executed repeatedly through an interval.
+     * Handles normal animations such as death, hurt, walking, idle, and long idle.
+     * The jump animation is handled separately by updateJumpAnimation().
      *
      * @returns {void}
      */
     updateAnimation = () => {
+        if (this.jumpStarted) return;
+
         if (this.isDead()) {
             this.playAnimation(this.imagesDead);
         } else if (this.isHurt()) {
             this.playAnimation(this.imagesHurt);
-        } else if (this.isAboveGround()) {
-            this.playAnimation(this.imagesJump);
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
             this.playAnimation(this.imagesWalk);
         } else if (this.isLongIdle()) {
             this.playAnimation(this.imagesLongIdle);
-        } else {
-            this.playAnimation(this.imagesIdle);
         }
+        // else {
+        //     this.playAnimation(this.imagesIdle);
+        // }
 
         this.manageSnoreSound();
+    };
+
+    /**
+     * Plays the jump animation separately from the normal animation cycle.
+     *
+     * Runs through the jump images once and resets the image counter when finished.
+     *
+     * @returns {void}
+     */
+    updateJumpAnimation = () => {
+        if (!this.jumpStarted) return;
+
+        if (this.currentJumpImage < this.imagesJump.length) {
+            this.img = this.imageCache[this.imagesJump[this.currentJumpImage]];
+            this.currentJumpImage++;
+        } else {
+            this.jumpStarted = false;
+            this.currentJumpImage = 0;
+        }
+    };
+
+    /**
+     * Plays the normal idle animation separately from the main animation cycle.
+     *
+     * Advances through the idle frames at a slower rate and only runs while the
+     * character is standing still and not in any other animation state.
+     *
+     * @returns {void}
+     */
+    updateIdleAnimation = () => {
+        if (
+            this.world.keyboard.RIGHT ||
+            this.world.keyboard.LEFT ||
+            this.isAboveGround() ||
+            this.isHurt() ||
+            this.isDead() ||
+            this.isLongIdle()
+        ) {
+            return;
+        }
+
+        this.img = this.imageCache[this.imagesIdle[this.currentIdleImage]];
+
+        this.currentIdleImage++;
+
+        if (this.currentIdleImage >= this.imagesIdle.length) {
+            this.currentIdleImage = 0;
+        }
     };
 
     /**
@@ -260,6 +306,8 @@ export class Character extends MovableObject {
      */
     jump() {
         this.speedY = 30;
+        this.currentJumpImage = 0;
+        this.jumpStarted = true;
         SoundHub.playOne(SoundHub.jump, 0.2);
     }
 
@@ -299,8 +347,8 @@ export class Character extends MovableObject {
      * @returns {boolean} True if the character has been idle longer than the defined time.
      */
     isLongIdle() {
-        let timePassed = new Date().getTime() - this.lastMove; // difference since last move in ms
-        timePassed /= 1000; // difference in sec
+        let timePassed = new Date().getTime() - this.lastMove;
+        timePassed /= 1000;
         return timePassed > this.longIdleStart;
     }
 

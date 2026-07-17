@@ -125,16 +125,9 @@ export class Endboss extends MovableObject {
     /**
      * Updates the end boss movement and attack state.
      *
-     * The end boss only becomes active once the world exists and the game has
-     * started. The distance to the character is checked to determine when the
-     * boss starts walking and when it enters the attack state.
-     *
-     * The hasStartedWalking flag is used to trigger the walking behavior only
-     * once when the character gets close enough. While the boss is not attacking,
-     * it moves towards the character.
-     *
-     * The method also manages the approach and attack sounds depending on the
-     * current boss state.
+     * Activates the end boss when the character enters its detection range,
+     * updates the attack state based on the distance to the character, and
+     * manages movement and sound effects.
      *
      * @returns {void}
      */
@@ -153,10 +146,7 @@ export class Endboss extends MovableObject {
             this.isAttacking = false;
         }
 
-        if (this.hasStartedWalking && !this.isAttacking) {
-            this.moveLeft();
-        }
-
+        this.manageWalking();
         this.manageApproachSound();
         this.manageAttackSound();
     };
@@ -170,7 +160,6 @@ export class Endboss extends MovableObject {
      *
      * @returns {void}
      */
-    updateAnimat;
     updateAnimation = () => {
         if (!this.world || !this.world.gameStarted) return;
 
@@ -200,6 +189,27 @@ export class Endboss extends MovableObject {
         const distanceX = this.world.character.x - this.x;
         const distanceY = this.world.character.y - this.y;
         return Math.hypot(distanceX, distanceY);
+    }
+
+    /**
+     * Moves the end boss towards the character.
+     *
+     * The end boss only moves after being activated and stops moving while
+     * attacking. The movement direction changes depending on the character's
+     * position, allowing the boss to turn around when the character passes it.
+     *
+     * @returns {void}
+     */
+    manageWalking() {
+        if (!this.hasStartedWalking || this.isAttacking) return;
+
+        if (this.world.character.x < this.x) {
+            this.moveLeft();
+            this.otherDirection = false;
+        } else {
+            this.moveRight();
+            this.otherDirection = true;
+        }
     }
 
     /**
