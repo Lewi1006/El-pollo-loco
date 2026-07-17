@@ -24,6 +24,8 @@ export class Character extends MovableObject {
      * @property {string[]} imagesHurt - Image paths used for the hurt animation.
      * @property {string[]} imagesIdle - Image paths used for the idle animation.
      * @property {string[]} imagesLongIdle - Image paths used for the long idle animation.
+     * @property {number} currentIdleImage - Stores the current frame index of the idle animation.
+     * @property {boolean} idleStarted - Tracks whether the idle animation has started.
      * @property {World} world - Reference to the current game world instance.
      * @property {Object} offset - Collision hitbox offsets used to adjust the character's collision area.
      * @property {number} lastMove - Timestamp of the last movement input.
@@ -42,6 +44,8 @@ export class Character extends MovableObject {
     imagesHurt = ImageHelper.CHARACTER.hurt;
     imagesIdle = ImageHelper.CHARACTER.idle;
     imagesLongIdle = ImageHelper.CHARACTER.longIdle;
+    currentIdleImage = 0;
+    idleStarted = false;
     world;
     offset = {
         top: 100,
@@ -87,6 +91,7 @@ export class Character extends MovableObject {
         IntervalHub.startInterval(this.updateMovement, 1000 / 60);
         IntervalHub.startInterval(this.updateAnimation, 50);
         IntervalHub.startInterval(this.updateJumpAnimation, 120);
+        IntervalHub.startInterval(this.updateIdleAnimation, 150);
     }
 
     // #region methods
@@ -186,9 +191,10 @@ export class Character extends MovableObject {
             this.playAnimation(this.imagesWalk);
         } else if (this.isLongIdle()) {
             this.playAnimation(this.imagesLongIdle);
-        } else {
-            this.playAnimation(this.imagesIdle);
         }
+        // else {
+        //     this.playAnimation(this.imagesIdle);
+        // }
 
         this.manageSnoreSound();
     };
@@ -209,6 +215,35 @@ export class Character extends MovableObject {
         } else {
             this.jumpStarted = false;
             this.currentJumpImage = 0;
+        }
+    };
+
+    /**
+     * Plays the normal idle animation separately from the main animation cycle.
+     *
+     * Advances through the idle frames at a slower rate and only runs while the
+     * character is standing still and not in any other animation state.
+     *
+     * @returns {void}
+     */
+    updateIdleAnimation = () => {
+        if (
+            this.world.keyboard.RIGHT ||
+            this.world.keyboard.LEFT ||
+            this.isAboveGround() ||
+            this.isHurt() ||
+            this.isDead() ||
+            this.isLongIdle()
+        ) {
+            return;
+        }
+
+        this.img = this.imageCache[this.imagesIdle[this.currentIdleImage]];
+
+        this.currentIdleImage++;
+
+        if (this.currentIdleImage >= this.imagesIdle.length) {
+            this.currentIdleImage = 0;
         }
     };
 
