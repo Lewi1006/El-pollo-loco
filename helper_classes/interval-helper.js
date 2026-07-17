@@ -8,7 +8,9 @@
  * @class IntervalHub
  */
 export class IntervalHub {
-    // saves all registered interval ID's
+    /**
+     * saves all registered interval ID's
+     */
     static allIntervals = [];
 
     /**
