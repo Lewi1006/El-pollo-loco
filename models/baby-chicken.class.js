@@ -53,10 +53,8 @@ export class BabyChicken extends MovableObject {
         this.loadImage(this.imagesWalk[0]);
         this.loadImages(this.imagesWalk);
         this.loadImages(this.imagesDead);
-        // this.x = 1100 + Math.random() * 3000;
-        this.x = 500 + Math.random() * 50;
-        // this.speed = 1.2 + Math.random() * 3;
-        this.speed = 0;
+        this.x = 1100 + Math.random() * 3000;
+        this.speed = 1.2 + Math.random() * 3;
         this.animate();
         IntervalHub.startInterval(this.updateMovement, 1000 / 60);
         IntervalHub.startInterval(this.updateAnimation, 200);

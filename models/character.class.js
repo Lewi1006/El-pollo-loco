@@ -33,7 +33,7 @@ export class Character extends MovableObject {
      */
     height = 280;
     y = 140;
-    speed = 4;
+    speed = 6;
     imagesWalk = ImageHelper.CHARACTER.walk;
     imagesJump = ImageHelper.CHARACTER.jump;
     imagesDead = ImageHelper.CHARACTER.dead;
