@@ -1,3 +1,15 @@
+/**
+ * Provides centralized access to all image asset paths used in the game.
+ *
+ * ImageHelper stores image collections grouped by game objects and categories,
+ * such as character animations, enemies, backgrounds, bottles, coins, and
+ * status bars.
+ *
+ * This is a static helper class. Images are accessed directly through the
+ * class.
+ *
+ * @class ImageHelper
+ */
 export class ImageHelper {
     static CHARACTER = {
         idle: [
@@ -157,9 +169,7 @@ export class ImageHelper {
             `assets/img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png`,
         ],
 
-        ground: [
-            `assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png`,
-        ],
+        ground: [`assets/img/6_salsa_bottle/2_salsa_bottle_on_ground.png`],
     };
 
     static STATUSBAR = {

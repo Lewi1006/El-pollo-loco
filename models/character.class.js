@@ -222,7 +222,7 @@ export class Character extends MovableObject {
                 this.isRunSoundPlaying = true;
             }
         } else {
-            SoundHub.pauseOne(SoundHub.run, 0.1);
+            SoundHub.pauseOne(SoundHub.run);
             this.isRunSoundPlaying = false;
         }
     }
