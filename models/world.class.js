@@ -86,8 +86,7 @@ export class World {
      *
      * The constructor creates the canvas rendering context using the predefined 2D context,
      * stores references to keyboard input and screen callbacks,
-     * creates the character and level,
-     * connects game objects to the world instance,
+     * creates the character and level, connects game objects to the world instance,
      * starts rendering and activates the game loop.
      *
      * @constructor
@@ -342,16 +341,10 @@ export class World {
      *
      * The method loops through all enemies and checks whether they are dead (energy=0).
      * When an enemy dies, its death time is stored in the enemy object.
-     * (the variable deathTime is set to the current time)
-     *
      * During collision handling, dead enemies are marked by setting their energy
      * to zero and saving the current timestamp as their death time.
-     *
      * This method checks how much time has passed since the enemy died and removes the enemy
      * from the level after the death animation has finished.
-     *
-     * Currently, only Chicken and BabyChicken enemies are removed. Other enemy
-     * types, such as the Endboss, remain in the level after death.
      *
      * @returns {void}
      */
