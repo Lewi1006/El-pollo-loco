@@ -101,6 +101,33 @@ export class SoundHub {
     }
 
     /**
+     * Starts the background music.
+     *
+     * Plays the background music continuously when the game starts.
+     *
+     * @returns {void}
+     */
+    static playBackground() {
+        if (SoundHub.isMuted) return;
+
+        SoundHub.background.loop = true;
+        SoundHub.background.volume = 0.7;
+        SoundHub.background.play();
+    }
+
+    /**
+     * Stops the background music.
+     *
+     * Pauses the background track and resets it to the beginning.
+     *
+     * @returns {void}
+     */
+    static stopBackground() {
+        SoundHub.background.pause();
+        SoundHub.background.currentTime = 0;
+    }
+
+    /**
      * Saves the current mute state to local storage.
      *
      * Allows the sound preference to remain after reloading the page.

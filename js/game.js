@@ -87,6 +87,7 @@ function restartGame() {
 
     init();
     world.gameStarted = true;
+    SoundHub.playBackground(); 
 }
 
 /**
